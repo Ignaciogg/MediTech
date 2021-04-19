@@ -24,6 +24,8 @@ public class Principal {
         int tipo_usuario;
         String email, contraseña;
 
+        System.out.println("   --- Bienvenido a MediTech (varsión 1.0) --- \n \n");
+
         do {
             //Preguntamos el tipo de usuario
             System.out.print(
