@@ -51,6 +51,6 @@ public class Principal {
                 System.out.print("Los datos introducidos no son correctos");
             }
         }while (inicioSesion==false);
-        System.out.print("CARLOS HEY");
+
     }
 }
