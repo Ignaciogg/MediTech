@@ -36,7 +36,7 @@ public class Principal {
                     "Introduce el tipo de usuario con el que vas a iniciar sesion:");
             tipo_usuario = input.nextInt();
 
-            input.nextLine(); //lipiar buffer Scanner
+            input.nextLine(); //limpiar buffer Scanner
 
             //Solicitamos los datos de inicio de sesion
             System.out.print("Introduce el email:");
