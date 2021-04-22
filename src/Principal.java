@@ -21,7 +21,15 @@ public class Principal {
                     String linea;
                     while ((linea = br.readLine()) != null) {
                         Persona persona = gson.fromJson(linea, Persona.class);
-
+                        if (persona.getEmail().equals(email)){
+                            if (persona.getContraseña().equals(contraseña)){
+                                System.out.println("Has iniciado sesión correctamente");
+                                return true;
+                            }else {
+                                System.out.println("la contraseña introducida no es correcta");
+                                return false;
+                            }
+                        }
                         System.out.println(persona.toString());
                     }
 
@@ -36,55 +44,45 @@ public class Principal {
             case 4: //Administrador
                 break;
         }
-
-        return true;
+        System.out.println("Los datos de inicio de sesion no son correctos");
+        return false;
     }
 
     public static void main(String[] args){
 
         Scanner input = new Scanner(System.in);
         Boolean inicioSesion = false;
-        Boolean usuarioEncontrado = false;
         int tipo_usuario=0;
         String email, contraseña;
 
-        System.out.println("   --- Bienvenido a MediTech (varsión 1.0) --- \n" +
-                "\n" +
-                "            \t 1) Recepcionista \n" +
-                "            \t 2) Paciente      \n" +
-                "            \t 3) Medico        \n" +
-                "            \t 4) Administrador \n");
+        System.out.println("   --- Bienvenido a MediTech (varsión 1.0) --- \n");
 
         do {
             //Preguntamos el tipo de usuario
             System.out.print(
+                    "\t 1) Recepcionista\n" +
+                    "\t 2) Paciente\n" +
+                    "\t 3) Medico\n" +
+                    "\t 4) Administrador\n" +
                     "Introduce el tipo de usuario con el que vas a iniciar sesion: ");
 
-            if(input.hasNextInt()){
+            if(input.hasNextInt())
                 tipo_usuario = input.nextInt();
-                usuarioEncontrado = true;
 
-
-                input.nextLine(); //limpiar buffer Scanner
-
-                //Solicitamos los datos de inicio de sesion
-                System.out.print("Introduce el email:");
-                email = input.nextLine();
-                System.out.print("Introduce la contraseña:");
-                contraseña = input.nextLine();
-
-                inicioSesion = iniciarSesion(tipo_usuario, email, contraseña);
-                if (inicioSesion) {
-                    System.out.print("Has iniciado sesión correctamente");
-                } else {
-                    System.out.print("Los datos introducidos no son correctos");
-                }
-            }
             else
                 System.out.println("ERROR al introducir el tipo de usuario");
 
 
-        }while (!inicioSesion && !usuarioEncontrado);
+            input.nextLine(); //limpiar buffer Scanner
+
+            //Solicitamos los datos de inicio de sesion
+            System.out.print("Introduce el email:");
+            email = input.nextLine();
+            System.out.print("Introduce la contraseña:");
+            contraseña = input.nextLine();
+
+            inicioSesion = iniciarSesion(tipo_usuario, email, contraseña);
+        }while (!inicioSesion);
 
     }
 }
