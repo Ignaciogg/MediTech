@@ -24,7 +24,7 @@ public class Principal {
         int tipo_usuario;
         String email, contraseña;
 
-        System.out.println("   --- Bienvenido a MediTech (varsión 1.0) --- \n \n");
+        System.out.println("   --- Bienvenido a MediTech (varsión 1.0) --- \n");
 
         do {
             //Preguntamos el tipo de usuario
@@ -33,7 +33,7 @@ public class Principal {
                     "\t 2) Paciente\n" +
                     "\t 3) Medico\n" +
                     "\t 4) Administrador\n" +
-                    "Introduce el tipo de usuario con el que vas a iniciar sesion:");
+                    "Introduce el tipo de usuario con el que vas a iniciar sesion: ");
             tipo_usuario = input.nextInt();
 
             input.nextLine(); //limpiar buffer Scanner
