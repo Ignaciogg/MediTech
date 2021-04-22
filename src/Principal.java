@@ -21,7 +21,15 @@ public class Principal {
                     String linea;
                     while ((linea = br.readLine()) != null) {
                         Persona persona = gson.fromJson(linea, Persona.class);
-
+                        if (persona.getEmail().equals(email)){
+                            if (persona.getContraseña().equals(contraseña)){
+                                System.out.println("Has iniciado sesión correctamente");
+                                return true;
+                            }else {
+                                System.out.println("la contraseña introducida no es correcta");
+                                return false;
+                            }
+                        }
                         System.out.println(persona.toString());
                     }
 
@@ -36,8 +44,8 @@ public class Principal {
             case 4: //Administrador
                 break;
         }
-
-        return true;
+        System.out.println("Los datos de inicio de sesion no son correctos");
+        return false;
     }
 
     public static void main(String[] args){
@@ -74,11 +82,6 @@ public class Principal {
             contraseña = input.nextLine();
 
             inicioSesion = iniciarSesion(tipo_usuario, email, contraseña);
-            if (inicioSesion) {
-                System.out.print("Has iniciado sesión correctamente");
-            } else {
-                System.out.print("Los datos introducidos no son correctos");
-            }
         }while (!inicioSesion);
 
     }
