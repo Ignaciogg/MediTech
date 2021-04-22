@@ -21,7 +21,7 @@ public class Principal {
 
         Scanner input = new Scanner(System.in);
         Boolean inicioSesion = false;
-        int tipo_usuario;
+        int tipo_usuario=0;
         String email, contraseña;
 
         System.out.println("   --- Bienvenido a MediTech (varsión 1.0) --- \n");
@@ -34,7 +34,13 @@ public class Principal {
                     "\t 3) Medico\n" +
                     "\t 4) Administrador\n" +
                     "Introduce el tipo de usuario con el que vas a iniciar sesion: ");
-            tipo_usuario = input.nextInt();
+
+            if(input.hasNextInt())
+                tipo_usuario = input.nextInt();
+
+            else
+                System.out.println("ERROR al introducir el tipo de usuario");
+
 
             input.nextLine(); //limpiar buffer Scanner
 
