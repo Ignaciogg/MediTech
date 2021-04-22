@@ -16,15 +16,13 @@ public class Principal {
 
                 break;
             case 2: //Paciente
-                String fichero = "";
 
-                try (BufferedReader br = new BufferedReader(new FileReader("ficheros\\ficheroPrueba.jsonl"))) {
+                try (BufferedReader br = new BufferedReader(new FileReader("src/ficheros/ficheroPrueba.jsonl"))) {
                     String linea;
                     while ((linea = br.readLine()) != null) {
-                        fichero += linea;
-                        Persona persona = gson.fromJson(fichero, Persona.class);
+                        Persona persona = gson.fromJson(linea, Persona.class);
 
-                        System.out.println(persona);
+                        System.out.println(persona.toString());
                     }
 
                 } catch (FileNotFoundException ex) {
