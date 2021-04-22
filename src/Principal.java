@@ -1,12 +1,37 @@
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Principal {
 
     public static boolean iniciarSesion (int tipo, String email, String contraseña){
+        Gson gson = new Gson();
+
         switch (tipo){
             case 1: //Recepcionista
+
                 break;
             case 2: //Paciente
+                String fichero = "";
+
+                try (BufferedReader br = new BufferedReader(new FileReader("ficheros\\ficheroPrueba.jsonl"))) {
+                    String linea;
+                    while ((linea = br.readLine()) != null) {
+                        fichero += linea;
+                        Persona persona = gson.fromJson(fichero, Persona.class);
+
+                        System.out.println(persona);
+                    }
+
+                } catch (FileNotFoundException ex) {
+                    System.out.println(ex.getMessage());
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                }
                 break;
             case 3: //Medico
                 break;
@@ -50,7 +75,7 @@ public class Principal {
             } else {
                 System.out.print("Los datos introducidos no son correctos");
             }
-        }while (inicioSesion==false);
+        }while (!inicioSesion);
 
     }
 }
