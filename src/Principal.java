@@ -57,7 +57,7 @@ public class Principal {
         System.out.println("   --- Bienvenido a MediTech (varsión 1.0) --- \n");
 
         do {
-            int tipo_usuario=0;
+            int tipo_usuario = 0;
             //Preguntamos el tipo de usuario
             System.out.println(
                     "\t 1) Recepcionista\n" +
@@ -68,13 +68,14 @@ public class Principal {
                 System.out.print("Introduce el tipo de usuario con el que vas a iniciar sesion: ");
                 try{
                     tipo_usuario = input.nextInt();
+                    if(tipo_usuario>4 || tipo_usuario<=0){
+                        System.out.println("ERROR, prueba a introducir un número del 1 al 4");
+                    }
                 } catch (Exception e) {
+                    System.out.println("ERROR, prueba a introducir un número del 1 al 4");
                     input.nextLine(); //limpiar buffer Scanner
                 }
             }
-
-
-
 
             input.nextLine(); //limpiar buffer Scanner
 
