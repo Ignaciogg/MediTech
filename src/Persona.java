@@ -18,6 +18,13 @@ public class Persona {
         this.genero = genero;
     }
 
+    public Persona(String email, String contraseña, String dni, String tipoUsuario) {
+        this.email = email;
+        this.contraseña = contraseña;
+        this.dni = dni;
+        this.genero = tipoUsuario;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -78,7 +85,6 @@ public class Persona {
     public String toString() {
         return "Persona{" +
                 "email='" + email + '\'' +
-                ", contraseña='" + contraseña + '\'' +
                 ", dni='" + dni + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", apellidos='" + apellidos + '\'' +
