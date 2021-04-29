@@ -81,6 +81,8 @@ public class Persona {
         this.genero = genero;
     }
 
+    public void Menu(){}
+
     @Override
     public String toString() {
         return "Persona{" +
