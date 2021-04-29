@@ -21,6 +21,14 @@ public class Principal {
                         switch (persona.getGenero()){ //Seleccionar la ruta
                             case "1":
                                 ruta = "src/ficheros/Administradores/"+persona.getDni()+".jsonl";
+
+                                try{
+                                    BufferedReader br2 = new BufferedReader(new FileReader(ruta));
+                                    persona = gson.fromJson(br2.readLine(), Administrador.class);
+                                } catch (IOException ex) {
+                                    System.out.println(ex.getMessage());
+                                }
+
                                 break;
                             case "2":
                                 ruta = "src/ficheros/Medicos/"+persona.getDni()+".jsonl";
@@ -32,12 +40,12 @@ public class Principal {
                                 ruta = "src/ficheros/Recepcionistas/"+persona.getDni()+".jsonl";
                                 break;
                         }
-                        try{
+                        /*try{
                             BufferedReader br2 = new BufferedReader(new FileReader(ruta));
                             persona = gson.fromJson(br2.readLine(), Persona.class);
                         } catch (IOException ex) {
                             System.out.println(ex.getMessage());
-                        }
+                        }*/
                         System.out.println("Has iniciado sesión correctamente");
                         inicioSesion = 1;
                     }else {
@@ -74,6 +82,6 @@ public class Principal {
             usuarioActivo = iniciarSesion(email, contraseña);
         }while (usuarioActivo==null);
         System.out.println(usuarioActivo);
-
+        usuarioActivo.Menu();
     }
 }
