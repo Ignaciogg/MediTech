@@ -2,7 +2,7 @@ public class Paciente extends Persona{
 
     // Declaramos las variables de la clase
     private double altura;
-    private String peso;
+    private double peso;
     private String patologías;
     private String alergias;
     private String grupo_sanguineo;
@@ -31,8 +31,6 @@ public class Paciente extends Persona{
     public void setPeso(double peso) {
         this.peso = peso;
     }
-
-    private double peso;
 
     public java.lang.String getPatologías() {
         return patologías;
