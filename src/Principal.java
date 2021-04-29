@@ -17,7 +17,7 @@ public class Principal {
                 break;
             case 2: //Paciente
 
-                try (BufferedReader br = new BufferedReader(new FileReader("src/ficheros/123456789c.jsonl"))) {
+                try (BufferedReader br = new BufferedReader(new FileReader("src/ficheros/Login.jsonl"))) {
                     String linea;
                     while ((linea = br.readLine()) != null) {
                         Persona persona = gson.fromJson(linea, Persona.class);
@@ -40,7 +40,7 @@ public class Principal {
                 }
                 break;
             case 3: //Medico
-                try (BufferedReader br = new BufferedReader(new FileReader("src/ficheros/123456789b.jsonl"))) {
+                try (BufferedReader br = new BufferedReader(new FileReader("src/ficheros/Login.jsonl"))) {
                     String linea;
                     while ((linea = br.readLine()) != null) {
                         Persona persona = gson.fromJson(linea, Persona.class);
@@ -65,7 +65,7 @@ public class Principal {
                 break;
             case 4: //Administrador
 
-                try (BufferedReader br = new BufferedReader(new FileReader("src/ficheros/123456789a.jsonl"))) {
+                try (BufferedReader br = new BufferedReader(new FileReader("src/ficheros/Login.jsonl"))) {
                     String linea;
                     while ((linea = br.readLine()) != null) {
                         Persona persona = gson.fromJson(linea, Persona.class);
