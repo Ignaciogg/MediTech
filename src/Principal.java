@@ -1,132 +1,79 @@
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Principal {
 
-    public static boolean iniciarSesion (int tipo, String email, String contraseña){
+    public static Persona iniciarSesion (String email, String contraseña){
         Gson gson = new Gson();
-
-        switch (tipo){
-            case 1: //Recepcionista
-
-                break;
-            case 2: //Paciente
-
-                try (BufferedReader br = new BufferedReader(new FileReader("src/ficheros/Login.jsonl"))) {
-                    String linea;
-                    while ((linea = br.readLine()) != null) {
-                        Persona persona = gson.fromJson(linea, Persona.class);
-                        if (persona.getEmail().equals(email)){
-                            if (persona.getContraseña().equals(contraseña)){
-                                System.out.println("Has iniciado sesión correctamente");
-                                return true;
-                            }else {
-                                System.out.println("la contraseña introducida no es correcta");
-                                return false;
-                            }
+        int inicioSesion = 0;
+        Persona persona = null;
+        try (BufferedReader br = new BufferedReader(new FileReader("src/ficheros/login.jsonl"))) {
+            String linea;
+            while ((linea = br.readLine()) != null && inicioSesion==0) {
+                persona = gson.fromJson(linea, Persona.class);
+                if (persona.getEmail().toLowerCase().equals(email)){
+                    if (persona.getContraseña().equals(contraseña)){
+                        String ruta="";
+                        switch (persona.getGenero()){ //Seleccionar la ruta
+                            case "1":
+                                ruta = "src/ficheros/Administradores/"+persona.getDni()+".jsonl";
+                                break;
+                            case "2":
+                                ruta = "src/ficheros/Medicos/"+persona.getDni()+".jsonl";
+                                break;
+                            case "3":
+                                ruta = "src/ficheros/Pacientes/"+persona.getDni()+".jsonl";
+                                break;
+                            case "4":
+                                ruta = "src/ficheros/Recepcionistas/"+persona.getDni()+".jsonl";
+                                break;
                         }
-                        System.out.println(persona.toString());
-                    }
-
-                } catch (FileNotFoundException ex) {
-                    System.out.println(ex.getMessage());
-                } catch (IOException ex) {
-                    System.out.println(ex.getMessage());
-                }
-                break;
-            case 3: //Medico
-                try (BufferedReader br = new BufferedReader(new FileReader("src/ficheros/Login.jsonl"))) {
-                    String linea;
-                    while ((linea = br.readLine()) != null) {
-                        Persona persona = gson.fromJson(linea, Persona.class);
-                        if (persona.getEmail().equals(email)){
-                            if (persona.getContraseña().equals(contraseña)){
-                                System.out.println("Has iniciado sesión correctamente");
-                                return true;
-                            }else {
-                                System.out.println("la contraseña introducida no es correcta");
-                                return false;
-                            }
+                        try{
+                            BufferedReader br2 = new BufferedReader(new FileReader(ruta));
+                            persona = gson.fromJson(br2.readLine(), Persona.class);
+                        } catch (IOException ex) {
+                            System.out.println(ex.getMessage());
                         }
-                        System.out.println(persona.toString());
+                        System.out.println("Has iniciado sesión correctamente");
+                        inicioSesion = 1;
+                    }else {
+                        System.out.println("la contraseña introducida no es correcta");
+                        inicioSesion = 2;
                     }
-
-                } catch (FileNotFoundException ex) {
-                    System.out.println(ex.getMessage());
-                } catch (IOException ex) {
-                    System.out.println(ex.getMessage());
                 }
+            }
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
 
-                break;
-            case 4: //Administrador
-
-                try (BufferedReader br = new BufferedReader(new FileReader("src/ficheros/Login.jsonl"))) {
-                    String linea;
-                    while ((linea = br.readLine()) != null) {
-                        Persona persona = gson.fromJson(linea, Persona.class);
-                        if (persona.getEmail().equals(email)){
-                            if (persona.getContraseña().equals(contraseña)){
-                                System.out.println("Has iniciado sesión correctamente");
-                                return true;
-                            }else {
-                                System.out.println("la contraseña introducida no es correcta");
-                                return false;
-                            }
-                        }
-                        System.out.println(persona.toString());
-                    }
-
-                } catch (FileNotFoundException ex) {
-                    System.out.println(ex.getMessage());
-                } catch (IOException ex) {
-                    System.out.println(ex.getMessage());
-                }
-                break;
+        if(inicioSesion==1){
+            return persona;
         }
         System.out.println("Los datos de inicio de sesion no son correctos");
-        return false;
+        return null;
     }
 
     public static void main(String[] args){
 
         Scanner input = new Scanner(System.in);
-        Boolean inicioSesion = false;
-        int tipo_usuario=0;
+        Persona usuarioActivo = null;
         String email, contraseña;
 
         System.out.println("   --- Bienvenido a MediTech (varsión 1.0) --- \n");
-
-        do {
-            //Preguntamos el tipo de usuario
-            System.out.print(
-                    "\t 1) Recepcionista\n" +
-                    "\t 2) Paciente\n" +
-                    "\t 3) Medico\n" +
-                    "\t 4) Administrador\n" +
-                    "Introduce el tipo de usuario con el que vas a iniciar sesion: ");
-
-            if(input.hasNextInt())
-                tipo_usuario = input.nextInt();
-
-            else
-                System.out.println("ERROR al introducir el tipo de usuario");
-
-
-            input.nextLine(); //limpiar buffer Scanner
-
+        do{
             //Solicitamos los datos de inicio de sesion
             System.out.print("Introduce el email:");
-            email = input.nextLine();
+            email = (input.nextLine()).toLowerCase();
             System.out.print("Introduce la contraseña:");
             contraseña = input.nextLine();
 
-            inicioSesion = iniciarSesion(tipo_usuario, email, contraseña);
-        }while (!inicioSesion);
+            usuarioActivo = iniciarSesion(email, contraseña);
+        }while (usuarioActivo==null);
+        System.out.println(usuarioActivo);
 
     }
 }
