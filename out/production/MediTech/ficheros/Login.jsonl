@@ -1,0 +1,4 @@
+{"email": "admin@email.com", "contraseña":"1234", "dni": "123456789a", "genero": "1"}
+{"email": "medico@email.com", "contraseña":"1234", "dni": "123456789b", "genero": "2"}
+{"email": "paciente@email.com", "contraseña":"1234", "dni": "123456789c", "genero": "3"}
+{"email": "recepcionista@email.com", "contraseña":"1234", "dni": "123456789d", "genero": "4"}
