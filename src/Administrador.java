@@ -44,10 +44,7 @@ public class Administrador extends Persona {
     public static void EscribirEnFichero(String email, String contraseña, String dni, String nombre,
                                          String apellidos, String fechaNacimiento, String genero) {
 
-        String ruta="";
-        Persona persona = null;
-        Gson gson = new Gson();
-        ruta = "src/ficheros/Administradores/";
+        String ruta = "src/ficheros/Administradores/" + dni + ".jsonl";
 
         try {
             FileWriter DarAltaAdmin = new FileWriter((ruta), true);
@@ -181,7 +178,6 @@ public class Administrador extends Persona {
             }
         }while (!menuAD.equals("5"));
     }
-
 
     public void ModificarUsuario(){
 
