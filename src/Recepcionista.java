@@ -25,7 +25,7 @@ public class Recepcionista extends Persona{
 
     // Menú del recepcionista y sus respectivas funciones necesarias
 
-    public void Menu_medico(){
+    public void Menu(){
         Scanner input = new Scanner(System.in);
         String menu = "0";
         do {

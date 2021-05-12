@@ -91,16 +91,16 @@ public class Paciente extends Persona{
                 case "4":
                     modificar_citas();
                     break;
-                case "5":
-                    resultados_citas();
-                    break;
                 case "6":
                     System.out.println("Hasta pronto");
                     break;
                 default:
                     System.out.print("Introduce una opcion correcta: ");
             }
-        }while (!menu.equals("6"));
+                    resultados_citas();
+                    break;
+
+        }while (!menu.equals("5"));
     }
 
     public void mostrar_citas(){
