@@ -18,34 +18,48 @@ public class Principal {
                 if (persona.getEmail().toLowerCase().equals(email)){
                     if (persona.getContraseña().equals(contraseña)){
                         String ruta="";
+                        BufferedReader br2;
                         switch (persona.getGenero()){ //Seleccionar la ruta
                             case "1":
                                 ruta = "src/ficheros/Administradores/"+persona.getDni()+".jsonl";
-
                                 try{
-                                    BufferedReader br2 = new BufferedReader(new FileReader(ruta));
+                                    br2 = new BufferedReader(new FileReader(ruta));
                                     persona = gson.fromJson(br2.readLine(), Administrador.class);
                                 } catch (IOException ex) {
                                     System.out.println(ex.getMessage());
                                 }
-
                                 break;
+
                             case "2":
                                 ruta = "src/ficheros/Medicos/"+persona.getDni()+".jsonl";
+                                try{
+                                    br2 = new BufferedReader(new FileReader(ruta));
+                                    persona = gson.fromJson(br2.readLine(), Medico.class);
+                                } catch (IOException ex) {
+                                    System.out.println(ex.getMessage());
+                                }
                                 break;
+
                             case "3":
                                 ruta = "src/ficheros/Pacientes/"+persona.getDni()+".jsonl";
+                                try{
+                                    br2 = new BufferedReader(new FileReader(ruta));
+                                    persona = gson.fromJson(br2.readLine(), Paciente.class);
+                                } catch (IOException ex) {
+                                    System.out.println(ex.getMessage());
+                                }
                                 break;
+
                             case "4":
                                 ruta = "src/ficheros/Recepcionistas/"+persona.getDni()+".jsonl";
+                                try{
+                                    br2 = new BufferedReader(new FileReader(ruta));
+                                    persona = gson.fromJson(br2.readLine(), Recepcionista.class);
+                                } catch (IOException ex) {
+                                    System.out.println(ex.getMessage());
+                                }
                                 break;
                         }
-                        /*try{
-                            BufferedReader br2 = new BufferedReader(new FileReader(ruta));
-                            persona = gson.fromJson(br2.readLine(), Persona.class);
-                        } catch (IOException ex) {
-                            System.out.println(ex.getMessage());
-                        }*/
                         System.out.println("Has iniciado sesión correctamente");
                         inicioSesion = 1;
                     }else {
