@@ -39,11 +39,14 @@ public class Administrador extends Persona {
         }while (!menu.equals("4"));
     }
 
-    public static void EscribirEnFichero(String email, String contraseña, String dni, String nombre) {
+    public static void EscribirEnFichero(String email, String contraseña, String dni, String nombre,
+                                         String apellidos, String fechaNacimiento, String genero) {
 
         try {
             FileWriter DarAltaAdmin = new FileWriter((dni + ".jsonl"), false);
-            DarAltaAdmin.write("{" + "email: " + email + "," + "contraseña: " + contraseña + "," + "dni: " + dni + "," + "nombre: " + nombre + "}" + "\n");
+            DarAltaAdmin.write("{" + "'email': " + email + "," + "'contraseña': " + contraseña + "," +
+                    "'dni': " + dni + "," + "'nombre': " + nombre + "," + "'apellidos': " + apellidos + "," +
+                    "'fechaNacimiento': " + fechaNacimiento + "," + "'genero': " + genero + "}" + "\n");
             DarAltaAdmin.close();
 
         } catch (IOException e) {
@@ -54,9 +57,9 @@ public class Administrador extends Persona {
 
     public void CrearUsuario(){
         Scanner input = new Scanner(System.in);
-        String menu = "0";
+        String menuAD = "0";
         do {
-            System.out.println("----Dar de alta a un usuario----");
+            System.out.println("\n\n----Dar de alta a un usuario----");
             System.out.print(
                 "1 - Admin\n" +
                 "2 - Medico\n" +
@@ -65,19 +68,26 @@ public class Administrador extends Persona {
                 "5 - Salir\n" +
                 "Introduce el número del usuario que quieras dar de alta: "
             );
-            switch (menu = input.nextLine()) {
+            switch (menuAD = input.nextLine()) {
                 case "1":
                     try {
-                            System.out.println("Introduce el email:");
-                            String email = input.nextLine();
+                        System.out.println("Introduce el email:");
+                        String email = input.nextLine();
                         System.out.println("Introduce la contraseña:");
                         String contraseña = input.nextLine();
-                            System.out.println("Introduce el dni:");
-                            String dni = input.nextLine();
-                            System.out.println("Introduce el nombre:");
-                            String nombre = input.nextLine();
-                        EscribirEnFichero(email,contraseña,dni,nombre);
-                            System.out.println("Administrador agregado con exito!");
+                        System.out.println("Introduce el dni:");
+                        String dni = input.nextLine();
+                        System.out.println("Introduce el nombre:");
+                        String nombre = input.nextLine();
+                        System.out.println("Introduce los apellidos:");
+                        String apellidos = input.nextLine();
+                        System.out.println("Introduce la fecha de nacimiento:");
+                        String fechaNacimiento = input.nextLine();
+                        System.out.println("Introduce el género:");
+                        String genero = input.nextLine();
+
+                        EscribirEnFichero(email,contraseña,dni,nombre,apellidos,fechaNacimiento,genero);
+                        System.out.println("Administrador agregado con exito!");
 
                     } catch (Exception e) {
                         System.out.println("Error al introducir un nuevo Administrador.");
@@ -99,7 +109,7 @@ public class Administrador extends Persona {
                 default:
                     System.out.print("Introduce una opcion correcta: ");
             }
-        }while (!menu.equals("5"));
+        }while (!menuAD.equals("5"));
     }
 
 
