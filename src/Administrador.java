@@ -42,11 +42,15 @@ public class Administrador extends Persona {
     public static void EscribirEnFichero(String email, String contraseña, String dni, String nombre,
                                          String apellidos, String fechaNacimiento, String genero) {
 
+        String ruta="";
+        Persona persona = null;
+        ruta = "src/ficheros/Administradores/\"+ persona.getDni() +\".jsonl";
+
         try {
-            FileWriter DarAltaAdmin = new FileWriter((dni + ".jsonl"), false);
-            DarAltaAdmin.write("{" + "'email': " + email + "," + "'contraseña': " + contraseña + "," +
-                    "'dni': " + dni + "," + "'nombre': " + nombre + "," + "'apellidos': " + apellidos + "," +
-                    "'fechaNacimiento': " + fechaNacimiento + "," + "'genero': " + genero + "}" + "\n");
+            FileWriter DarAltaAdmin = new FileWriter((ruta), true);
+            DarAltaAdmin.write("{" + "'email': " + email + ", " + "'contraseña': " + contraseña + ", " +
+                    "'dni': " + dni + ", " + "'nombre': " + nombre + ", " + "'apellidos': " + apellidos + ", " +
+                    "'fechaNacimiento': " + fechaNacimiento + ", " + "'genero': " + genero + "}" + "\n");
             DarAltaAdmin.close();
 
         } catch (IOException e) {
@@ -71,19 +75,19 @@ public class Administrador extends Persona {
             switch (menuAD = input.nextLine()) {
                 case "1":
                     try {
-                        System.out.println("Introduce el email:");
+                        System.out.print("Introduce el email:");
                         String email = input.nextLine();
-                        System.out.println("Introduce la contraseña:");
+                        System.out.print("Introduce la contraseña:");
                         String contraseña = input.nextLine();
-                        System.out.println("Introduce el dni:");
+                        System.out.print("Introduce el dni:");
                         String dni = input.nextLine();
-                        System.out.println("Introduce el nombre:");
+                        System.out.print("Introduce el nombre:");
                         String nombre = input.nextLine();
-                        System.out.println("Introduce los apellidos:");
+                        System.out.print("Introduce los apellidos:");
                         String apellidos = input.nextLine();
-                        System.out.println("Introduce la fecha de nacimiento:");
+                        System.out.print("Introduce la fecha de nacimiento:");
                         String fechaNacimiento = input.nextLine();
-                        System.out.println("Introduce el género:");
+                        System.out.print("Introduce el género:");
                         String genero = input.nextLine();
 
                         EscribirEnFichero(email,contraseña,dni,nombre,apellidos,fechaNacimiento,genero);
