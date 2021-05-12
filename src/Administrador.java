@@ -1,3 +1,5 @@
+import com.google.gson.Gson;
+
 import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -44,7 +46,8 @@ public class Administrador extends Persona {
 
         String ruta="";
         Persona persona = null;
-        ruta = "src/ficheros/Administradores/\"+ persona.getDni() +\".jsonl";
+        Gson gson = new Gson();
+        ruta = "src/ficheros/Administradores/";
 
         try {
             FileWriter DarAltaAdmin = new FileWriter((ruta), true);
@@ -99,16 +102,79 @@ public class Administrador extends Persona {
 
                     break;
                 case "2":
+                    try {
+                        System.out.print("Introduce el email:");
+                        String email = input.nextLine();
+                        System.out.print("Introduce la contraseña:");
+                        String contraseña = input.nextLine();
+                        System.out.print("Introduce el dni:");
+                        String dni = input.nextLine();
+                        System.out.print("Introduce el nombre:");
+                        String nombre = input.nextLine();
+                        System.out.print("Introduce los apellidos:");
+                        String apellidos = input.nextLine();
+                        System.out.print("Introduce la fecha de nacimiento:");
+                        String fechaNacimiento = input.nextLine();
+                        System.out.print("Introduce el género:");
+                        String genero = input.nextLine();
 
+                        EscribirEnFichero(email,contraseña,dni,nombre,apellidos,fechaNacimiento,genero);
+                        System.out.println("Médico agregado con exito!");
+
+                    } catch (Exception e) {
+                        System.out.println("Error al introducir un nuevo Médico.");
+                    }
                     break;
                 case "3":
+                    try {
+                        System.out.print("Introduce el email:");
+                        String email = input.nextLine();
+                        System.out.print("Introduce la contraseña:");
+                        String contraseña = input.nextLine();
+                        System.out.print("Introduce el dni:");
+                        String dni = input.nextLine();
+                        System.out.print("Introduce el nombre:");
+                        String nombre = input.nextLine();
+                        System.out.print("Introduce los apellidos:");
+                        String apellidos = input.nextLine();
+                        System.out.print("Introduce la fecha de nacimiento:");
+                        String fechaNacimiento = input.nextLine();
+                        System.out.print("Introduce el género:");
+                        String genero = input.nextLine();
 
+                        EscribirEnFichero(email,contraseña,dni,nombre,apellidos,fechaNacimiento,genero);
+                        System.out.println("Paciente agregado con exito!");
+
+                    } catch (Exception e) {
+                        System.out.println("Error al introducir un nuevo Paciente.");
+                    }
                     break;
                 case "4":
+                    try {
+                        System.out.print("Introduce el email:");
+                        String email = input.nextLine();
+                        System.out.print("Introduce la contraseña:");
+                        String contraseña = input.nextLine();
+                        System.out.print("Introduce el dni:");
+                        String dni = input.nextLine();
+                        System.out.print("Introduce el nombre:");
+                        String nombre = input.nextLine();
+                        System.out.print("Introduce los apellidos:");
+                        String apellidos = input.nextLine();
+                        System.out.print("Introduce la fecha de nacimiento:");
+                        String fechaNacimiento = input.nextLine();
+                        System.out.print("Introduce el género:");
+                        String genero = input.nextLine();
 
+                        EscribirEnFichero(email,contraseña,dni,nombre,apellidos,fechaNacimiento,genero);
+                        System.out.println("Recepcionista agregado con exito!");
+
+                    } catch (Exception e) {
+                        System.out.println("Error al introducir un nuevo Recepcionista.");
+                    }
                     break;
                 case "5":
-
+                    System.out.println("Elejiste salir \n");
                     break;
                 default:
                     System.out.print("Introduce una opcion correcta: ");
@@ -124,4 +190,5 @@ public class Administrador extends Persona {
     public void EliminarUsuario(){
 
     }
+
 }
