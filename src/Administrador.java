@@ -42,9 +42,9 @@ public class Administrador extends Persona {
     public static void EscribirEnFichero(String email, String contraseña, String dni, String nombre) {
 
         try {
-            FileWriter Municipios = new FileWriter("123456789a.jsonl", true);
-            Municipios.write(email + ";" + contraseña + ";" + dni + ";" + nombre + "\n");
-            Municipios.close();
+            FileWriter DarAltaAdmin = new FileWriter((dni + ".jsonl"), false);
+            DarAltaAdmin.write("{" + "email: " + email + "," + "contraseña: " + contraseña + "," + "dni: " + dni + "," + "nombre: " + nombre + "}" + "\n");
+            DarAltaAdmin.close();
 
         } catch (IOException e) {
 
@@ -77,7 +77,7 @@ public class Administrador extends Persona {
                             System.out.println("Introduce el nombre:");
                             String nombre = input.nextLine();
                         EscribirEnFichero(email,contraseña,dni,nombre);
-                            System.out.println("Municipio Agregado con exito!");
+                            System.out.println("Administrador agregado con exito!");
 
                     } catch (Exception e) {
                         System.out.println("Error al introducir un nuevo Administrador.");
