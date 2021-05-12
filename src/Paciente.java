@@ -64,7 +64,7 @@ public class Paciente extends Persona{
 
 // Menú del paciente y sus respectivas funciones necesarias
 
-    public void Menu_paciente(){
+    public void Menu(){
         Scanner input = new Scanner(System.in);
         String menu = "0";
         do {
