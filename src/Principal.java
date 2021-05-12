@@ -85,7 +85,7 @@ public class Principal {
         Persona usuarioActivo = null;
         String email, contraseña;
 
-        System.out.println("   --- Bienvenido a MediTech (varsión 1.0) --- \n");
+        System.out.println("   --- Bienvenido a MediTech (versión 1.0) --- \n");
         do{
             //Solicitamos los datos de inicio de sesion
             System.out.print("Introduce el email:");
