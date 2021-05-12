@@ -41,24 +41,6 @@ public class Administrador extends Persona {
         }while (!menu.equals("4"));
     }
 
-    public static void EscribirEnFichero(String email, String contraseña, String dni, String nombre,
-                                         String apellidos, String fechaNacimiento, String genero) {
-
-        String ruta = "src/ficheros/Administradores/" + dni + ".jsonl";
-
-        try {
-            FileWriter DarAltaAdmin = new FileWriter((ruta), true);
-            DarAltaAdmin.write("{" + "'email': " + email + ", " + "'contraseña': " + contraseña + ", " +
-                    "'dni': " + dni + ", " + "'nombre': " + nombre + ", " + "'apellidos': " + apellidos + ", " +
-                    "'fechaNacimiento': " + fechaNacimiento + ", " + "'genero': " + genero + "}" + "\n");
-            DarAltaAdmin.close();
-
-        } catch (IOException e) {
-
-            System.out.println("No se encontró el fichero");
-        }
-    }
-
     public void CrearUsuario(){
         Scanner input = new Scanner(System.in);
         String menuAD = "0";
@@ -90,7 +72,19 @@ public class Administrador extends Persona {
                         System.out.print("Introduce el género:");
                         String genero = input.nextLine();
 
-                        EscribirEnFichero(email,contraseña,dni,nombre,apellidos,fechaNacimiento,genero);
+                        String ruta = "src/ficheros/Administradores/" + dni + ".jsonl";
+
+                        try {
+                            FileWriter DarAltaAdmin = new FileWriter((ruta), true);
+                            DarAltaAdmin.write("{" + "'email': " + email + ", " + "'contraseña': " + contraseña + ", " +
+                                    "'dni': " + dni + ", " + "'nombre': " + nombre + ", " + "'apellidos': " + apellidos + ", " +
+                                    "'fechaNacimiento': " + fechaNacimiento + ", " + "'genero': " + genero + "}" + "\n");
+                            DarAltaAdmin.close();
+
+                        } catch (IOException e) {
+
+                            System.out.println("No se encontró el fichero");
+                        }
                         System.out.println("Administrador agregado con exito!");
 
                     } catch (Exception e) {
@@ -115,7 +109,19 @@ public class Administrador extends Persona {
                         System.out.print("Introduce el género:");
                         String genero = input.nextLine();
 
-                        EscribirEnFichero(email,contraseña,dni,nombre,apellidos,fechaNacimiento,genero);
+                        String ruta = "src/ficheros/Medicos/" + dni + ".jsonl";
+
+                        try {
+                            FileWriter DarAltaAdmin = new FileWriter((ruta), true);
+                            DarAltaAdmin.write("{" + "'email': " + email + ", " + "'contraseña': " + contraseña + ", " +
+                                    "'dni': " + dni + ", " + "'nombre': " + nombre + ", " + "'apellidos': " + apellidos + ", " +
+                                    "'fechaNacimiento': " + fechaNacimiento + ", " + "'genero': " + genero + "}" + "\n");
+                            DarAltaAdmin.close();
+
+                        } catch (IOException e) {
+
+                            System.out.println("No se encontró el fichero");
+                        }
                         System.out.println("Médico agregado con exito!");
 
                     } catch (Exception e) {
@@ -139,7 +145,19 @@ public class Administrador extends Persona {
                         System.out.print("Introduce el género:");
                         String genero = input.nextLine();
 
-                        EscribirEnFichero(email,contraseña,dni,nombre,apellidos,fechaNacimiento,genero);
+                        String ruta = "src/ficheros/Pacientes/" + dni + ".jsonl";
+
+                        try {
+                            FileWriter DarAltaAdmin = new FileWriter((ruta), true);
+                            DarAltaAdmin.write("{" + "'email': " + email + ", " + "'contraseña': " + contraseña + ", " +
+                                    "'dni': " + dni + ", " + "'nombre': " + nombre + ", " + "'apellidos': " + apellidos + ", " +
+                                    "'fechaNacimiento': " + fechaNacimiento + ", " + "'genero': " + genero + "}" + "\n");
+                            DarAltaAdmin.close();
+
+                        } catch (IOException e) {
+
+                            System.out.println("No se encontró el fichero");
+                        }
                         System.out.println("Paciente agregado con exito!");
 
                     } catch (Exception e) {
@@ -163,7 +181,19 @@ public class Administrador extends Persona {
                         System.out.print("Introduce el género:");
                         String genero = input.nextLine();
 
-                        EscribirEnFichero(email,contraseña,dni,nombre,apellidos,fechaNacimiento,genero);
+                        String ruta = "src/ficheros/Recepcionistas/" + dni + ".jsonl";
+
+                        try {
+                            FileWriter DarAltaAdmin = new FileWriter((ruta), true);
+                            DarAltaAdmin.write("{" + "'email': " + email + ", " + "'contraseña': " + contraseña + ", " +
+                                    "'dni': " + dni + ", " + "'nombre': " + nombre + ", " + "'apellidos': " + apellidos + ", " +
+                                    "'fechaNacimiento': " + fechaNacimiento + ", " + "'genero': " + genero + "}" + "\n");
+                            DarAltaAdmin.close();
+
+                        } catch (IOException e) {
+
+                            System.out.println("No se encontró el fichero");
+                        }
                         System.out.println("Recepcionista agregado con exito!");
 
                     } catch (Exception e) {
