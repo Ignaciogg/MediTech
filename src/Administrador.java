@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Administrador extends Persona {
 
@@ -37,6 +39,19 @@ public class Administrador extends Persona {
         }while (!menu.equals("4"));
     }
 
+    public static void EscribirEnFichero(String email, String contraseña, String dni, String nombre) {
+
+        try {
+            FileWriter Municipios = new FileWriter("123456789a.jsonl", true);
+            Municipios.write(email + ";" + contraseña + ";" + dni + ";" + nombre + "\n");
+            Municipios.close();
+
+        } catch (IOException e) {
+
+            System.out.println("No se encontró el fichero");
+        }
+    }
+
     public void CrearUsuario(){
         Scanner input = new Scanner(System.in);
         String menu = "0";
@@ -52,6 +67,21 @@ public class Administrador extends Persona {
             );
             switch (menu = input.nextLine()) {
                 case "1":
+                    try {
+                            System.out.println("Introduce el email:");
+                            String email = input.nextLine();
+                        System.out.println("Introduce la contraseña:");
+                        String contraseña = input.nextLine();
+                            System.out.println("Introduce el dni:");
+                            String dni = input.nextLine();
+                            System.out.println("Introduce el nombre:");
+                            String nombre = input.nextLine();
+                        EscribirEnFichero(email,contraseña,dni,nombre);
+                            System.out.println("Municipio Agregado con exito!");
+
+                    } catch (Exception e) {
+                        System.out.println("Error al introducir un nuevo Administrador.");
+                    }
 
                     break;
                 case "2":
