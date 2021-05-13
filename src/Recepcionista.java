@@ -13,6 +13,11 @@ public class Recepcionista extends Persona{
         this.no_seguridad_social = no_seguridad_social;
     }
 
+    public Recepcionista(String email, String dni, String nombre, String apellidos, String fechaNacimiento, String genero, int no_seguridad_social) {
+        super(email, dni, nombre, apellidos, fechaNacimiento, genero);
+        this.no_seguridad_social = no_seguridad_social;
+    }
+
     // Generamos getters y setters
     public int getNo_seguridad_social() {
         return no_seguridad_social;

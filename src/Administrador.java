@@ -121,6 +121,33 @@ public class Administrador extends Persona {
         escribirPersona(new Medico(email,dni,nombre,apellidos,fechaNacimiento,genero, no_seguridad_social, no_colegialo),ruta);
     }
 
+    public void generarRecepcionista(){
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Introduce el email:");
+        String email = input.nextLine();
+        //GENERAR AUTOMATICO Y MANDAR POR CORREO
+        System.out.print("Introduce la contraseña:");
+        String contraseña = input.nextLine();
+        System.out.print("Introduce el dni:");
+        String dni = input.nextLine();
+        System.out.print("Introduce el nombre:");
+        String nombre = input.nextLine();
+        System.out.print("Introduce los apellidos:");
+        String apellidos = input.nextLine();
+        System.out.print("Introduce la fecha de nacimiento:");
+        String fechaNacimiento = input.nextLine();
+        System.out.print("Introduce el género:");
+        String genero = input.nextLine();
+        System.out.print("Introduce número de la seguridad social");
+        int no_seguridad_social = input.nextInt();
+
+        String ruta = "src/ficheros/Recepcionistas/" + dni + ".jsonl";
+
+        escribirLogin(new Persona(email,contraseña,dni,"4"));
+        escribirPersona(new Recepcionista(email,dni,nombre,apellidos,fechaNacimiento,genero,no_seguridad_social),ruta);
+    }
+
     public void CrearUsuario(){
         Scanner input = new Scanner(System.in);
         String menuAD = "0";
@@ -145,7 +172,7 @@ public class Administrador extends Persona {
 
                     break;
                 case "4":
-
+                    generarRecepcionista();
                     break;
                 case "5":
                     System.out.println("Elejiste salir \n");
