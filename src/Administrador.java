@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class Administrador extends Persona {
 
+    // constructores
     public Administrador(String email, String contraseña, String dni, String nombre, String apellidos, String fechaNacimiento, String genero) {
         super(email, contraseña, dni, nombre, apellidos, fechaNacimiento, genero);
     }
@@ -42,6 +43,7 @@ public class Administrador extends Persona {
             }
         }while (!menu.equals("4"));
     }
+
     public void escribirLogin(Persona nuevo){
         Gson gson = new Gson();
         try{
@@ -65,6 +67,31 @@ public class Administrador extends Persona {
         }
     }
 
+    public void generarAdministrador(){
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Introduce el email:");
+        String email = input.nextLine();
+        //GENERAR AUTOMATICO Y MANDAR POR CORREO
+        System.out.print("Introduce la contraseña:");
+        String contraseña = input.nextLine();
+        System.out.print("Introduce el dni:");
+        String dni = input.nextLine();
+        System.out.print("Introduce el nombre:");
+        String nombre = input.nextLine();
+        System.out.print("Introduce los apellidos:");
+        String apellidos = input.nextLine();
+        System.out.print("Introduce la fecha de nacimiento:");
+        String fechaNacimiento = input.nextLine();
+        System.out.print("Introduce el género:");
+        String genero = input.nextLine();
+
+        String ruta = "src/ficheros/Administradores/" + dni + ".jsonl";
+
+        escribirLogin(new Persona(email,contraseña,dni,"1"));
+        escribirPersona(new Administrador(email,dni,nombre,apellidos,fechaNacimiento,genero),ruta);
+    }
+
     public void CrearUsuario(){
         Scanner input = new Scanner(System.in);
         String menuAD = "0";
@@ -80,33 +107,7 @@ public class Administrador extends Persona {
             );
             switch (menuAD = input.nextLine()) {
                 case "1":
-                    try {
-                        System.out.print("Introduce el email:");
-                        String email = input.nextLine();
-                        //GENERAR AUTOMATICO Y MANDAR POR CORREO
-                        System.out.print("Introduce la contraseña:");
-                        String contraseña = input.nextLine();
-
-                        System.out.print("Introduce el dni:");
-                        String dni = input.nextLine();
-                        System.out.print("Introduce el nombre:");
-                        String nombre = input.nextLine();
-                        System.out.print("Introduce los apellidos:");
-                        String apellidos = input.nextLine();
-                        System.out.print("Introduce la fecha de nacimiento:");
-                        String fechaNacimiento = input.nextLine();
-                        System.out.print("Introduce el género:");
-                        String genero = input.nextLine();
-
-                        String ruta = "src/ficheros/Administradores/" + dni + ".jsonl";
-                        escribirLogin(new Persona(email,contraseña,dni,"1"));
-                        escribirPersona(new Administrador(email,dni,nombre,apellidos,fechaNacimiento,genero),ruta);
-                        System.out.println("Administrador agregado con exito!");
-
-                    } catch (Exception e) {
-                        System.out.println("Error al introducir un nuevo Administrador.");
-                    }
-
+                    generarAdministrador();
                     break;
                 case "2":
 
