@@ -1,13 +1,15 @@
 import com.google.gson.Gson;
 
+import java.io.*;
 import java.util.Scanner;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class Administrador extends Persona {
 
     public Administrador(String email, String contraseña, String dni, String nombre, String apellidos, String fechaNacimiento, String genero) {
         super(email, contraseña, dni, nombre, apellidos, fechaNacimiento, genero);
+    }
+    public Administrador(String email, String dni, String nombre, String apellidos, String fechaNacimiento, String genero) {
+        super(email, dni, nombre, apellidos, fechaNacimiento, genero);
     }
 
     public void Menu(){
@@ -40,6 +42,28 @@ public class Administrador extends Persona {
             }
         }while (!menu.equals("4"));
     }
+    public void escribirLogin(Persona nuevo){
+        Gson gson = new Gson();
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter("src/ficheros/login.jsonl",true));
+            bw.newLine();
+            bw.append(gson.toJson(nuevo));
+            bw.flush();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void escribirPersona(Persona nuevo, String ruta){
+        Gson gson = new Gson();
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter(ruta));
+            bw.write(gson.toJson(nuevo));
+            bw.flush();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 
     public void CrearUsuario(){
         Scanner input = new Scanner(System.in);
@@ -59,8 +83,10 @@ public class Administrador extends Persona {
                     try {
                         System.out.print("Introduce el email:");
                         String email = input.nextLine();
+                        //GENERAR AUTOMATICO Y MANDAR POR CORREO
                         System.out.print("Introduce la contraseña:");
                         String contraseña = input.nextLine();
+
                         System.out.print("Introduce el dni:");
                         String dni = input.nextLine();
                         System.out.print("Introduce el nombre:");
@@ -73,18 +99,8 @@ public class Administrador extends Persona {
                         String genero = input.nextLine();
 
                         String ruta = "src/ficheros/Administradores/" + dni + ".jsonl";
-
-                        try {
-                            FileWriter DarAltaAdmin = new FileWriter((ruta), true);
-                            DarAltaAdmin.write("{" + "'email': " + email + ", " + "'contraseña': " + contraseña + ", " +
-                                    "'dni': " + dni + ", " + "'nombre': " + nombre + ", " + "'apellidos': " + apellidos + ", " +
-                                    "'fechaNacimiento': " + fechaNacimiento + ", " + "'genero': " + genero + "}" + "\n");
-                            DarAltaAdmin.close();
-
-                        } catch (IOException e) {
-
-                            System.out.println("No se encontró el fichero");
-                        }
+                        escribirLogin(new Persona(email,contraseña,dni,"1"));
+                        escribirPersona(new Administrador(email,dni,nombre,apellidos,fechaNacimiento,genero),ruta);
                         System.out.println("Administrador agregado con exito!");
 
                     } catch (Exception e) {

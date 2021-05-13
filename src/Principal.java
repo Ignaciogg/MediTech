@@ -11,20 +11,20 @@ public class Principal {
         Gson gson = new Gson();
         int inicioSesion = 0;
         Persona persona = null;
-        try (BufferedReader br = new BufferedReader(new FileReader("src/ficheros/login.jsonl"))) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/ficheros/login.jsonl"));
             String linea;
             while ((linea = br.readLine()) != null && inicioSesion==0) {
                 persona = gson.fromJson(linea, Persona.class);
                 if (persona.getEmail().toLowerCase().equals(email)){
                     if (persona.getContraseña().equals(contraseña)){
                         String ruta="";
-                        BufferedReader br2;
                         switch (persona.getGenero()){ //Seleccionar la ruta
                             case "1":
                                 ruta = "src/ficheros/Administradores/"+persona.getDni()+".jsonl";
                                 try{
-                                    br2 = new BufferedReader(new FileReader(ruta));
-                                    persona = gson.fromJson(br2.readLine(), Administrador.class);
+                                    br = new BufferedReader(new FileReader(ruta));
+                                    persona = gson.fromJson(br.readLine(), Administrador.class);
                                 } catch (IOException ex) {
                                     System.out.println(ex.getMessage());
                                 }
@@ -33,8 +33,8 @@ public class Principal {
                             case "2":
                                 ruta = "src/ficheros/Medicos/"+persona.getDni()+".jsonl";
                                 try{
-                                    br2 = new BufferedReader(new FileReader(ruta));
-                                    persona = gson.fromJson(br2.readLine(), Medico.class);
+                                    br = new BufferedReader(new FileReader(ruta));
+                                    persona = gson.fromJson(br.readLine(), Medico.class);
                                 } catch (IOException ex) {
                                     System.out.println(ex.getMessage());
                                 }
@@ -43,8 +43,8 @@ public class Principal {
                             case "3":
                                 ruta = "src/ficheros/Pacientes/"+persona.getDni()+".jsonl";
                                 try{
-                                    br2 = new BufferedReader(new FileReader(ruta));
-                                    persona = gson.fromJson(br2.readLine(), Paciente.class);
+                                    br = new BufferedReader(new FileReader(ruta));
+                                    persona = gson.fromJson(br.readLine(), Paciente.class);
                                 } catch (IOException ex) {
                                     System.out.println(ex.getMessage());
                                 }
@@ -53,8 +53,8 @@ public class Principal {
                             case "4":
                                 ruta = "src/ficheros/Recepcionistas/"+persona.getDni()+".jsonl";
                                 try{
-                                    br2 = new BufferedReader(new FileReader(ruta));
-                                    persona = gson.fromJson(br2.readLine(), Recepcionista.class);
+                                    br = new BufferedReader(new FileReader(ruta));
+                                    persona = gson.fromJson(br.readLine(), Recepcionista.class);
                                 } catch (IOException ex) {
                                     System.out.println(ex.getMessage());
                                 }

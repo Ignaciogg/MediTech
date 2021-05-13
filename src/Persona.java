@@ -18,6 +18,15 @@ public class Persona {
         this.genero = genero;
     }
 
+    public Persona(String email, String dni, String nombre, String apellidos, String fechaNacimiento, String genero) {
+        this.email = email;
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.fechaNacimiento = fechaNacimiento;
+        this.genero = genero;
+    }
+
     public Persona(String email, String contraseña, String dni, String tipoUsuario) {
         this.email = email;
         this.contraseña = contraseña;
