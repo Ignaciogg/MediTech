@@ -14,6 +14,13 @@ public class Medico extends Persona{
         this.no_seguridad_social = no_seguridad_social;
 
     }
+    public Medico(String email, String dni, String nombre, String apellidos, String fechaNacimiento, String genero, int no_seguridad_social, int no_colegialo) {
+        super(email, dni, nombre, apellidos, fechaNacimiento, genero);
+        this.no_colegialo = no_colegialo;
+        this.no_seguridad_social = no_seguridad_social;
+
+    }
+
 
     // Generamos getters y setters
     public int getNo_seguridad_social() {

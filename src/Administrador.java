@@ -92,6 +92,35 @@ public class Administrador extends Persona {
         escribirPersona(new Administrador(email,dni,nombre,apellidos,fechaNacimiento,genero),ruta);
     }
 
+    public void generarMedico(){
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Introduce el email:");
+        String email = input.nextLine();
+        //GENERAR AUTOMATICO Y MANDAR POR CORREO
+        System.out.print("Introduce la contraseña:");
+        String contraseña = input.nextLine();
+        System.out.print("Introduce el dni:");
+        String dni = input.nextLine();
+        System.out.print("Introduce el nombre:");
+        String nombre = input.nextLine();
+        System.out.print("Introduce los apellidos:");
+        String apellidos = input.nextLine();
+        System.out.print("Introduce la fecha de nacimiento:");
+        String fechaNacimiento = input.nextLine();
+        System.out.print("Introduce el género:");
+        String genero = input.nextLine();
+        System.out.print("Introduce el nº de la Seguridad Social:");
+        int no_seguridad_social = input.nextInt();
+        System.out.print("Introduce el nº de colegialo:");
+        int no_colegialo = input.nextInt();
+
+        String ruta = "src/ficheros/Medicos/" + dni + ".jsonl";
+
+        escribirLogin(new Persona(email,contraseña,dni,"2"));
+        escribirPersona(new Medico(email,dni,nombre,apellidos,fechaNacimiento,genero, no_seguridad_social, no_colegialo),ruta);
+    }
+
     public void CrearUsuario(){
         Scanner input = new Scanner(System.in);
         String menuAD = "0";
@@ -110,7 +139,7 @@ public class Administrador extends Persona {
                     generarAdministrador();
                     break;
                 case "2":
-
+                    generarMedico();
                     break;
                 case "3":
 
