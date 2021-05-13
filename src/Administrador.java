@@ -121,6 +121,41 @@ public class Administrador extends Persona {
         escribirPersona(new Medico(email,dni,nombre,apellidos,fechaNacimiento,genero, no_seguridad_social, no_colegialo),ruta);
     }
 
+    public void generarPaciente(){
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Introduce el email:");
+        String email = input.nextLine();
+        //GENERAR AUTOMATICO Y MANDAR POR CORREO
+        System.out.print("Introduce la contraseña:");
+        String contraseña = input.nextLine();
+        System.out.print("Introduce el dni:");
+        String dni = input.nextLine();
+        System.out.print("Introduce el nombre:");
+        String nombre = input.nextLine();
+        System.out.print("Introduce los apellidos:");
+        String apellidos = input.nextLine();
+        System.out.print("Introduce la fecha de nacimiento:");
+        String fechaNacimiento = input.nextLine();
+        System.out.print("Introduce el género:");
+        String genero = input.nextLine();
+        System.out.print("Introduce la altura:");
+        Double altura = input.nextDouble();
+        System.out.print("Introduce el peso:");
+        Double peso = input.nextDouble();
+        System.out.print("Introduce las patologías:");
+        String patologías = input.nextLine();
+        System.out.print("Introduce las alergias:");
+        String alergias = input.nextLine();
+        System.out.print("Introduce el grupo sanguíneo:");
+        String grupo_sanguineo = input.nextLine();
+
+        String ruta = "src/ficheros/Pacientes/" + dni + ".jsonl";
+
+        escribirLogin(new Persona(email,contraseña,dni,"3"));
+        escribirPersona(new Paciente(email,dni,nombre,apellidos,fechaNacimiento,genero,altura,peso,patologías,alergias,grupo_sanguineo),ruta);
+    }
+
     public void generarRecepcionista(){
         Scanner input = new Scanner(System.in);
 
@@ -169,7 +204,7 @@ public class Administrador extends Persona {
                     generarMedico();
                     break;
                 case "3":
-
+                    generarPaciente();
                     break;
                 case "4":
                     generarRecepcionista();

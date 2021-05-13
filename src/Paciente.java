@@ -11,8 +11,9 @@ public class Paciente extends Persona{
 
     // Constructor
 
-    public Paciente(String email, String contraseña, String dni, String tipoUsuario, double altura, String patologías, String alergias, String grupo_sanguineo) {
-        super(email, contraseña, dni, tipoUsuario);
+    public Paciente(String email, String dni, String nombre, String apellidos, String fechaNacimiento, String genero,
+                    double altura, double peso, String patologías, String alergias, String grupo_sanguineo) {
+        super(email, dni, nombre, apellidos, fechaNacimiento,genero);
         this.altura = altura;
         this.alergias = alergias;
         this.patologías = patologías;

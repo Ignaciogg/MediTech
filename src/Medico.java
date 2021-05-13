@@ -8,13 +8,8 @@ public class Medico extends Persona{
 
     //  Constructor
 
-    public Medico(String email, String contraseña, String dni, String nombre, String apellidos, String fechaNacimiento, String genero, int no_seguridad_social, int no_colegialo) {
-        super(email, contraseña, dni, nombre, apellidos, fechaNacimiento, genero);
-        this.no_colegialo = no_colegialo;
-        this.no_seguridad_social = no_seguridad_social;
-
-    }
-    public Medico(String email, String dni, String nombre, String apellidos, String fechaNacimiento, String genero, int no_seguridad_social, int no_colegialo) {
+    public Medico(String email, String dni, String nombre, String apellidos, String fechaNacimiento, String genero,
+                  int no_seguridad_social, int no_colegialo) {
         super(email, dni, nombre, apellidos, fechaNacimiento, genero);
         this.no_colegialo = no_colegialo;
         this.no_seguridad_social = no_seguridad_social;
