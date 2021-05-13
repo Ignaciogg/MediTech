@@ -109,112 +109,13 @@ public class Administrador extends Persona {
 
                     break;
                 case "2":
-                    try {
-                        System.out.print("Introduce el email:");
-                        String email = input.nextLine();
-                        System.out.print("Introduce la contraseña:");
-                        String contraseña = input.nextLine();
-                        System.out.print("Introduce el dni:");
-                        String dni = input.nextLine();
-                        System.out.print("Introduce el nombre:");
-                        String nombre = input.nextLine();
-                        System.out.print("Introduce los apellidos:");
-                        String apellidos = input.nextLine();
-                        System.out.print("Introduce la fecha de nacimiento:");
-                        String fechaNacimiento = input.nextLine();
-                        System.out.print("Introduce el género:");
-                        String genero = input.nextLine();
 
-                        String ruta = "src/ficheros/Medicos/" + dni + ".jsonl";
-
-                        try {
-                            FileWriter DarAltaAdmin = new FileWriter((ruta), true);
-                            DarAltaAdmin.write("{" + "'email': " + email + ", " + "'contraseña': " + contraseña + ", " +
-                                    "'dni': " + dni + ", " + "'nombre': " + nombre + ", " + "'apellidos': " + apellidos + ", " +
-                                    "'fechaNacimiento': " + fechaNacimiento + ", " + "'genero': " + genero + "}" + "\n");
-                            DarAltaAdmin.close();
-
-                        } catch (IOException e) {
-
-                            System.out.println("No se encontró el fichero");
-                        }
-                        System.out.println("Médico agregado con exito!");
-
-                    } catch (Exception e) {
-                        System.out.println("Error al introducir un nuevo Médico.");
-                    }
                     break;
                 case "3":
-                    try {
-                        System.out.print("Introduce el email:");
-                        String email = input.nextLine();
-                        System.out.print("Introduce la contraseña:");
-                        String contraseña = input.nextLine();
-                        System.out.print("Introduce el dni:");
-                        String dni = input.nextLine();
-                        System.out.print("Introduce el nombre:");
-                        String nombre = input.nextLine();
-                        System.out.print("Introduce los apellidos:");
-                        String apellidos = input.nextLine();
-                        System.out.print("Introduce la fecha de nacimiento:");
-                        String fechaNacimiento = input.nextLine();
-                        System.out.print("Introduce el género:");
-                        String genero = input.nextLine();
 
-                        String ruta = "src/ficheros/Pacientes/" + dni + ".jsonl";
-
-                        try {
-                            FileWriter DarAltaAdmin = new FileWriter((ruta), true);
-                            DarAltaAdmin.write("{" + "'email': " + email + ", " + "'contraseña': " + contraseña + ", " +
-                                    "'dni': " + dni + ", " + "'nombre': " + nombre + ", " + "'apellidos': " + apellidos + ", " +
-                                    "'fechaNacimiento': " + fechaNacimiento + ", " + "'genero': " + genero + "}" + "\n");
-                            DarAltaAdmin.close();
-
-                        } catch (IOException e) {
-
-                            System.out.println("No se encontró el fichero");
-                        }
-                        System.out.println("Paciente agregado con exito!");
-
-                    } catch (Exception e) {
-                        System.out.println("Error al introducir un nuevo Paciente.");
-                    }
                     break;
                 case "4":
-                    try {
-                        System.out.print("Introduce el email:");
-                        String email = input.nextLine();
-                        System.out.print("Introduce la contraseña:");
-                        String contraseña = input.nextLine();
-                        System.out.print("Introduce el dni:");
-                        String dni = input.nextLine();
-                        System.out.print("Introduce el nombre:");
-                        String nombre = input.nextLine();
-                        System.out.print("Introduce los apellidos:");
-                        String apellidos = input.nextLine();
-                        System.out.print("Introduce la fecha de nacimiento:");
-                        String fechaNacimiento = input.nextLine();
-                        System.out.print("Introduce el género:");
-                        String genero = input.nextLine();
 
-                        String ruta = "src/ficheros/Recepcionistas/" + dni + ".jsonl";
-
-                        try {
-                            FileWriter DarAltaAdmin = new FileWriter((ruta), true);
-                            DarAltaAdmin.write("{" + "'email': " + email + ", " + "'contraseña': " + contraseña + ", " +
-                                    "'dni': " + dni + ", " + "'nombre': " + nombre + ", " + "'apellidos': " + apellidos + ", " +
-                                    "'fechaNacimiento': " + fechaNacimiento + ", " + "'genero': " + genero + "}" + "\n");
-                            DarAltaAdmin.close();
-
-                        } catch (IOException e) {
-
-                            System.out.println("No se encontró el fichero");
-                        }
-                        System.out.println("Recepcionista agregado con exito!");
-
-                    } catch (Exception e) {
-                        System.out.println("Error al introducir un nuevo Recepcionista.");
-                    }
                     break;
                 case "5":
                     System.out.println("Elejiste salir \n");
