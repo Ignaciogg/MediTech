@@ -193,7 +193,7 @@ public class Administrador extends Persona {
             br.close();
             bw.close();
             System.out.println("fichero viejo duplicado");
-            if(ficheroViejo.delete()){ //Aquí deberí eliminara el original
+            if(ficheroViejo.delete()){ //Aquí debería eliminara el original
                 System.out.println("fichero viejo eliminado");
                 File renombrar = new File("src/ficheros/loginmanolo.jsonl");
                 if(ficheroNuevo.renameTo(renombrar)){ //Aquí debería renombrarlo al nombre original
