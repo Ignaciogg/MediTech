@@ -128,8 +128,19 @@ public class Recepcionista extends Persona{
         escribirPersona(new Paciente(email,dni,nombre,apellidos,fechaNacimiento,genero,altura,peso,patologías,alergias,grupo_sanguineo),ruta);
     }
 
-    public void Crear_cita(){}
-    public void Cancelar_sita(){}
-    public void Modificar_cita(){}
-    public void Recordar_cita(){}
+    public void Crear_cita(){
+
+    }
+
+    public void Cancelar_sita(){
+
+    }
+
+    public void Modificar_cita(){
+
+    }
+
+    public void Recordar_cita(){
+
+    }
 }

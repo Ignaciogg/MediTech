@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Administrador extends Persona {
 
-    // constructores
+    //Constructores
     public Administrador(String email, String dni, String nombre, String apellidos, String fechaNacimiento, String genero) {
         super(email, dni, nombre, apellidos, fechaNacimiento, genero);
     }
@@ -65,6 +65,7 @@ public class Administrador extends Persona {
         }
     }
 
+    //FUNCIONES UTILIZADAS EN 1) CREAR NUEVO USUARIO
     public void generarAdministrador(){
         Scanner input = new Scanner(System.in);
 
@@ -90,6 +91,128 @@ public class Administrador extends Persona {
         escribirPersona(new Administrador(email,dni,nombre,apellidos,fechaNacimiento,genero),ruta);
     }
 
+    public void generarMedico(){
+        Scanner input = new Scanner(System.in);
+        System.out.print("Introduce el email:");
+        String email = input.nextLine();
+        //GENERAR AUTOMATICO Y MANDAR POR CORREO
+        System.out.print("Introduce la contraseña:");
+        String contraseña = input.nextLine();
+        System.out.print("Introduce el dni:");
+        String dni = input.nextLine();
+        System.out.print("Introduce el nombre:");
+        String nombre = input.nextLine();
+        System.out.print("Introduce los apellidos:");
+        String apellidos = input.nextLine();
+        System.out.print("Introduce la fecha de nacimiento:");
+        String fechaNacimiento = input.nextLine();
+        System.out.print("Introduce el género:");
+        String genero = input.nextLine();
+        System.out.print("Introduce el nº de la Seguridad Social:");
+        int no_seguridad_social = input.nextInt();
+        System.out.print("Introduce el nº de colegialo:");
+        int no_colegialo = input.nextInt();
+        String ruta = "src/ficheros/Medicos/" + dni + ".jsonl";
+        escribirLogin(new Persona(email,contraseña,dni,"2"));
+        escribirPersona(new Medico(email,dni,nombre,apellidos,fechaNacimiento,genero, no_seguridad_social, no_colegialo),ruta);
+    }
+
+    public void generarPaciente(){
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Introduce el email:");
+        String email = input.nextLine();
+        //GENERAR AUTOMATICO Y MANDAR POR CORREO
+        System.out.print("Introduce la contraseña:");
+        String contraseña = input.nextLine();
+        System.out.print("Introduce el dni:");
+        String dni = input.nextLine();
+        System.out.print("Introduce el nombre:");
+        String nombre = input.nextLine();
+        System.out.print("Introduce los apellidos:");
+        String apellidos = input.nextLine();
+        System.out.print("Introduce la fecha de nacimiento:");
+        String fechaNacimiento = input.nextLine();
+        System.out.print("Introduce el género:");
+        String genero = input.nextLine();
+        System.out.print("Introduce la altura:");
+        Double altura = input.nextDouble();
+        System.out.print("Introduce el peso:");
+        Double peso = input.nextDouble();
+        System.out.print("Introduce las patologías:");
+        String patologías = input.nextLine();
+        System.out.print("Introduce las alergias:");
+        String alergias = input.nextLine();
+        System.out.print("Introduce el grupo sanguíneo:");
+        String grupo_sanguineo = input.nextLine();
+
+        String ruta = "src/ficheros/Pacientes/" + dni + ".jsonl";
+
+        escribirLogin(new Persona(email,contraseña,dni,"3"));
+        escribirPersona(new Paciente(email,dni,nombre,apellidos,fechaNacimiento,genero,altura,peso,patologías,alergias,grupo_sanguineo),ruta);
+    }
+
+    public void generarRecepcionista(){
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Introduce el email:");
+        String email = input.nextLine();
+        //GENERAR AUTOMATICO Y MANDAR POR CORREO
+        System.out.print("Introduce la contraseña:");
+        String contraseña = input.nextLine();
+        System.out.print("Introduce el dni:");
+        String dni = input.nextLine();
+        System.out.print("Introduce el nombre:");
+        String nombre = input.nextLine();
+        System.out.print("Introduce los apellidos:");
+        String apellidos = input.nextLine();
+        System.out.print("Introduce la fecha de nacimiento:");
+        String fechaNacimiento = input.nextLine();
+        System.out.print("Introduce el género:");
+        String genero = input.nextLine();
+        System.out.print("Introduce número de la seguridad social");
+        int no_seguridad_social = input.nextInt();
+        String ruta = "src/ficheros/Recepcionistas/" + dni + ".jsonl";
+        escribirLogin(new Persona(email,contraseña,dni,"4"));
+        escribirPersona(new Recepcionista(email,dni,nombre,apellidos,fechaNacimiento,genero,no_seguridad_social),ruta);
+    }
+
+    public void CrearUsuario(){
+        Scanner input = new Scanner(System.in);
+        String menuAD = "0";
+        do {
+            System.out.println("\n\n----Dar de alta a un usuario----");
+            System.out.print(
+                "1 - Admin\n" +
+                "2 - Medico\n" +
+                "3 - Paciente\n" +
+                "4 - Recepcionista\n" +
+                "5 - Salir\n" +
+                "Introduce el número del usuario que quieras dar de alta: "
+            );
+            switch (menuAD = input.nextLine()) {
+                case "1":
+                    generarAdministrador();
+                    break;
+                case "2":
+                    generarMedico();
+                    break;
+                case "3":
+                    generarPaciente();
+                    break;
+                case "4":
+                    generarRecepcionista();
+                    break;
+                case "5":
+                    System.out.println("Elejiste salir \n");
+                    break;
+                default:
+                    System.out.print("Introduce una opcion correcta: ");
+            }
+        }while (!menuAD.equals("5"));
+    }
+
+    //FUNCIONES UTILIZADAS EN 2) MODIFICAR USUARIO  Métodos a revisar
     public Persona buscarUsuario(String dni){
         Gson gson = new Gson();
         Persona persona = null;
@@ -136,42 +259,6 @@ public class Administrador extends Persona {
         return persona;
     }
 
-    public void CrearUsuario(){
-        Scanner input = new Scanner(System.in);
-        String menuAD = "0";
-        do {
-            System.out.println("\n\n----Dar de alta a un usuario----");
-            System.out.print(
-                "1 - Admin\n" +
-                "2 - Medico\n" +
-                "3 - Paciente\n" +
-                "4 - Recepcionista\n" +
-                "5 - Salir\n" +
-                "Introduce el número del usuario que quieras dar de alta: "
-            );
-            switch (menuAD = input.nextLine()) {
-                case "1":
-                    generarAdministrador();
-                    break;
-                case "2":
-
-                    break;
-                case "3":
-
-                    break;
-                case "4":
-
-                    break;
-                case "5":
-                    System.out.println("Elejiste salir \n");
-                    break;
-                default:
-                    System.out.print("Introduce una opcion correcta: ");
-            }
-        }while (!menuAD.equals("5"));
-    }
-
-    //Metodo a revisar
     public boolean EliminarUsuarioLogin(String dni){
         Gson gson = new Gson();
         Persona persona = null;
