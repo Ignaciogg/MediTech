@@ -1,14 +1,12 @@
 import com.google.gson.Gson;
 
 import java.io.*;
+import java.lang.module.FindException;
 import java.util.Scanner;
 
 public class Administrador extends Persona {
 
     // constructores
-    public Administrador(String email, String contraseña, String dni, String nombre, String apellidos, String fechaNacimiento, String genero) {
-        super(email, contraseña, dni, nombre, apellidos, fechaNacimiento, genero);
-    }
     public Administrador(String email, String dni, String nombre, String apellidos, String fechaNacimiento, String genero) {
         super(email, dni, nombre, apellidos, fechaNacimiento, genero);
     }
@@ -92,95 +90,50 @@ public class Administrador extends Persona {
         escribirPersona(new Administrador(email,dni,nombre,apellidos,fechaNacimiento,genero),ruta);
     }
 
-    public void generarMedico(){
-        Scanner input = new Scanner(System.in);
-
-        System.out.print("Introduce el email:");
-        String email = input.nextLine();
-        //GENERAR AUTOMATICO Y MANDAR POR CORREO
-        System.out.print("Introduce la contraseña:");
-        String contraseña = input.nextLine();
-        System.out.print("Introduce el dni:");
-        String dni = input.nextLine();
-        System.out.print("Introduce el nombre:");
-        String nombre = input.nextLine();
-        System.out.print("Introduce los apellidos:");
-        String apellidos = input.nextLine();
-        System.out.print("Introduce la fecha de nacimiento:");
-        String fechaNacimiento = input.nextLine();
-        System.out.print("Introduce el género:");
-        String genero = input.nextLine();
-        System.out.print("Introduce el nº de la Seguridad Social:");
-        int no_seguridad_social = input.nextInt();
-        System.out.print("Introduce el nº de colegialo:");
-        int no_colegialo = input.nextInt();
-
-        String ruta = "src/ficheros/Medicos/" + dni + ".jsonl";
-
-        escribirLogin(new Persona(email,contraseña,dni,"2"));
-        escribirPersona(new Medico(email,dni,nombre,apellidos,fechaNacimiento,genero, no_seguridad_social, no_colegialo),ruta);
+    public Persona buscarUsuario(String dni){
+        Gson gson = new Gson();
+        Persona persona = null;
+        boolean encontrado = false;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/ficheros/login.jsonl"));
+            String linea;
+            while ((linea = br.readLine()) != null && encontrado == false) {
+                persona = gson.fromJson(linea, Persona.class);
+                if (persona.getDni().toLowerCase().equals(dni)) {
+                    encontrado = true;
+                }
+            }
+        }catch (IOException e){
+            System.out.println(e);
+        }
+        return persona;
     }
 
-    public void generarPaciente(){
-        Scanner input = new Scanner(System.in);
-
-        System.out.print("Introduce el email:");
-        String email = input.nextLine();
-        //GENERAR AUTOMATICO Y MANDAR POR CORREO
-        System.out.print("Introduce la contraseña:");
-        String contraseña = input.nextLine();
-        System.out.print("Introduce el dni:");
-        String dni = input.nextLine();
-        System.out.print("Introduce el nombre:");
-        String nombre = input.nextLine();
-        System.out.print("Introduce los apellidos:");
-        String apellidos = input.nextLine();
-        System.out.print("Introduce la fecha de nacimiento:");
-        String fechaNacimiento = input.nextLine();
-        System.out.print("Introduce el género:");
-        String genero = input.nextLine();
-        System.out.print("Introduce la altura:");
-        Double altura = input.nextDouble();
-        System.out.print("Introduce el peso:");
-        Double peso = input.nextDouble();
-        System.out.print("Introduce las patologías:");
-        String patologías = input.nextLine();
-        System.out.print("Introduce las alergias:");
-        String alergias = input.nextLine();
-        System.out.print("Introduce el grupo sanguíneo:");
-        String grupo_sanguineo = input.nextLine();
-
-        String ruta = "src/ficheros/Pacientes/" + dni + ".jsonl";
-
-        escribirLogin(new Persona(email,contraseña,dni,"3"));
-        escribirPersona(new Paciente(email,dni,nombre,apellidos,fechaNacimiento,genero,altura,peso,patologías,alergias,grupo_sanguineo),ruta);
-    }
-
-    public void generarRecepcionista(){
-        Scanner input = new Scanner(System.in);
-
-        System.out.print("Introduce el email:");
-        String email = input.nextLine();
-        //GENERAR AUTOMATICO Y MANDAR POR CORREO
-        System.out.print("Introduce la contraseña:");
-        String contraseña = input.nextLine();
-        System.out.print("Introduce el dni:");
-        String dni = input.nextLine();
-        System.out.print("Introduce el nombre:");
-        String nombre = input.nextLine();
-        System.out.print("Introduce los apellidos:");
-        String apellidos = input.nextLine();
-        System.out.print("Introduce la fecha de nacimiento:");
-        String fechaNacimiento = input.nextLine();
-        System.out.print("Introduce el género:");
-        String genero = input.nextLine();
-        System.out.print("Introduce número de la seguridad social");
-        int no_seguridad_social = input.nextInt();
-
-        String ruta = "src/ficheros/Recepcionistas/" + dni + ".jsonl";
-
-        escribirLogin(new Persona(email,contraseña,dni,"4"));
-        escribirPersona(new Recepcionista(email,dni,nombre,apellidos,fechaNacimiento,genero,no_seguridad_social),ruta);
+    public Persona cargarUsuario(String ruta, int tipo){
+        Gson gson = new Gson();
+        Persona persona = null;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(ruta));
+            String linea;
+            linea = br.readLine();
+            switch (tipo){
+                case 1:
+                    persona = gson.fromJson(linea, Administrador.class);
+                    break;
+                case 2:
+                    persona = gson.fromJson(linea, Medico.class);
+                    break;
+                case 3:
+                    persona = gson.fromJson(linea, Paciente.class);
+                    break;
+                case 4:
+                    persona = gson.fromJson(linea, Recepcionista.class);
+                    break;
+            }
+        }catch (IOException e){
+            System.out.println(e);
+        }
+        return persona;
     }
 
     public void CrearUsuario(){
@@ -201,13 +154,13 @@ public class Administrador extends Persona {
                     generarAdministrador();
                     break;
                 case "2":
-                    generarMedico();
+
                     break;
                 case "3":
-                    generarPaciente();
+
                     break;
                 case "4":
-                    generarRecepcionista();
+
                     break;
                 case "5":
                     System.out.println("Elejiste salir \n");
@@ -218,12 +171,176 @@ public class Administrador extends Persona {
         }while (!menuAD.equals("5"));
     }
 
-    public void ModificarUsuario(){
+    //Metodo a revisar
+    public boolean EliminarUsuarioLogin(String dni){
+        Gson gson = new Gson();
+        Persona persona = null;
+        File ficheroViejo = new File("src/ficheros/login.jsonl");
+        File ficheroNuevo = new File("src/ficheros/login2.jsonl");
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(ficheroViejo));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(ficheroNuevo,true));
 
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                persona = gson.fromJson(linea, Persona.class);
+                if (!persona.getDni().toLowerCase().equals(dni)) {
+                    bw.append(gson.toJson(persona));
+                    bw.flush();
+                    bw.newLine();
+                }
+            }
+            br.close();
+            bw.close();
+            System.out.println("fichero viejo duplicado");
+            if(ficheroViejo.delete()){ //Aquí deberí eliminara el original
+                System.out.println("fichero viejo eliminado");
+                File renombrar = new File("src/ficheros/loginmanolo.jsonl");
+                if(ficheroNuevo.renameTo(renombrar)){ //Aquí debería renombrarlo al nombre original
+                    System.out.println("fichero renombrado");
+                    return true;
+                }else{
+                    System.out.println("error al renombrar fichero");
+                }
+            }else {
+                System.out.println("error al eliminar fichero");
+            }
+        }catch (IOException e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public void ModificarUsuario(){
+        Scanner input = new Scanner(System.in);
+        System.out.print("Introduce el DNI del usuario que quieres modificar: ");
+        String DNI = input.nextLine();
+        Persona personaLoginAntiguo = buscarUsuario(DNI);
+        if(personaLoginAntiguo==null){
+            System.out.println("No se ga encontrado ningun usuario con ese Dni");
+        }else{
+            Persona personaLoginNuevo = personaLoginAntiguo;
+
+            String menu = "0";
+            String ruta = "";
+
+            switch (personaLoginAntiguo.getGenero()) {
+                case "1":
+                    ruta = "src/ficheros/Administradores/"+personaLoginAntiguo.getDni()+".json";
+                    Persona personaFicheroAntiguo = cargarUsuario(ruta,1);
+                    Persona personaFicheroNuevo = personaFicheroAntiguo;
+                    do {
+                        System.out.println("\n\n----Modificar a un administrador----");
+                        System.out.print(
+                            "1 - Email\n" +
+                            "2 - Contraseña\n" +
+                            "3 - DNI\n" +
+                            "4 - Nombre\n" +
+                            "5 - Apellidos\n" +
+                            "6 - Fecha de nacimiento\n" +
+                            "7 - Genero\n" +
+                            "8 - Guardar y salir\n" +
+                            "Introduce el número del dato que quieras modificar: "
+                        );
+                        switch (menu = input.nextLine()) {
+                            case "1":
+                                System.out.print("Introduce el nuevo email: ");
+                                String email = input.nextLine();
+                                //Comprobar formato email
+                                personaFicheroNuevo.setEmail(email);
+                                personaLoginNuevo.setEmail(email);
+                                break;
+                            case "2":
+                                System.out.print("Introduce la nueva contraseña: ");
+                                String contraseña = input.nextLine();
+                                personaLoginNuevo.setContraseña(contraseña);
+                                break;
+                            case "3":
+                                System.out.print("Introduce el nuevo dni: ");
+                                String dni = input.nextLine();
+                                personaFicheroNuevo.setDni(dni);
+                                personaLoginNuevo.setDni(dni);
+                                break;
+                            case "4":
+                                System.out.print("Introduce el nuevo nombre: ");
+                                String nombre = input.nextLine();
+                                personaFicheroNuevo.setNombre(nombre);
+                                break;
+                            case "5":
+                                System.out.print("Introduce el nuevo apellido: ");
+                                String apellido = input.nextLine();
+                                personaFicheroNuevo.setApellidos(apellido);
+                                break;
+                            case "6":
+                                System.out.print("Introduce la nueva fecha de nacimiento: ");
+                                String fechaNacimiento = input.nextLine();
+                                personaFicheroNuevo.setFechaNacimiento(fechaNacimiento);
+                                break;
+                            case "7":
+                                System.out.print("Introduce el nuevo genero: ");
+                                String genero = input.nextLine();
+                                personaFicheroNuevo.setGenero(genero);
+                                break;
+                            case "8":
+                                //Eliminar usuario
+                                //guardar de nuevo
+                                break;
+                            default:
+                                System.out.println("Introduce una opción válida");
+                        }
+                    }while (!menu.equals("8"));
+                    break;
+                case "2":
+                    ruta = "src/ficheros/Medicos/"+personaLoginAntiguo.getDni()+".json";
+
+                    break;
+                case "3":
+                    ruta = "src/ficheros/Pacientes/"+personaLoginAntiguo.getDni()+".json";
+
+                    break;
+                case "4":
+                    ruta = "src/ficheros/Recepcionista/"+personaLoginAntiguo.getDni()+".json";
+
+                    break;
+            }
+
+        }
     }
 
     public void EliminarUsuario(){
-
+        Scanner input = new Scanner(System.in);
+        System.out.print("Introduce el DNI del usuario que quieres modificar: ");
+        String DNI = input.nextLine();
+        Persona personaBuscada = buscarUsuario(DNI);
+        if (personaBuscada != null){
+            if(EliminarUsuarioLogin(DNI)){
+                String ruta = "";
+                switch (personaBuscada.getGenero()) {
+                    case "1":
+                        ruta = "src/ficheros/Administradores/" + personaBuscada.getDni() + ".json";
+                        break;
+                    case "2":
+                        ruta = "src/ficheros/Medicos/" + personaBuscada.getDni() + ".json";
+                        break;
+                    case "3":
+                        ruta = "src/ficheros/Paciente/" + personaBuscada.getDni() + ".json";
+                        break;
+                    case "4":
+                        ruta = "src/ficheros/Recepcionista/" + personaBuscada.getDni() + ".json";
+                        break;
+                }
+                File fichero = new File(ruta);
+                if(fichero.delete()){
+                    System.out.println("El fichero del usuario se ha eliminado correctamente");
+                }else {
+                    System.out.println("Error al eliminar el fichero del usuario");
+                }
+            }else{
+                System.out.println("No se ha encontrado ningun usuario con ese dni");
+            }
+        }else {
+            System.out.println("Error al eliminar el usuario de la lista de login");
+        }
     }
 
 }
