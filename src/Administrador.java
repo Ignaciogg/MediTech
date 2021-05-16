@@ -304,7 +304,7 @@ public class Administrador extends Persona {
         String DNI = input.nextLine();
         Persona personaLoginAntiguo = buscarUsuario(DNI);
         if(personaLoginAntiguo==null){
-            System.out.println("No se ga encontrado ningun usuario con ese Dni");
+            System.out.println("No se ha encontrado ningún usuario con ese DNI");
         }else{
             Persona personaLoginNuevo = personaLoginAntiguo;
 

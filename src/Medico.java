@@ -1,3 +1,6 @@
+import com.google.gson.Gson;
+
+import java.io.*;
 import java.util.Scanner;
 
 public class Medico extends Persona{
@@ -6,7 +9,7 @@ public class Medico extends Persona{
     private int no_seguridad_social;
     private int no_colegialo;
 
-    //  Constructor
+    // Constructor
 
     public Medico(String email, String dni, String nombre, String apellidos, String fechaNacimiento, String genero,
                   int no_seguridad_social, int no_colegialo) {
@@ -17,7 +20,7 @@ public class Medico extends Persona{
     }
 
 
-    // Generamos getters y setters
+    // Getters y setters
     public int getNo_seguridad_social() {
         return no_seguridad_social;
     }
@@ -71,6 +74,54 @@ public class Medico extends Persona{
             }
         }while (!menu.equals("7"));
     }
+
+    //FUNCIONES UTILIZADAS EN 1) VER CITA
+    public Persona buscarUsuario(String dni){
+        Gson gson = new Gson();
+        Persona persona = null;
+        boolean encontrado = false;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/ficheros/login.jsonl"));
+            String linea;
+            while ((linea = br.readLine()) != null && encontrado == false) {
+                persona = gson.fromJson(linea, Persona.class);
+                if (persona.getDni().toLowerCase().equals(dni)) {
+                    encontrado = true;
+                }
+            }
+        }catch (IOException e){
+            System.out.println(e);
+        }
+        return persona;
+    }
+
+    public Persona cargarUsuario(String ruta, int tipo){
+        Gson gson = new Gson();
+        Persona persona = null;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(ruta));
+            String linea;
+            linea = br.readLine();
+            switch (tipo){
+                case 1:
+                    persona = gson.fromJson(linea, Administrador.class);
+                    break;
+                case 2:
+                    persona = gson.fromJson(linea, Medico.class);
+                    break;
+                case 3:
+                    persona = gson.fromJson(linea, Paciente.class);
+                    break;
+                case 4:
+                    persona = gson.fromJson(linea, Recepcionista.class);
+                    break;
+            }
+        }catch (IOException e){
+            System.out.println(e);
+        }
+        return persona;
+    }
+
     public void ver_cita(){
 
     }
@@ -80,8 +131,35 @@ public class Medico extends Persona{
     public void historial_paciente(){
 
     }
-    public void final_cita(){
 
+    public void escribirCita(Cita nuevo, String ruta){
+        Gson gson = new Gson();
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter(ruta));
+            bw.write(gson.toJson(nuevo));
+            bw.flush();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void final_cita(){
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Introduce el DNI del paciente:");
+        String dniPaciente = input.nextLine();
+        System.out.print("Introduce la fecha:");
+        String fecha = input.nextLine();
+        System.out.print("Introduce la hora:");
+        String hora = input.nextLine();
+        System.out.print("Introduce el diagnóstico:");
+        String diagnostico = input.nextLine();
+        System.out.print("Introduce la receta:");
+        String receta = input.nextLine();
+
+        String ruta = "src/ficheros/Administradores/" + fecha + ".jsonl";
+
+        escribirCita(new Cita(dniPaciente,dniPaciente,fecha,hora,diagnostico,receta),ruta);
     }
     public void datos_paciente(){
 
