@@ -259,7 +259,7 @@ public class Administrador extends Persona {
         return persona;
     }
 
-    public boolean EliminarUsuarioLogin(String dni){
+    public boolean eliminarUsuarioLogin(String dni){
         Gson gson = new Gson();
         Persona persona = null;
         File ficheroViejo = new File("src/ficheros/login.jsonl");
@@ -400,7 +400,7 @@ public class Administrador extends Persona {
         String DNI = input.nextLine();
         Persona personaBuscada = buscarUsuario(DNI);
         if (personaBuscada != null){
-            if(EliminarUsuarioLogin(DNI)){
+            if(eliminarUsuarioLogin(DNI)){
                 String ruta = "";
                 switch (personaBuscada.getGenero()) {
                     case "1":
