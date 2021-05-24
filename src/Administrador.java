@@ -311,6 +311,7 @@ public class Administrador extends Persona {
             Persona personaFicheroAntiguo,personaFicheroNuevo;
             String email,contraseña,dni,nombre,apellido,fechaNacimiento,genero;
             int no_ss,no_cole;
+
             switch (personaLoginAntiguo.getGenero()) {
                 case "1":
                     ruta = "src/ficheros/Administradores/"+personaLoginAntiguo.getDni()+".jsonl";
@@ -444,17 +445,12 @@ public class Administrador extends Persona {
                             case "8":
                                 System.out.print("Introduce el nuevo nº de Seguridad Social: ");
                                 no_ss = input.nextInt();
-                                //forma 1
-                                Medico medicoNuevo = (Medico) personaFicheroNuevo;
-                                medicoNuevo.setNo_colegialo(no_ss);
-                                personaFicheroNuevo = medicoNuevo;
-                                //forma 2
                                 ((Medico) personaFicheroNuevo).getNo_seguridad_social();
                                 break;
                             case "9":
                                 System.out.print("Introduce el nuevo nº de Colegialo: ");
-                                no_cole = input.nextLine();
-                                personaFicheroNuevo.setGenero(no_cole);
+                                no_cole = input.nextInt();
+                                ((Medico) personaFicheroNuevo).getNo_colegialo();
                                 break;
                             case "10":
                                 //Eliminar usuario
