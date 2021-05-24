@@ -387,6 +387,8 @@ public class Administrador extends Persona {
                     ruta = "src/ficheros/Medicos/"+personaLoginAntiguo.getDni()+".jsonl";
                     personaFicheroAntiguo = cargarUsuario(ruta,2);
                     personaFicheroNuevo = personaFicheroAntiguo;
+                    String no_ss;
+                    String no_cole;
                     do {
                         System.out.println("\n\n----Modificar a un médico----");
                         System.out.print(
@@ -397,7 +399,9 @@ public class Administrador extends Persona {
                                         "5 - Apellidos\n" +
                                         "6 - Fecha de nacimiento\n" +
                                         "7 - Genero\n" +
-                                        "8 - Guardar y salir\n" +
+                                        "8 - Nº de Seguridad Social\n"+
+                                        "9 - Nº de Colegialo\n"+
+                                        "10 - Guardar y salir\n" +
                                         "Introduce el número del dato que quieras modificar: "
                         );
                         switch (menu = input.nextLine()) {
@@ -440,6 +444,16 @@ public class Administrador extends Persona {
                                 personaFicheroNuevo.setGenero(genero);
                                 break;
                             case "8":
+                                System.out.print("Introduce el nuevo nº de Seguridad Social: ");
+                                no_ss = input.nextLine();
+                                personaFicheroNuevo.setNo_Seguridad_Social(no_ss);
+                                break;
+                            case "9":
+                                System.out.print("Introduce el nuevo nº de Colegialo: ");
+                                no_cole = input.nextLine();
+                                personaFicheroNuevo.setGenero(no_cole);
+                                break;
+                            case "10":
                                 //Eliminar usuario
                                 eliminarUsuarioLogin(personaLoginAntiguo.getDni());
                                 File eliminar = new File(ruta);
