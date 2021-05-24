@@ -180,7 +180,7 @@ public class Administrador extends Persona {
 
     public void CrearUsuario(){
         Scanner input = new Scanner(System.in);
-        String menuAD = "0";
+        String menuCU = "0";
         do {
             System.out.println("\n\n----Dar de alta a un usuario----");
             System.out.print(
@@ -191,7 +191,7 @@ public class Administrador extends Persona {
                 "5 - Salir\n" +
                 "Introduce el número del usuario que quieras dar de alta: "
             );
-            switch (menuAD = input.nextLine()) {
+            switch (menuCU = input.nextLine()) {
                 case "1":
                     generarAdministrador();
                     break;
@@ -210,7 +210,7 @@ public class Administrador extends Persona {
                 default:
                     System.out.print("Introduce una opcion correcta: ");
             }
-        }while (!menuAD.equals("5"));
+        }while (!menuCU.equals("5"));
     }
 
     //FUNCIONES UTILIZADAS EN 2) MODIFICAR USUARIO  Métodos a revisar
@@ -219,7 +219,7 @@ public class Administrador extends Persona {
         Persona persona = null;
         boolean encontrado = false;
         try {
-            BufferedReader br = new BufferedReader(new FileReader("src/ficheros/login.jsonl"));
+            BufferedReader br = new BufferedReader(new FileReader("src/ficheros/Login.jsonl"));
             String linea;
             while ((linea = br.readLine()) != null && encontrado == false) {
                 persona = gson.fromJson(linea, Persona.class);
@@ -265,8 +265,8 @@ public class Administrador extends Persona {
     public boolean eliminarUsuarioLogin(String dni){
         Gson gson = new Gson();
         Persona persona = null;
-        File ficheroViejo = new File("src/ficheros/login.jsonl");
-        File ficheroNuevo = new File("src/ficheros/login2.jsonl");
+        File ficheroViejo = new File("src/ficheros/Login.jsonl");
+        File ficheroNuevo = new File("src/ficheros/Login2.jsonl");
         try {
             FileReader fr = new FileReader(ficheroViejo);
             BufferedReader br = new BufferedReader(fr);
