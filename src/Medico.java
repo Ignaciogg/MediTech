@@ -40,7 +40,7 @@ public class Medico extends Persona{
         Scanner input = new Scanner(System.in);
         String menu = "0";
         do {
-            System.out.println("\n\n\n----MENU ADMIN----");
+            System.out.println("\n\n\n----MENU MÉDICO----");
             System.out.print(
                 "1 - Ver citas pendientes\n" +
                 "2 - Recetar medicamento a un paciente\n" +
@@ -52,7 +52,7 @@ public class Medico extends Persona{
             );
             switch (menu = input.nextLine()) {
                 case "1":
-                    ver_cita();
+                    ver_cita(getDni());
                     break;
                 case "2":
                     recetar();
@@ -61,7 +61,7 @@ public class Medico extends Persona{
                     historial_paciente();
                     break;
                 case "4":
-                    final_cita();
+                    final_cita(getDni());
                     break;
                 case "5":
                     datos_paciente();
@@ -122,7 +122,8 @@ public class Medico extends Persona{
         return persona;
     }
 
-    public void ver_cita(){
+    public void ver_cita(String dni){
+
 
     }
     public void recetar(){
@@ -143,7 +144,7 @@ public class Medico extends Persona{
         }
     }
 
-    public void final_cita(){
+    public void final_cita(String dniMedico){
         Scanner input = new Scanner(System.in);
 
         System.out.print("Introduce el DNI del paciente:");
@@ -157,9 +158,9 @@ public class Medico extends Persona{
         System.out.print("Introduce la receta:");
         String receta = input.nextLine();
 
-        String ruta = "src/ficheros/Administradores/" + fecha + ".jsonl";
+        String ruta = "src/ficheros/Citas/" + fecha + ".jsonl";
 
-        escribirCita(new Cita(dniPaciente,dniPaciente,fecha,hora,diagnostico,receta),ruta);
+        escribirCita(new Cita(dniMedico,dniPaciente,fecha,hora,diagnostico,receta),ruta);
     }
     public void datos_paciente(){
 
