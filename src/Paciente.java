@@ -69,7 +69,7 @@ public class Paciente extends Persona{
         Scanner input = new Scanner(System.in);
         String menu = "0";
         do {
-            System.out.println("\n\n\n----MENU ADMIN----");
+            System.out.println("\n\n\n----MENU PACIENTE----");
             System.out.print(
                 "1 - Ver citas pendientes\n" +
                 "2 - Solicitar cita\n" +
@@ -101,7 +101,7 @@ public class Paciente extends Persona{
                     resultados_citas();
                     break;
 
-        }while (!menu.equals("5"));
+        }while (!menu.equals("6"));
     }
 
     public void mostrar_citas(){

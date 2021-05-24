@@ -310,6 +310,7 @@ public class Administrador extends Persona {
             String ruta;
             Persona personaFicheroAntiguo,personaFicheroNuevo;
             String email,contraseña,dni,nombre,apellido,fechaNacimiento,genero;
+
             switch (personaLoginAntiguo.getGenero()) {
                 case "1":
                     ruta = "src/ficheros/Administradores/"+personaLoginAntiguo.getDni()+".jsonl";
@@ -384,10 +385,144 @@ public class Administrador extends Persona {
                     break;
                 case "2":
                     ruta = "src/ficheros/Medicos/"+personaLoginAntiguo.getDni()+".jsonl";
+                    personaFicheroAntiguo = cargarUsuario(ruta,2);
+                    personaFicheroNuevo = personaFicheroAntiguo;
+                    do {
+                        System.out.println("\n\n----Modificar a un médico----");
+                        System.out.print(
+                                "1 - Email\n" +
+                                        "2 - Contraseña\n" +
+                                        "3 - DNI\n" +
+                                        "4 - Nombre\n" +
+                                        "5 - Apellidos\n" +
+                                        "6 - Fecha de nacimiento\n" +
+                                        "7 - Genero\n" +
+                                        "8 - Guardar y salir\n" +
+                                        "Introduce el número del dato que quieras modificar: "
+                        );
+                        switch (menu = input.nextLine()) {
+                            case "1":
+                                System.out.print("Introduce el nuevo email: ");
+                                email = input.nextLine();
+                                //Comprobar formato email
+                                personaFicheroNuevo.setEmail(email);
+                                personaLoginNuevo.setEmail(email);
+                                break;
+                            case "2":
+                                System.out.print("Introduce la nueva contraseña: ");
+                                contraseña = input.nextLine();
+                                personaLoginNuevo.setContraseña(contraseña);
+                                break;
+                            case "3":
+                                System.out.print("Introduce el nuevo dni: ");
+                                dni = input.nextLine();
+                                personaFicheroNuevo.setDni(dni);
+                                personaLoginNuevo.setDni(dni);
+                                break;
+                            case "4":
+                                System.out.print("Introduce el nuevo nombre: ");
+                                nombre = input.nextLine();
+                                personaFicheroNuevo.setNombre(nombre);
+                                break;
+                            case "5":
+                                System.out.print("Introduce el nuevo apellido: ");
+                                apellido = input.nextLine();
+                                personaFicheroNuevo.setApellidos(apellido);
+                                break;
+                            case "6":
+                                System.out.print("Introduce la nueva fecha de nacimiento: ");
+                                fechaNacimiento = input.nextLine();
+                                personaFicheroNuevo.setFechaNacimiento(fechaNacimiento);
+                                break;
+                            case "7":
+                                System.out.print("Introduce el nuevo genero: ");
+                                genero = input.nextLine();
+                                personaFicheroNuevo.setGenero(genero);
+                                break;
+                            case "8":
+                                //Eliminar usuario
+                                eliminarUsuarioLogin(personaLoginAntiguo.getDni());
+                                File eliminar = new File(ruta);
+                                eliminar.delete();
+                                //guardar de nuevo
+                                escribirLogin(personaLoginNuevo);
+                                escribirPersona(personaFicheroNuevo,ruta);
+                                break;
+                            default:
+                                System.out.println("Introduce una opción válida");
+                        }
+                    }while (!menu.equals("8"));
 
                     break;
                 case "3":
                     ruta = "src/ficheros/Pacientes/"+personaLoginAntiguo.getDni()+".jsonl";
+                    personaFicheroAntiguo = cargarUsuario(ruta,3);
+                    personaFicheroNuevo = personaFicheroAntiguo;
+                    do {
+                        System.out.println("\n\n----Modificar a un paciente----");
+                        System.out.print(
+                                "1 - Email\n" +
+                                        "2 - Contraseña\n" +
+                                        "3 - DNI\n" +
+                                        "4 - Nombre\n" +
+                                        "5 - Apellidos\n" +
+                                        "6 - Fecha de nacimiento\n" +
+                                        "7 - Genero\n" +
+                                        "8 - Guardar y salir\n" +
+                                        "Introduce el número del dato que quieras modificar: "
+                        );
+                        switch (menu = input.nextLine()) {
+                            case "1":
+                                System.out.print("Introduce el nuevo email: ");
+                                email = input.nextLine();
+                                //Comprobar formato email
+                                personaFicheroNuevo.setEmail(email);
+                                personaLoginNuevo.setEmail(email);
+                                break;
+                            case "2":
+                                System.out.print("Introduce la nueva contraseña: ");
+                                contraseña = input.nextLine();
+                                personaLoginNuevo.setContraseña(contraseña);
+                                break;
+                            case "3":
+                                System.out.print("Introduce el nuevo dni: ");
+                                dni = input.nextLine();
+                                personaFicheroNuevo.setDni(dni);
+                                personaLoginNuevo.setDni(dni);
+                                break;
+                            case "4":
+                                System.out.print("Introduce el nuevo nombre: ");
+                                nombre = input.nextLine();
+                                personaFicheroNuevo.setNombre(nombre);
+                                break;
+                            case "5":
+                                System.out.print("Introduce el nuevo apellido: ");
+                                apellido = input.nextLine();
+                                personaFicheroNuevo.setApellidos(apellido);
+                                break;
+                            case "6":
+                                System.out.print("Introduce la nueva fecha de nacimiento: ");
+                                fechaNacimiento = input.nextLine();
+                                personaFicheroNuevo.setFechaNacimiento(fechaNacimiento);
+                                break;
+                            case "7":
+                                System.out.print("Introduce el nuevo genero: ");
+                                genero = input.nextLine();
+                                personaFicheroNuevo.setGenero(genero);
+                                break;
+                            case "8":
+                                //Eliminar usuario
+                                eliminarUsuarioLogin(personaLoginAntiguo.getDni());
+                                File eliminar = new File(ruta);
+                                eliminar.delete();
+                                //guardar de nuevo
+                                escribirLogin(personaLoginNuevo);
+                                escribirPersona(personaFicheroNuevo,ruta);
+                                break;
+                            default:
+                                System.out.println("Introduce una opción válida");
+                        }
+                    }while (!menu.equals("8"));
 
                     break;
                 case "4":

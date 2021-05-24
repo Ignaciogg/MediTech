@@ -182,7 +182,6 @@ public class Medico extends Persona{
         return cita;
     }
 
-
     public Persona cargarCita (String ruta, int tipo){
         Gson gson = new Gson();
         Persona persona = null;
