@@ -308,12 +308,13 @@ public class Administrador extends Persona {
             Persona personaLoginNuevo = personaLoginAntiguo;
             String menu = "0";
             String ruta = "";
-
+            Persona personaFicheroAntiguo;
+            Persona personaFicheroNuevo;
             switch (personaLoginAntiguo.getGenero()) {
                 case "1":
                     ruta = "src/ficheros/Administradores/"+personaLoginAntiguo.getDni()+".jsonl";
-                    Persona personaFicheroAntiguo = cargarUsuario(ruta,1);
-                    Persona personaFicheroNuevo = personaFicheroAntiguo;
+                    personaFicheroAntiguo = cargarUsuario(ruta,1);
+                    personaFicheroNuevo = personaFicheroAntiguo;
                     do {
                         System.out.println("\n\n----Modificar a un administrador----");
                         System.out.print(
