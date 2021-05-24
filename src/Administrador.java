@@ -1,7 +1,6 @@
 import com.google.gson.Gson;
 
 import java.io.*;
-import java.lang.module.FindException;
 import java.util.Scanner;
 
 public class Administrador extends Persona {
@@ -49,6 +48,7 @@ public class Administrador extends Persona {
             bw.newLine();
             bw.append(gson.toJson(nuevo));
             bw.flush();
+            bw.close();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -60,6 +60,7 @@ public class Administrador extends Persona {
             BufferedWriter bw = new BufferedWriter(new FileWriter(ruta));
             bw.write(gson.toJson(nuevo));
             bw.flush();
+            bw.close();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -204,7 +205,7 @@ public class Administrador extends Persona {
                     generarRecepcionista();
                     break;
                 case "5":
-                    System.out.println("Elejiste salir \n");
+                    System.out.println("Elegiste salir \n");
                     break;
                 default:
                     System.out.print("Introduce una opcion correcta: ");
@@ -226,6 +227,7 @@ public class Administrador extends Persona {
                     encontrado = true;
                 }
             }
+            br.close();
         }catch (IOException e){
             System.out.println(e);
         }
@@ -253,6 +255,7 @@ public class Administrador extends Persona {
                     persona = gson.fromJson(linea, Recepcionista.class);
                     break;
             }
+            br.close();
         }catch (IOException e){
             System.out.println(e);
         }
@@ -265,9 +268,10 @@ public class Administrador extends Persona {
         File ficheroViejo = new File("src/ficheros/login.jsonl");
         File ficheroNuevo = new File("src/ficheros/login2.jsonl");
         try {
-            BufferedReader br = new BufferedReader(new FileReader(ficheroViejo));
-            BufferedWriter bw = new BufferedWriter(new FileWriter(ficheroNuevo,true));
-
+            FileReader fr = new FileReader(ficheroViejo);
+            BufferedReader br = new BufferedReader(fr);
+            FileWriter fw = new FileWriter(ficheroNuevo,true);
+            BufferedWriter bw = new BufferedWriter(fw);
             String linea;
             while ((linea = br.readLine()) != null) {
                 persona = gson.fromJson(linea, Persona.class);
@@ -278,24 +282,19 @@ public class Administrador extends Persona {
                 }
             }
             br.close();
+            fr.close();
             bw.close();
-            System.out.println("fichero viejo duplicado");
-            if(ficheroViejo.delete()){ //Aquí debería eliminara el original
-                System.out.println("fichero viejo eliminado");
-                File renombrar = new File("src/ficheros/loginmanolo.jsonl");
-                if(ficheroNuevo.renameTo(renombrar)){ //Aquí debería renombrarlo al nombre original
-                    System.out.println("fichero renombrado");
+            fw.close();
+            if(ficheroViejo.delete()){
+                if(ficheroNuevo.renameTo(new File("src/ficheros/login.jsonl"))){
                     return true;
-                }else{
-                    System.out.println("error al renombrar fichero");
                 }
-            }else {
-                System.out.println("error al eliminar fichero");
             }
+            return false;
         }catch (IOException e) {
             System.out.println(e);
+            return false;
         }
-        return false;
     }
 
     public void ModificarUsuario(){
@@ -307,13 +306,12 @@ public class Administrador extends Persona {
             System.out.println("No se ha encontrado ningún usuario con ese DNI");
         }else{
             Persona personaLoginNuevo = personaLoginAntiguo;
-
             String menu = "0";
             String ruta = "";
 
             switch (personaLoginAntiguo.getGenero()) {
                 case "1":
-                    ruta = "src/ficheros/Administradores/"+personaLoginAntiguo.getDni()+".json";
+                    ruta = "src/ficheros/Administradores/"+personaLoginAntiguo.getDni()+".jsonl";
                     Persona personaFicheroAntiguo = cargarUsuario(ruta,1);
                     Persona personaFicheroNuevo = personaFicheroAntiguo;
                     do {
@@ -370,7 +368,12 @@ public class Administrador extends Persona {
                                 break;
                             case "8":
                                 //Eliminar usuario
+                                eliminarUsuarioLogin(personaLoginAntiguo.getDni());
+                                File eliminar = new File(ruta);
+                                eliminar.delete();
                                 //guardar de nuevo
+                                escribirLogin(personaLoginNuevo);
+                                escribirPersona(personaFicheroNuevo,ruta);
                                 break;
                             default:
                                 System.out.println("Introduce una opción válida");
@@ -378,15 +381,15 @@ public class Administrador extends Persona {
                     }while (!menu.equals("8"));
                     break;
                 case "2":
-                    ruta = "src/ficheros/Medicos/"+personaLoginAntiguo.getDni()+".json";
+                    ruta = "src/ficheros/Medicos/"+personaLoginAntiguo.getDni()+".jsonl";
 
                     break;
                 case "3":
-                    ruta = "src/ficheros/Pacientes/"+personaLoginAntiguo.getDni()+".json";
+                    ruta = "src/ficheros/Pacientes/"+personaLoginAntiguo.getDni()+".jsonl";
 
                     break;
                 case "4":
-                    ruta = "src/ficheros/Recepcionista/"+personaLoginAntiguo.getDni()+".json";
+                    ruta = "src/ficheros/Recepcionista/"+personaLoginAntiguo.getDni()+".jsonl";
 
                     break;
             }
@@ -399,34 +402,36 @@ public class Administrador extends Persona {
         System.out.print("Introduce el DNI del usuario que quieres modificar: ");
         String DNI = input.nextLine();
         Persona personaBuscada = buscarUsuario(DNI);
+
         if (personaBuscada != null){
             if(eliminarUsuarioLogin(DNI)){
                 String ruta = "";
                 switch (personaBuscada.getGenero()) {
                     case "1":
-                        ruta = "src/ficheros/Administradores/" + personaBuscada.getDni() + ".json";
+                        ruta = "src/ficheros/Administradores/" + personaBuscada.getDni() + ".jsonl";
                         break;
                     case "2":
-                        ruta = "src/ficheros/Medicos/" + personaBuscada.getDni() + ".json";
+                        ruta = "src/ficheros/Medicos/" + personaBuscada.getDni() + ".jsonl";
                         break;
                     case "3":
-                        ruta = "src/ficheros/Paciente/" + personaBuscada.getDni() + ".json";
+                        ruta = "src/ficheros/Pacientes/" + personaBuscada.getDni() + ".jsonl";
                         break;
                     case "4":
-                        ruta = "src/ficheros/Recepcionista/" + personaBuscada.getDni() + ".json";
+                        ruta = "src/ficheros/Recepcionista/" + personaBuscada.getDni() + ".jsonl";
                         break;
                 }
                 File fichero = new File(ruta);
+
                 if(fichero.delete()){
                     System.out.println("El fichero del usuario se ha eliminado correctamente");
                 }else {
                     System.out.println("Error al eliminar el fichero del usuario");
                 }
             }else{
-                System.out.println("No se ha encontrado ningun usuario con ese dni");
+                System.out.println("Error al eliminar el usuario de la lista de login");
             }
         }else {
-            System.out.println("Error al eliminar el usuario de la lista de login");
+            System.out.println("No se ha encontrado ningun usuario con ese dni");
         }
     }
 

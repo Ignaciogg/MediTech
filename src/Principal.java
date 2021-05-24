@@ -1,6 +1,7 @@
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
@@ -12,7 +13,8 @@ public class Principal {
         int inicioSesion = 0;
         Persona persona = null;
         try {
-            BufferedReader br = new BufferedReader(new FileReader("src/ficheros/login.jsonl"));
+            FileReader fr = new FileReader("src/ficheros/login.jsonl");
+            BufferedReader br = new BufferedReader(fr);
             String linea;
             while ((linea = br.readLine()) != null && inicioSesion==0) {
                 persona = gson.fromJson(linea, Persona.class);
@@ -68,6 +70,8 @@ public class Principal {
                     }
                 }
             }
+            fr.close();
+            br.close();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
