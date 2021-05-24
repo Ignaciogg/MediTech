@@ -372,6 +372,7 @@ public class Administrador extends Persona {
                                 File eliminar = new File(ruta);
                                 eliminar.delete();
                                 //guardar de nuevo
+                                ruta = "src/ficheros/Administradores/"+personaFicheroNuevo.getDni()+".jsonl";
                                 escribirLogin(personaLoginNuevo);
                                 escribirPersona(personaFicheroNuevo,ruta);
                                 break;
