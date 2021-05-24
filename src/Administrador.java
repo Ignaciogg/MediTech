@@ -307,9 +307,9 @@ public class Administrador extends Persona {
         }else{
             Persona personaLoginNuevo = personaLoginAntiguo;
             String menu = "0";
-            String ruta = "";
-            Persona personaFicheroAntiguo;
-            Persona personaFicheroNuevo;
+            String ruta;
+            Persona personaFicheroAntiguo,personaFicheroNuevo;
+            String email,contraseña,dni,nombre,apellido,fechaNacimiento,genero;
             switch (personaLoginAntiguo.getGenero()) {
                 case "1":
                     ruta = "src/ficheros/Administradores/"+personaLoginAntiguo.getDni()+".jsonl";
@@ -331,40 +331,40 @@ public class Administrador extends Persona {
                         switch (menu = input.nextLine()) {
                             case "1":
                                 System.out.print("Introduce el nuevo email: ");
-                                String email = input.nextLine();
+                                email = input.nextLine();
                                 //Comprobar formato email
                                 personaFicheroNuevo.setEmail(email);
                                 personaLoginNuevo.setEmail(email);
                                 break;
                             case "2":
                                 System.out.print("Introduce la nueva contraseña: ");
-                                String contraseña = input.nextLine();
+                                contraseña = input.nextLine();
                                 personaLoginNuevo.setContraseña(contraseña);
                                 break;
                             case "3":
                                 System.out.print("Introduce el nuevo dni: ");
-                                String dni = input.nextLine();
+                                dni = input.nextLine();
                                 personaFicheroNuevo.setDni(dni);
                                 personaLoginNuevo.setDni(dni);
                                 break;
                             case "4":
                                 System.out.print("Introduce el nuevo nombre: ");
-                                String nombre = input.nextLine();
+                                nombre = input.nextLine();
                                 personaFicheroNuevo.setNombre(nombre);
                                 break;
                             case "5":
                                 System.out.print("Introduce el nuevo apellido: ");
-                                String apellido = input.nextLine();
+                                apellido = input.nextLine();
                                 personaFicheroNuevo.setApellidos(apellido);
                                 break;
                             case "6":
                                 System.out.print("Introduce la nueva fecha de nacimiento: ");
-                                String fechaNacimiento = input.nextLine();
+                                fechaNacimiento = input.nextLine();
                                 personaFicheroNuevo.setFechaNacimiento(fechaNacimiento);
                                 break;
                             case "7":
                                 System.out.print("Introduce el nuevo genero: ");
-                                String genero = input.nextLine();
+                                genero = input.nextLine();
                                 personaFicheroNuevo.setGenero(genero);
                                 break;
                             case "8":
