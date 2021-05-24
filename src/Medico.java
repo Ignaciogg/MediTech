@@ -72,7 +72,7 @@ public class Medico extends Persona{
                 default:
                     System.out.print("Introduce una opcion correcta: ");
             }
-        }while (!menu.equals("7"));
+        }while (!menu.equals("6"));
     }
 
     //FUNCIONES UTILIZADAS EN 1) VER CITA
@@ -126,9 +126,11 @@ public class Medico extends Persona{
 
 
     }
+
     public void recetar(){
 
     }
+
     public void historial_paciente(){
 
     }
@@ -162,6 +164,7 @@ public class Medico extends Persona{
 
         escribirCita(new Cita(dniMedico,dniPaciente,fecha,hora,diagnostico,receta),ruta);
     }
+
     public void datos_paciente(){
 
     }

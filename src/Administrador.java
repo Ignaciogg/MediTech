@@ -213,7 +213,7 @@ public class Administrador extends Persona {
         }while (!menuCU.equals("5"));
     }
 
-    //FUNCIONES UTILIZADAS EN 2) MODIFICAR USUARIO  Métodos a revisar
+    //FUNCIONES UTILIZADAS EN 2/3) MODIFICAR/ELIMINAR USUARIO
     public Persona buscarUsuario(String dni){
         Gson gson = new Gson();
         Persona persona = null;
