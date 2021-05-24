@@ -311,6 +311,8 @@ public class Administrador extends Persona {
             Persona personaFicheroAntiguo,personaFicheroNuevo;
             String email,contraseña,dni,nombre,apellido,fechaNacimiento,genero;
             int no_ss,no_cole;
+            double altura, peso;
+            String patologías, alergias, grupo_sanguineo;
 
             switch (personaLoginAntiguo.getGenero()) {
                 case "1":
@@ -318,7 +320,7 @@ public class Administrador extends Persona {
                     personaFicheroAntiguo = cargarUsuario(ruta,1);
                     personaFicheroNuevo = personaFicheroAntiguo;
                     do {
-                        System.out.println("\n\n----Modificar a un administrador----");
+                        System.out.println("\n\n----Modificar un Administrador----");
                         System.out.print(
                             "1 - Email\n" +
                             "2 - Contraseña\n" +
@@ -389,7 +391,7 @@ public class Administrador extends Persona {
                     personaFicheroAntiguo = cargarUsuario(ruta,2);
                     personaFicheroNuevo = personaFicheroAntiguo;
                     do {
-                        System.out.println("\n\n----Modificar a un médico----");
+                        System.out.println("\n\n----Modificar un Médico----");
                         System.out.print(
                             "1 - Email\n" +
                             "2 - Contraseña\n" +
@@ -464,24 +466,28 @@ public class Administrador extends Persona {
                             default:
                                 System.out.println("Introduce una opción válida");
                         }
-                    }while (!menu.equals("8"));
-
+                    }while (!menu.equals("10"));
                     break;
                 case "3":
                     ruta = "src/ficheros/Pacientes/"+personaLoginAntiguo.getDni()+".jsonl";
                     personaFicheroAntiguo = cargarUsuario(ruta,3);
                     personaFicheroNuevo = personaFicheroAntiguo;
                     do {
-                        System.out.println("\n\n----Modificar a un paciente----");
+                        System.out.println("\n\n----Modificar un Paciente----");
                         System.out.print(
                                 "1 - Email\n" +
-                                        "2 - Contraseña\n" +
-                                        "3 - DNI\n" +
-                                        "4 - Nombre\n" +
-                                        "5 - Apellidos\n" +
-                                        "6 - Fecha de nacimiento\n" +
-                                        "7 - Genero\n" +
-                                        "8 - Guardar y salir\n" +
+                                        "2  - Contraseña\n" +
+                                        "3  - DNI\n" +
+                                        "4  - Nombre\n" +
+                                        "5  - Apellidos\n" +
+                                        "6  - Fecha de nacimiento\n" +
+                                        "7  - Genero\n" +
+                                        "8  - Altura\n" +
+                                        "9  - Peso\n" +
+                                        "10 - Patologías\n" +
+                                        "11 - Alergias\n" +
+                                        "12 - Grupo Sanguíneo\n" +
+                                        "13 - Guardar y salir\n" +
                                         "Introduce el número del dato que quieras modificar: "
                         );
                         switch (menu = input.nextLine()) {
@@ -524,6 +530,31 @@ public class Administrador extends Persona {
                                 personaFicheroNuevo.setGenero(genero);
                                 break;
                             case "8":
+                                System.out.print("Introduce la nueva altura: ");
+                                altura = input.nextDouble();
+                                ((Paciente) personaFicheroNuevo).getAltura();
+                                break;
+                            case "9":
+                                System.out.print("Introduce el nuevo peso: ");
+                                peso = input.nextDouble();
+                                ((Paciente) personaFicheroNuevo).getPeso();
+                                break;
+                            case "10":
+                                System.out.print("Introduce las nuevas patologías: ");
+                                patologías = input.nextLine();
+                                ((Paciente) personaFicheroNuevo).getPatologías();
+                                break;
+                            case "11":
+                                System.out.print("Introduce las nuevas alergias: ");
+                                alergias = input.nextLine();
+                                ((Paciente) personaFicheroNuevo).getAlergias();
+                                break;
+                            case "12":
+                                System.out.print("Introduce el nuevo grupo sanguíneo: ");
+                                grupo_sanguineo = input.nextLine();
+                                ((Paciente) personaFicheroNuevo).getGrupo_sanguineo();
+                                break;
+                            case "13":
                                 //Eliminar usuario
                                 eliminarUsuarioLogin(personaLoginAntiguo.getDni());
                                 File eliminar = new File(ruta);
@@ -535,12 +566,83 @@ public class Administrador extends Persona {
                             default:
                                 System.out.println("Introduce una opción válida");
                         }
-                    }while (!menu.equals("8"));
-
+                    }while (!menu.equals("13"));
                     break;
                 case "4":
                     ruta = "src/ficheros/Recepcionista/"+personaLoginAntiguo.getDni()+".jsonl";
-
+                    personaFicheroAntiguo = cargarUsuario(ruta,4);
+                    personaFicheroNuevo = personaFicheroAntiguo;
+                    do {
+                        System.out.println("\n\n----Modificar un Recepcionista----");
+                        System.out.print(
+                                "1 - Email\n" +
+                                        "2 - Contraseña\n" +
+                                        "3 - DNI\n" +
+                                        "4 - Nombre\n" +
+                                        "5 - Apellidos\n" +
+                                        "6 - Fecha de nacimiento\n" +
+                                        "7 - Genero\n" +
+                                        "8 - Nº de Seguridad Social\n"+
+                                        "9 - Guardar y salir\n" +
+                                        "Introduce el número del dato que quieras modificar: "
+                        );
+                        switch (menu = input.nextLine()) {
+                            case "1":
+                                System.out.print("Introduce el nuevo email: ");
+                                email = input.nextLine();
+                                //Comprobar formato email
+                                personaFicheroNuevo.setEmail(email);
+                                personaLoginNuevo.setEmail(email);
+                                break;
+                            case "2":
+                                System.out.print("Introduce la nueva contraseña: ");
+                                contraseña = input.nextLine();
+                                personaLoginNuevo.setContraseña(contraseña);
+                                break;
+                            case "3":
+                                System.out.print("Introduce el nuevo dni: ");
+                                dni = input.nextLine();
+                                personaFicheroNuevo.setDni(dni);
+                                personaLoginNuevo.setDni(dni);
+                                break;
+                            case "4":
+                                System.out.print("Introduce el nuevo nombre: ");
+                                nombre = input.nextLine();
+                                personaFicheroNuevo.setNombre(nombre);
+                                break;
+                            case "5":
+                                System.out.print("Introduce el nuevo apellido: ");
+                                apellido = input.nextLine();
+                                personaFicheroNuevo.setApellidos(apellido);
+                                break;
+                            case "6":
+                                System.out.print("Introduce la nueva fecha de nacimiento: ");
+                                fechaNacimiento = input.nextLine();
+                                personaFicheroNuevo.setFechaNacimiento(fechaNacimiento);
+                                break;
+                            case "7":
+                                System.out.print("Introduce el nuevo genero: ");
+                                genero = input.nextLine();
+                                personaFicheroNuevo.setGenero(genero);
+                                break;
+                            case "8":
+                                System.out.print("Introduce el nuevo nº de Seguridad Social: ");
+                                no_ss = input.nextInt();
+                                ((Recepcionista) personaFicheroNuevo).getNo_seguridad_social();
+                                break;
+                            case "9":
+                                //Eliminar usuario
+                                eliminarUsuarioLogin(personaLoginAntiguo.getDni());
+                                File eliminar = new File(ruta);
+                                eliminar.delete();
+                                //guardar de nuevo
+                                escribirLogin(personaLoginNuevo);
+                                escribirPersona(personaFicheroNuevo,ruta);
+                                break;
+                            default:
+                                System.out.println("Introduce una opción válida");
+                        }
+                    }while (!menu.equals("9"));
                     break;
             }
 
