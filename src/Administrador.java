@@ -310,7 +310,7 @@ public class Administrador extends Persona {
             String ruta;
             Persona personaFicheroAntiguo,personaFicheroNuevo;
             String email,contraseña,dni,nombre,apellido,fechaNacimiento,genero;
-
+            int no_ss,no_cole;
             switch (personaLoginAntiguo.getGenero()) {
                 case "1":
                     ruta = "src/ficheros/Administradores/"+personaLoginAntiguo.getDni()+".jsonl";
@@ -387,22 +387,20 @@ public class Administrador extends Persona {
                     ruta = "src/ficheros/Medicos/"+personaLoginAntiguo.getDni()+".jsonl";
                     personaFicheroAntiguo = cargarUsuario(ruta,2);
                     personaFicheroNuevo = personaFicheroAntiguo;
-                    String no_ss;
-                    String no_cole;
                     do {
                         System.out.println("\n\n----Modificar a un médico----");
                         System.out.print(
-                                "1 - Email\n" +
-                                        "2 - Contraseña\n" +
-                                        "3 - DNI\n" +
-                                        "4 - Nombre\n" +
-                                        "5 - Apellidos\n" +
-                                        "6 - Fecha de nacimiento\n" +
-                                        "7 - Genero\n" +
-                                        "8 - Nº de Seguridad Social\n"+
-                                        "9 - Nº de Colegialo\n"+
-                                        "10 - Guardar y salir\n" +
-                                        "Introduce el número del dato que quieras modificar: "
+                            "1 - Email\n" +
+                            "2 - Contraseña\n" +
+                            "3 - DNI\n" +
+                            "4 - Nombre\n" +
+                            "5 - Apellidos\n" +
+                            "6 - Fecha de nacimiento\n" +
+                            "7 - Genero\n" +
+                            "8 - Nº de Seguridad Social\n"+
+                            "9 - Nº de Colegialo\n"+
+                            "10 - Guardar y salir\n" +
+                            "Introduce el número del dato que quieras modificar: "
                         );
                         switch (menu = input.nextLine()) {
                             case "1":
@@ -445,8 +443,13 @@ public class Administrador extends Persona {
                                 break;
                             case "8":
                                 System.out.print("Introduce el nuevo nº de Seguridad Social: ");
-                                no_ss = input.nextLine();
-                                personaFicheroNuevo.setNo_Seguridad_Social(no_ss);
+                                no_ss = input.nextInt();
+                                //forma 1
+                                Medico medicoNuevo = (Medico) personaFicheroNuevo;
+                                medicoNuevo.setNo_colegialo(no_ss);
+                                personaFicheroNuevo = medicoNuevo;
+                                //forma 2
+                                ((Medico) personaFicheroNuevo).getNo_seguridad_social();
                                 break;
                             case "9":
                                 System.out.print("Introduce el nuevo nº de Colegialo: ");
