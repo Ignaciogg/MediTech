@@ -50,7 +50,7 @@ public class Recepcionista extends Persona{
                     Crear_cita();
                     break;
                 case "2":
-                    Cancelar_sita();
+                    Cancelar_cita();
                     break;
                 case "3":
                     Modificar_cita();
@@ -132,7 +132,7 @@ public class Recepcionista extends Persona{
 
     }
 
-    public void Cancelar_sita(){
+    public void Cancelar_cita(){
 
     }
 

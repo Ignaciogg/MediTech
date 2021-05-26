@@ -1,4 +1,7 @@
 import java.util.Scanner;
+import java.io.IOException;
+import java.security.InvalidParameterException;
+import javax.mail.MessagingException;
 
 public class Paciente extends Persona{
 
@@ -108,6 +111,16 @@ public class Paciente extends Persona{
 
     }
     public void solicitar_cita(){
+
+        try {
+            Correo m = new Correo("src/config/Paciente.prop");
+
+            m.enviarEmail("Test", "Hola mundo", "meditech.recepcionista@gmail.com");
+
+            System.out.println("Se ha enviado!!");
+        } catch (InvalidParameterException | IOException | MessagingException ex) {
+            System.out.println(ex.getMessage());
+        }
 
     }
     public void cancelar_cita(){

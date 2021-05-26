@@ -1,0 +1,6 @@
+mail.smtp.host=smtp.gmail.com
+mail.smtp.port=25
+mail.smtp.user=meditech.paciente@gmail.com
+mail.smtp.password=Meditech2021
+mail.smtp.starttls.enable=true
+mail.smtp.auth=true
