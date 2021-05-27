@@ -1,6 +1,7 @@
 import com.google.gson.Gson;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class Medico extends Persona{
@@ -143,13 +144,99 @@ public class Medico extends Persona{
         }
     }
 
+    public String solicitarFecha(){
+        Scanner input = new Scanner(System.in);
+        boolean salir = false;
+        boolean bisiesto = false;
+        boolean mismoAnio = false;
+        boolean mismoMes = false;
+        int maxDias = 0;
+
+        String dia,mes,año;
+
+        //año
+        do {
+            System.out.print("Introduce el año de la cita:");
+            año = input.nextLine();
+            if (Integer.parseInt(año) >= LocalDateTime.now().getYear()) {
+                salir = true;
+                if(Integer.parseInt(año) == LocalDateTime.now().getYear()) mismoAnio = true;
+                if ((Integer.parseInt(año) % 4 == 0) && ((Integer.parseInt(año) % 100 != 0) || (Integer.parseInt(año) % 400 == 0)) ) bisiesto = true;
+            }
+        } while (!salir) ;
+        salir = false;
+        //mes
+        do {
+            System.out.print("Introduce el mes de la cita:");
+            mes = input.nextLine();
+            int mesEntero = Integer.parseInt(mes);
+            if (mesEntero > 0 && mesEntero < 13) {
+                if (mismoAnio) {
+                    if (mesEntero >= LocalDateTime.now().getMonthValue()) {
+                        if (mesEntero == LocalDateTime.now().getMonthValue()) mismoMes = true;
+                        salir = true;
+                        if (mesEntero == 1 || mesEntero == 3 || mesEntero == 5 || mesEntero == 7 || mesEntero == 8 || mesEntero == 10 || mesEntero == 12) {
+                            maxDias = 31;
+                        } else {
+                            if (mesEntero == 2) {
+                                if (bisiesto) {
+                                    maxDias = 29;
+                                } else {
+                                    maxDias = 28;
+                                }
+                            } else {
+                                maxDias = 30;
+                            }
+                        }
+                    }
+                }else {
+                    salir = true;
+                    if (mesEntero == 1 || mesEntero == 3 || mesEntero == 5 || mesEntero == 7 || mesEntero == 8 || mesEntero == 10 || mesEntero == 12) {
+                        maxDias = 31;
+                    } else {
+                        if (mesEntero == 2) {
+                            if (bisiesto) {
+                                maxDias = 29;
+                            } else {
+                                maxDias = 28;
+                            }
+                        } else {
+                            maxDias = 30;
+                        }
+                    }
+                }
+            }
+
+
+
+
+        }while (!salir);
+        salir = false;
+        //dia
+        do {
+            System.out.print("Introduce el dia de la cita:");
+            dia = input.nextLine();
+            if (Integer.parseInt(dia) > 0 && Integer.parseInt(dia) <= maxDias) {
+                if (mismoMes) {
+                    if (Integer.parseInt(dia) >= LocalDateTime.now().getDayOfMonth()) {
+                        salir = true;
+                    }
+                }else {
+                    salir = true;
+                }
+            }
+        }while (!salir);
+        if (Integer.parseInt(mes) < 10) mes = "0"+Integer.parseInt(mes);
+        if (Integer.parseInt(dia) < 10) dia = "0"+Integer.parseInt(dia);
+
+        return ("src/Citas/"+dia + "-"+mes+"-"+año+".jsonl");
+    }
+
     public void final_cita(String dniMedico){
         Scanner input = new Scanner(System.in);
 
         System.out.print("Introduce el DNI del paciente:");
         String dniPaciente = input.nextLine();
-        System.out.print("Introduce la fecha:");
-        String fecha = input.nextLine();
         System.out.print("Introduce la hora:");
         String hora = input.nextLine();
         System.out.print("Introduce el diagnóstico:");
@@ -157,9 +244,9 @@ public class Medico extends Persona{
         System.out.print("Introduce la receta:");
         String receta = input.nextLine();
 
-        String ruta = "src/ficheros/Citas/" + fecha + ".jsonl";
+        String ruta = solicitarFecha();
 
-        escribirCita(new Cita(dniMedico,dniPaciente,fecha,hora,diagnostico,receta),ruta);
+        escribirCita(new Cita(dniMedico,dniPaciente,hora,diagnostico,receta),ruta);
     }
 
     /*

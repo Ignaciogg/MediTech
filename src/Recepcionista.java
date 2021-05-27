@@ -1,9 +1,12 @@
 import com.google.gson.Gson;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 public class Recepcionista extends Persona{
 
@@ -27,7 +30,6 @@ public class Recepcionista extends Persona{
     public void setNo_seguridad_social(int no_seguridad_social) {
         this.no_seguridad_social = no_seguridad_social;
     }
-
 
     // Menú del recepcionista y sus respectivas funciones necesarias
 
@@ -128,19 +130,133 @@ public class Recepcionista extends Persona{
         escribirPersona(new Paciente(email,dni,nombre,apellidos,fechaNacimiento,genero,altura,peso,patologías,alergias,grupo_sanguineo),ruta);
     }
 
-    public void Crear_cita(){
+    public String solicitarFecha(){
+        Scanner input = new Scanner(System.in);
+        boolean salir = false;
+        boolean bisiesto = false;
+        boolean mismoAnio = false;
+        boolean mismoMes = false;
+        int maxDias = 0;
 
+        String dia,mes,año;
+
+        //año
+        do {
+            System.out.print("Introduce el año de la cita:");
+            año = input.nextLine();
+            if (Integer.parseInt(año) >= LocalDateTime.now().getYear()) {
+                salir = true;
+                if(Integer.parseInt(año) == LocalDateTime.now().getYear()) mismoAnio = true;
+                if ((Integer.parseInt(año) % 4 == 0) && ((Integer.parseInt(año) % 100 != 0) || (Integer.parseInt(año) % 400 == 0)) ) bisiesto = true;
+            }
+        } while (!salir) ;
+        salir = false;
+        //mes
+        do {
+            System.out.print("Introduce el mes de la cita:");
+            mes = input.nextLine();
+            int mesEntero = Integer.parseInt(mes);
+            if (mesEntero > 0 && mesEntero < 13) {
+                if (mismoAnio) {
+                    if (mesEntero >= LocalDateTime.now().getMonthValue()) {
+                        if (mesEntero == LocalDateTime.now().getMonthValue()) mismoMes = true;
+                        salir = true;
+                        if (mesEntero == 1 || mesEntero == 3 || mesEntero == 5 || mesEntero == 7 || mesEntero == 8 || mesEntero == 10 || mesEntero == 12) {
+                            maxDias = 31;
+                        } else {
+                            if (mesEntero == 2) {
+                                if (bisiesto) {
+                                    maxDias = 29;
+                                } else {
+                                    maxDias = 28;
+                                }
+                            } else {
+                                maxDias = 30;
+                            }
+                        }
+                    }
+                }else {
+                    salir = true;
+                    if (mesEntero == 1 || mesEntero == 3 || mesEntero == 5 || mesEntero == 7 || mesEntero == 8 || mesEntero == 10 || mesEntero == 12) {
+                        maxDias = 31;
+                    } else {
+                        if (mesEntero == 2) {
+                            if (bisiesto) {
+                                maxDias = 29;
+                            } else {
+                                maxDias = 28;
+                            }
+                        } else {
+                            maxDias = 30;
+                        }
+                    }
+                }
+            }
+        }while (!salir);
+        salir = false;
+        //dia
+        do {
+            System.out.print("Introduce el dia de la cita:");
+            dia = input.nextLine();
+            if (Integer.parseInt(dia) > 0 && Integer.parseInt(dia) <= maxDias) {
+                if (mismoMes) {
+                    if (Integer.parseInt(dia) >= LocalDateTime.now().getDayOfMonth()) {
+                        salir = true;
+                    }
+                }else {
+                    salir = true;
+                }
+            }
+        }while (!salir);
+        if (Integer.parseInt(mes) < 10) mes = "0"+Integer.parseInt(mes);
+        if (Integer.parseInt(dia) < 10) dia = "0"+Integer.parseInt(dia);
+
+        return ("src/Citas/"+dia + "-"+mes+"-"+año+".jsonl");
+    }
+
+    public void Crear_cita() {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Introduce el dni del paciente:");
+        String paciente = input.nextLine();
+        System.out.print("Introduce el dni del médico:");
+        String medico = input.nextLine();
+        //facha
+        String ficheroNombre = solicitarFecha();
+        //hora
+        System.out.print("Introduce la hora de la cita:");
+        String hora = input.nextLine();
+        try {
+            File cita = new File (ficheroNombre);
+            if(!cita.exists()) {
+                cita.createNewFile();
+            }
+            escribirCita(ficheroNombre,medico,paciente,hora);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void escribirCita (String ruta, String medico, String paciente, String hora){
+        Gson gson = new Gson();
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter(ruta));
+            Cita nuevo = new Cita(medico,paciente,hora);
+            bw.append(gson.toJson(nuevo));
+            bw.flush();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public void Cancelar_cita(){
-
+            System.out.print("");
     }
 
     public void Modificar_cita(){
-
+            System.out.print("");
     }
 
     public void Recordar_cita(){
-
+            System.out.print("");
     }
 }

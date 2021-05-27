@@ -2,18 +2,23 @@ public class Cita {
 
         private String dniMedico;
         private String dniPaciente;
-        private String fecha;
         private String hora;
         private String diagnostico;
         private String receta;
 
-        public Cita (String dniMedico, String dniPaciente, String fecha, String hora, String diagnostico, String receta) {
+        public Cita (String dniMedico, String dniPaciente, String hora, String diagnostico, String receta) {
             this.dniMedico = dniMedico;
             this.dniPaciente = dniPaciente;
-            this.fecha = fecha;
             this.hora = hora;
             this.diagnostico = diagnostico;
             this.receta = receta;
+        }
+        public Cita (String dniMedico, String dniPaciente, String hora) {
+            this.dniMedico = dniMedico;
+            this.dniPaciente = dniPaciente;
+            this.hora = hora;
+            this.diagnostico = null;
+            this.receta = null;
         }
 
         public String getDniMedico() {
@@ -30,14 +35,6 @@ public class Cita {
 
         public void setDniPaciente(String dniPaciente) {
             this.dniPaciente = dniPaciente;
-        }
-
-        public String getFecha() {
-            return fecha;
-        }
-
-        public void setFecha(String fecha) {
-            this.fecha = fecha;
         }
 
         public String getHora() {
@@ -69,7 +66,6 @@ public class Cita {
             return "Cita{" +
                     "DNI Médico ='" + dniMedico + '\'' +
                     ", DNI Paciente ='" + dniPaciente + '\'' +
-                    ", Fecha ='" + fecha + '\'' +
                     ", Hora ='" + hora + '\'' +
                     ", Diagnóstico ='" + diagnostico + '\'' +
                     ", Receta ='" + receta + '\'' +
