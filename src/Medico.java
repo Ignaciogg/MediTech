@@ -41,39 +41,35 @@ public class Medico extends Persona{
             System.out.println("\n\n\n----MENU MÉDICO----");
             System.out.print(
                 "1 - Ver citas pendientes\n" +
-                "2 - Recetar medicamento a un paciente\n" +
-                "3 - Ver el historial de un paciente\n" +
-                "4 - Concluir una cita \n" +
-                "5 - Mostrar datos de un paciente\n" +
-                "6 - Salir\n" +
-                "Introduce el número de la opcion que quieras realizar: "
+                "2 - Ver el historial de un paciente\n" +
+                "3 - Crear una nueva cita \n" +
+                "4 - Mostrar datos de un paciente\n" +
+                "5 - Salir\n" +
+                "Introduce el número de la opcion que quieras realizar:"
             );
             switch (menu = input.nextLine()) {
                 case "1":
                     ver_cita(getDni());
                     break;
                 case "2":
-                    recetar();
-                    break;
-                case "3":
                     historial_paciente();
                     break;
-                case "4":
-                    final_cita(getDni());
+                case "3":
+                    crearCita(getDni());
                     break;
-                case "5":
+                case "4":
                     datos_paciente();
                     break;
-                case "6":
+                case "5":
                     System.out.println("Hasta pronto");
                     break;
                 default:
                     System.out.print("Introduce una opcion correcta: ");
             }
-        }while (!menu.equals("6"));
+        }while (!menu.equals("5"));
     }
 
-    //FUNCIONES UTILIZADAS EN 1) VER CITA
+    //FUNCIONES UTILIZADAS EN 1) VER CITAS PENDIENTES
     public Persona buscarUsuario(String dni){
         Gson gson = new Gson();
         Persona persona = null;
@@ -125,14 +121,12 @@ public class Medico extends Persona{
 
     }
 
-    public void recetar(){
-
-    }
-
+    //FUNCIONES UTILIZADAS EN 2) VER HISTORIAL DE UN PACIENTE
     public void historial_paciente(){
 
     }
 
+    //FUNCIONES UTILIZADAS EN 3) CREAR UNA NUEVA CITA
     public void escribirCita(Cita nuevo, String ruta){
         Gson gson = new Gson();
         try{
@@ -207,9 +201,6 @@ public class Medico extends Persona{
                 }
             }
 
-
-
-
         }while (!salir);
         salir = false;
         //dia
@@ -229,10 +220,10 @@ public class Medico extends Persona{
         if (Integer.parseInt(mes) < 10) mes = "0"+Integer.parseInt(mes);
         if (Integer.parseInt(dia) < 10) dia = "0"+Integer.parseInt(dia);
 
-        return ("src/Citas/"+dia + "-"+mes+"-"+año+".jsonl");
+        return ("src/Citas/"+dia+"-"+mes+"-"+año+".jsonl");
     }
 
-    public void final_cita(String dniMedico){
+    public void crearCita(String dniMedico){
         Scanner input = new Scanner(System.in);
 
         System.out.print("Introduce el DNI del paciente:");
