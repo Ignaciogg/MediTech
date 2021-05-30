@@ -9,9 +9,7 @@ public class Recepcionista extends Persona{
     // Generados parámetros de la clase
     private int no_seguridad_social;
 
-
     //  Constructor
-
     public Recepcionista(String email, String dni, String nombre, String apellidos, String fechaNacimiento,
                          String genero, int no_seguridad_social) {
         super(email, dni, nombre, apellidos, fechaNacimiento, genero);
@@ -245,7 +243,19 @@ public class Recepcionista extends Persona{
     }
 
     public void Cancelar_cita(){
-            System.out.print("");
+        Scanner input = new Scanner(System.in);
+        System.out.print("Introduce el dni del paciente:");
+        String paciente = input.nextLine();
+        System.out.println("Introduce los datos de la cita que quieres cancelar:");
+        String urlCita = solicitarFecha();
+        System.out.print("Introduce a que hora tenía la cita:");
+        String hora = input.nextLine();
+        Cita cita = cargarCita(urlCita,hora,paciente);
+        if(cita!=null){
+            System.out.println("Cita eliminada correctamente");
+        }else {
+            System.out.println("Error al eliminar la cita");
+        }
     }
 
     public Cita cargarCita(String url, String hora, String dniPaciente){
