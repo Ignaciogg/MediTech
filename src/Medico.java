@@ -303,14 +303,28 @@ public class Medico extends Persona{
         Scanner input = new Scanner(System.in);
         System.out.println("Introduce el dni del paciente del que se quieren ver los datos:");
         String dniPaciente = input.nextLine();
-        /*
-        if(dniPaciente == buscarCita(dniPaciente)){
-            System.out.println("Estas son las citas de este Paciente: \n");
-            return cargarCita;
+
+        Paciente paciente = buscarPaciente(dniPaciente);
+        if(paciente != null){
+            System.out.println(paciente);
         }
         else
-            System.out.println("No se encontraron citas de este Paciente.");
-        */
+            System.out.println("Paciente no encontrado con ese DNI.");
 
+    }
+
+    public Paciente buscarPaciente(String dniPaciente){
+        Gson gson = new Gson();
+        Paciente paciente = null;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/ficheros/Pacientes"+ dniPaciente +".jsonl"));
+            String linea;
+            linea = br.readLine();
+            paciente = gson.fromJson(linea, Paciente.class);
+            br.close();
+        }catch (IOException e){
+            System.out.println(e);
+        }
+        return paciente;
     }
 }
