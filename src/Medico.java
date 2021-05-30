@@ -123,8 +123,66 @@ public class Medico extends Persona{
 
     //FUNCIONES UTILIZADAS EN 2) VER HISTORIAL DE UN PACIENTE
     public void historial_paciente(){
-
+        Scanner input = new Scanner(System.in);
+        System.out.println("Introduce el dni del paciente del que se quieren ver los datos:");
+        String dniPaciente = input.nextLine();
+        /*
+        if(dniPaciente == buscarCita(dniPaciente)){
+            System.out.println("Estas son las citas de este Paciente: \n");
+            return cargarCita;
+        }
+        else
+            System.out.println("No se encontraron citas de este Paciente.");
+        */
     }
+
+    /*
+    public Persona buscarCita(String dniPaciente){
+        Gson gson = new Gson();
+        Cita cita = null;
+        boolean encontrado = false;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/ficheros/Citas.jsonl"));
+            String linea;
+            while ((linea = br.readLine()) != null && encontrado == false) {
+                cita = gson.fromJson(linea, Cita.class);
+                if (cita.getDniPaciente().equals(dniPaciente)) {
+                    encontrado = true;
+                }
+            }
+        }catch (IOException e){
+            System.out.println(e);
+        }
+        return cita;
+    }
+
+    public Persona cargarCita (String ruta, int tipo){
+        Gson gson = new Gson();
+        Persona persona = null;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(ruta));
+            String linea;
+            linea = br.readLine();
+            switch (tipo){
+                case 1:
+                    persona = gson.fromJson(linea, Administrador.class);
+                    break;
+                case 2:
+                    persona = gson.fromJson(linea, Medico.class);
+                    break;
+                case 3:
+                    persona = gson.fromJson(linea, Paciente.class);
+                    break;
+                case 4:
+                    persona = gson.fromJson(linea, Recepcionista.class);
+                    break;
+            }
+        }catch (IOException e){
+            System.out.println(e);
+        }
+        return persona;
+    }
+    */
 
     //FUNCIONES UTILIZADAS EN 3) CREAR UNA NUEVA CITA
     public void escribirCita(Cita nuevo, String ruta){
@@ -240,53 +298,7 @@ public class Medico extends Persona{
         escribirCita(new Cita(dniMedico,dniPaciente,hora,diagnostico,receta),ruta);
     }
 
-    /*
-    public Persona buscarCita(String dniPaciente){
-        Gson gson = new Gson();
-        Cita cita = null;
-        boolean encontrado = false;
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("src/ficheros/Citas.jsonl"));
-            String linea;
-            while ((linea = br.readLine()) != null && encontrado == false) {
-                cita = gson.fromJson(linea, Cita.class);
-                if (cita.getDniPaciente().equals(dniPaciente)) {
-                    encontrado = true;
-                }
-            }
-        }catch (IOException e){
-            System.out.println(e);
-        }
-        return cita;
-    }
-
-    public Persona cargarCita (String ruta, int tipo){
-        Gson gson = new Gson();
-        Persona persona = null;
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(ruta));
-            String linea;
-            linea = br.readLine();
-            switch (tipo){
-                case 1:
-                    persona = gson.fromJson(linea, Administrador.class);
-                    break;
-                case 2:
-                    persona = gson.fromJson(linea, Medico.class);
-                    break;
-                case 3:
-                    persona = gson.fromJson(linea, Paciente.class);
-                    break;
-                case 4:
-                    persona = gson.fromJson(linea, Recepcionista.class);
-                    break;
-            }
-        }catch (IOException e){
-            System.out.println(e);
-        }
-        return persona;
-    }
-    */
+    //FUNCIONES UTILIZADAS EN 4) VER LOS DATOS DE UN PACIENTE
     public void datos_paciente(){
         Scanner input = new Scanner(System.in);
         System.out.println("Introduce el dni del paciente del que se quieren ver los datos:");
