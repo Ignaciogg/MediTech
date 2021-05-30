@@ -1,11 +1,7 @@
 import com.google.gson.Gson;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
-import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
 public class Recepcionista extends Persona{
@@ -43,7 +39,7 @@ public class Recepcionista extends Persona{
                 "2 - Cancelar cita a un paciente\n" +
                 "3 - Modificar cita de un paciente\n" +
                 "4 - Enviar recordatorio a un paciente de su cita\n" +
-                        "5 - Generar un nuevo paciente\n" +
+                "5 - Generar un nuevo paciente\n" +
                 "6 - Salir\n" +
                 "Introduce el número de la opcion que quieras realizar: "
             );
@@ -252,8 +248,67 @@ public class Recepcionista extends Persona{
             System.out.print("");
     }
 
+    public Cita cargarCita(String url, String hora, String dniPaciente){
+        Gson gson = new Gson();
+        Cita cita = null;
+        Cita citaBuscada = null;
+        File ficheroViejo = new File(url);
+        File ficheroNuevo = new File("src/citas/cita.jsonl");
+        try {
+            FileReader fr = new FileReader(ficheroViejo);
+            BufferedReader br = new BufferedReader(fr);
+            FileWriter fw = new FileWriter(ficheroNuevo,true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                cita = gson.fromJson(linea, Cita.class);
+                if (!cita.getDniPaciente().toLowerCase().equals(dniPaciente)) {
+                    bw.append(gson.toJson(cita));
+                    bw.flush();
+                    bw.newLine();
+                }else{
+                    if (!cita.getHora().equals(hora)){
+                        bw.append(gson.toJson(cita));
+                        bw.flush();
+                        bw.newLine();
+                    }else{
+                        citaBuscada = cita;
+                    }
+                }
+            }
+            br.close();
+            fr.close();
+            bw.close();
+            fw.close();
+            if(ficheroViejo.delete()){
+                if(ficheroNuevo.renameTo(new File(url))){
+                    return citaBuscada;
+                }
+            }
+            return null;
+        }catch (IOException e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+
     public void Modificar_cita(){
-            System.out.print("");
+        Scanner input = new Scanner(System.in);
+        System.out.print("Introduce el dni del paciente:");
+        String paciente = input.nextLine();
+        System.out.println("Introduce los datos de la cita que quieres modificar:");
+        String urlCitaVieja = solicitarFecha();
+        System.out.print("Introduce a que hora tenía la cita:");
+        String horaVieja = input.nextLine();
+        Cita vieja = cargarCita(urlCitaVieja,horaVieja,paciente);
+        if(vieja!=null){
+            System.out.println("Introduce los nuevos datos de la cita:");
+            String urlCitaNueva = solicitarFecha();
+            String medico = vieja.getDniMedico();
+            System.out.println("Introduce la hora de la nueva cita:");
+            String horaNueva = input.nextLine();
+            escribirCita(urlCitaNueva,medico,paciente,horaNueva);
+        }
     }
 
     public void Recordar_cita(){
