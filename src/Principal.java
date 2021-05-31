@@ -98,6 +98,7 @@ public class Principal {
             contraseña = input.nextLine();
 
             usuarioActivo = iniciarSesion(email, contraseña);
+
         }while (usuarioActivo==null);
         System.out.println(usuarioActivo);
         usuarioActivo.Menu();
