@@ -66,64 +66,7 @@ public class Recepcionista extends Persona{
         }while (!menu.equals("5"));
     }
 
-    public void escribirLogin(Persona nuevo){
-        Gson gson = new Gson();
-        try{
-            BufferedWriter bw = new BufferedWriter(new FileWriter("src/ficheros/login.jsonl",true));
-            bw.newLine();
-            bw.append(gson.toJson(nuevo));
-            bw.flush();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    public void escribirPersona(Persona nuevo, String ruta){
-        Gson gson = new Gson();
-        try{
-            BufferedWriter bw = new BufferedWriter(new FileWriter(ruta));
-            bw.write(gson.toJson(nuevo));
-            bw.flush();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    public void generarPaciente(){
-        Scanner input = new Scanner(System.in);
-
-        System.out.print("Introduce el email:");
-        String email = input.nextLine();
-        //GENERAR AUTOMATICO Y MANDAR POR CORREO
-        System.out.print("Introduce la contraseña:");
-        String contraseña = input.nextLine();
-        System.out.print("Introduce el dni:");
-        String dni = input.nextLine();
-        System.out.print("Introduce el nombre:");
-        String nombre = input.nextLine();
-        System.out.print("Introduce los apellidos:");
-        String apellidos = input.nextLine();
-        System.out.print("Introduce la fecha de nacimiento:");
-        String fechaNacimiento = input.nextLine();
-        System.out.print("Introduce el género:");
-        String genero = input.nextLine();
-        System.out.print("Introduce la altura:");
-        Double altura = input.nextDouble();
-        System.out.print("Introduce el peso:");
-        Double peso = input.nextDouble();
-        System.out.print("Introduce las patologías:");
-        String patologías = input.nextLine();
-        System.out.print("Introduce las alergias:");
-        String alergias = input.nextLine();
-        System.out.print("Introduce el grupo sanguíneo:");
-        String grupo_sanguineo = input.nextLine();
-
-        String ruta = "src/ficheros/Pacientes/" + dni + ".jsonl";
-
-        escribirLogin(new Persona(email,contraseña,dni,"3"));
-        escribirPersona(new Paciente(email,dni,nombre,apellidos,fechaNacimiento,genero,altura,peso,patologías,alergias,grupo_sanguineo),ruta);
-    }
-
+    //FUNCIONES UTILIZADAS EN 1) GENERAR UNA NUEVA CITA
     public String solicitarFecha(){
         Scanner input = new Scanner(System.in);
         boolean salir = false;
@@ -242,6 +185,7 @@ public class Recepcionista extends Persona{
         }
     }
 
+    //FUNCIONES UTILIZADAS EN 2) CANCELAR UNA CITA
     public void Cancelar_cita(){
         Scanner input = new Scanner(System.in);
         System.out.print("Introduce el dni del paciente:");
@@ -302,6 +246,7 @@ public class Recepcionista extends Persona{
         }
     }
 
+    //FUNCIONES UTILIZADAS EN 3) MODIFICAR UNA CITA
     public void Modificar_cita(){
         Scanner input = new Scanner(System.in);
         System.out.print("Introduce el dni del paciente:");
@@ -321,7 +266,67 @@ public class Recepcionista extends Persona{
         }
     }
 
+    //FUNCIONES UTILIZADAS EN 4) RECORDAR UNA CITA
     public void Recordar_cita(){
             System.out.print("");
+    }
+
+    //FUNCIONES UTILIZADAS EN 5) GENERAR UN NUEVO PACIENTE
+    public void escribirLogin(Persona nuevo){
+        Gson gson = new Gson();
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter("src/ficheros/login.jsonl",true));
+            bw.newLine();
+            bw.append(gson.toJson(nuevo));
+            bw.flush();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void escribirPersona(Persona nuevo, String ruta){
+        Gson gson = new Gson();
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter(ruta));
+            bw.write(gson.toJson(nuevo));
+            bw.flush();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void generarPaciente(){
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Introduce el email:");
+        String email = input.nextLine();
+        //GENERAR AUTOMATICO Y MANDAR POR CORREO
+        System.out.print("Introduce la contraseña:");
+        String contraseña = input.nextLine();
+        System.out.print("Introduce el dni:");
+        String dni = input.nextLine();
+        System.out.print("Introduce el nombre:");
+        String nombre = input.nextLine();
+        System.out.print("Introduce los apellidos:");
+        String apellidos = input.nextLine();
+        System.out.print("Introduce la fecha de nacimiento:");
+        String fechaNacimiento = input.nextLine();
+        System.out.print("Introduce el género:");
+        String genero = input.nextLine();
+        System.out.print("Introduce la altura:");
+        Double altura = input.nextDouble();
+        System.out.print("Introduce el peso:");
+        Double peso = input.nextDouble();
+        System.out.print("Introduce las patologías:");
+        String patologías = input.nextLine();
+        System.out.print("Introduce las alergias:");
+        String alergias = input.nextLine();
+        System.out.print("Introduce el grupo sanguíneo:");
+        String grupo_sanguineo = input.nextLine();
+
+        String ruta = "src/ficheros/Pacientes/" + dni + ".jsonl";
+
+        escribirLogin(new Persona(email,contraseña,dni,"3"));
+        escribirPersona(new Paciente(email,dni,nombre,apellidos,fechaNacimiento,genero,altura,peso,patologías,alergias,grupo_sanguineo),ruta);
     }
 }
