@@ -65,7 +65,7 @@ public class Principal {
                         System.out.println("Has iniciado sesión correctamente");
                         inicioSesion = 1;
                     }else {
-                        System.out.println("la contraseña introducida no es correcta");
+                        System.out.println("La contraseña introducida no es correcta");
                         inicioSesion = 2;
                     }
                 }
@@ -79,7 +79,7 @@ public class Principal {
         if(inicioSesion==1){
             return persona;
         }
-        System.out.println("Los datos de inicio de sesion no son correctos");
+        System.out.println("Los datos de inicio de sesión no son correctos");
         return null;
     }
 
