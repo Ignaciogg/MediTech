@@ -1,1 +1,1 @@
-{"email": "paciente@email.com", "dni": "123456789c", "nombre": "manolo", "apellidos": "soy Manolo", "fechaNacimiento": "01-01-2000", "genero": "hombre"}
+{"email": "paciente@email.com", "dni": "123456789c", "nombre": "manolo", "apellidos": "soy Manolo", "fechaNacimiento": "01-01-2000", "genero": "hombre", "altura": "1.80", "peso": "75.0", "patologías": "esguince", "alergias": "melocotón", "grupo_sanguineo": "A"}

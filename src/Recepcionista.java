@@ -6,17 +6,16 @@ import java.time.LocalDateTime;
 
 public class Recepcionista extends Persona{
 
-    // Generados parámetros de la clase
+    // Datos de la clase
     private int no_seguridad_social;
 
     //  Constructor
-    public Recepcionista(String email, String dni, String nombre, String apellidos, String fechaNacimiento,
-                         String genero, int no_seguridad_social) {
+    public Recepcionista(String email, String dni, String nombre, String apellidos, String fechaNacimiento, String genero, int no_seguridad_social) {
         super(email, dni, nombre, apellidos, fechaNacimiento, genero);
         this.no_seguridad_social = no_seguridad_social;
     }
 
-    // Generamos getters y setters
+    // Getters y Setters
     public int getNo_seguridad_social() {
         return no_seguridad_social;
     }
@@ -55,7 +54,7 @@ public class Recepcionista extends Persona{
                     Recordar_cita();
                     break;
                 case "5":
-                    generarPaciente();
+                    Generar_paciente();
                     break;
                 case "6":
                     System.out.println("Hasta pronto");
@@ -67,6 +66,29 @@ public class Recepcionista extends Persona{
     }
 
     //FUNCIONES UTILIZADAS EN 1) GENERAR UNA NUEVA CITA
+
+    public void Crear_cita() {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Introduce el dni del paciente:");
+        String paciente = input.nextLine();
+        System.out.print("Introduce el dni del médico:");
+        String medico = input.nextLine();
+        //facha
+        String ficheroNombre = solicitarFecha();
+        //hora
+        System.out.print("Introduce la hora de la cita:");
+        String hora = input.nextLine();
+        try {
+            File cita = new File (ficheroNombre);
+            if(!cita.exists()) {
+                cita.createNewFile();
+            }
+            escribirCita(ficheroNombre,medico,paciente,hora);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String solicitarFecha(){
         Scanner input = new Scanner(System.in);
         boolean salir = false;
@@ -151,28 +173,6 @@ public class Recepcionista extends Persona{
         return ("src/Citas/"+dia + "-"+mes+"-"+año+".jsonl");
     }
 
-    public void Crear_cita() {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Introduce el dni del paciente:");
-        String paciente = input.nextLine();
-        System.out.print("Introduce el dni del médico:");
-        String medico = input.nextLine();
-        //facha
-        String ficheroNombre = solicitarFecha();
-        //hora
-        System.out.print("Introduce la hora de la cita:");
-        String hora = input.nextLine();
-        try {
-            File cita = new File (ficheroNombre);
-            if(!cita.exists()) {
-                cita.createNewFile();
-            }
-            escribirCita(ficheroNombre,medico,paciente,hora);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void escribirCita (String ruta, String medico, String paciente, String hora){
         Gson gson = new Gson();
         try{
@@ -186,6 +186,7 @@ public class Recepcionista extends Persona{
     }
 
     //FUNCIONES UTILIZADAS EN 2) CANCELAR UNA CITA
+
     public void Cancelar_cita(){
         Scanner input = new Scanner(System.in);
         System.out.print("Introduce el dni del paciente:");
@@ -207,7 +208,7 @@ public class Recepcionista extends Persona{
         Cita cita = null;
         Cita citaBuscada = null;
         File ficheroViejo = new File(url);
-        File ficheroNuevo = new File("src/citas/cita.jsonl");
+        File ficheroNuevo = new File("src/ficheros/citas/cita.jsonl");
         try {
             FileReader fr = new FileReader(ficheroViejo);
             BufferedReader br = new BufferedReader(fr);
@@ -266,36 +267,16 @@ public class Recepcionista extends Persona{
         }
     }
 
-    //FUNCIONES UTILIZADAS EN 4) RECORDAR UNA CITA
+    //FUNCIONES UTILIZADAS EN 4) RECORDAR UNA CITA ----Por Hacer(Correo)----
     public void Recordar_cita(){
-            System.out.print("");
+
+
+        System.out.print("");
     }
 
     //FUNCIONES UTILIZADAS EN 5) GENERAR UN NUEVO PACIENTE
-    public void escribirLogin(Persona nuevo){
-        Gson gson = new Gson();
-        try{
-            BufferedWriter bw = new BufferedWriter(new FileWriter("src/ficheros/login.jsonl",true));
-            bw.newLine();
-            bw.append(gson.toJson(nuevo));
-            bw.flush();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
 
-    public void escribirPersona(Persona nuevo, String ruta){
-        Gson gson = new Gson();
-        try{
-            BufferedWriter bw = new BufferedWriter(new FileWriter(ruta));
-            bw.write(gson.toJson(nuevo));
-            bw.flush();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    public void generarPaciente(){
+    public void Generar_paciente(){
         Scanner input = new Scanner(System.in);
 
         System.out.print("Introduce el email:");
@@ -329,4 +310,28 @@ public class Recepcionista extends Persona{
         escribirLogin(new Persona(email,contraseña,dni,"3"));
         escribirPersona(new Paciente(email,dni,nombre,apellidos,fechaNacimiento,genero,altura,peso,patologías,alergias,grupo_sanguineo),ruta);
     }
+
+    public void escribirLogin(Persona nuevo){
+        Gson gson = new Gson();
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter("src/ficheros/login.jsonl",true));
+            bw.newLine();
+            bw.append(gson.toJson(nuevo));
+            bw.flush();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void escribirPersona(Persona nuevo, String ruta){
+        Gson gson = new Gson();
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter(ruta));
+            bw.write(gson.toJson(nuevo));
+            bw.flush();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
 }

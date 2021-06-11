@@ -5,11 +5,12 @@ import java.util.Scanner;
 
 public class Administrador extends Persona {
 
-    //Constructores
+    //Constructor
     public Administrador(String email, String dni, String nombre, String apellidos, String fechaNacimiento, String genero) {
         super(email, dni, nombre, apellidos, fechaNacimiento, genero);
     }
 
+    //Menú principal
     public void Menu(){
         Scanner input = new Scanner(System.in);
         String menu = "0";
@@ -67,6 +68,42 @@ public class Administrador extends Persona {
     }
 
     //FUNCIONES UTILIZADAS EN 1) CREAR NUEVO USUARIO
+
+    public void CrearUsuario(){
+        Scanner input = new Scanner(System.in);
+        String menuCU = "0";
+        do {
+            System.out.println("\n\n----Dar de alta a un usuario----");
+            System.out.print(
+                    "1 - Admin\n" +
+                            "2 - Medico\n" +
+                            "3 - Paciente\n" +
+                            "4 - Recepcionista\n" +
+                            "5 - Salir\n" +
+                            "Introduce el número del usuario que quieras dar de alta: "
+            );
+            switch (menuCU = input.nextLine()) {
+                case "1":
+                    generarAdministrador();
+                    break;
+                case "2":
+                    generarMedico();
+                    break;
+                case "3":
+                    generarPaciente();
+                    break;
+                case "4":
+                    generarRecepcionista();
+                    break;
+                case "5":
+                    System.out.println("Elegiste salir \n");
+                    break;
+                default:
+                    System.out.print("Introduce una opcion correcta: ");
+            }
+        }while (!menuCU.equals("5"));
+    }
+
     public void generarAdministrador(){
         Scanner input = new Scanner(System.in);
 
@@ -176,41 +213,6 @@ public class Administrador extends Persona {
         String ruta = "src/ficheros/Recepcionistas/" + dni + ".jsonl";
         escribirLogin(new Persona(email,contraseña,dni,"4"));
         escribirPersona(new Recepcionista(email,dni,nombre,apellidos,fechaNacimiento,genero,no_seguridad_social),ruta);
-    }
-
-    public void CrearUsuario(){
-        Scanner input = new Scanner(System.in);
-        String menuCU = "0";
-        do {
-            System.out.println("\n\n----Dar de alta a un usuario----");
-            System.out.print(
-                "1 - Admin\n" +
-                "2 - Medico\n" +
-                "3 - Paciente\n" +
-                "4 - Recepcionista\n" +
-                "5 - Salir\n" +
-                "Introduce el número del usuario que quieras dar de alta: "
-            );
-            switch (menuCU = input.nextLine()) {
-                case "1":
-                    generarAdministrador();
-                    break;
-                case "2":
-                    generarMedico();
-                    break;
-                case "3":
-                    generarPaciente();
-                    break;
-                case "4":
-                    generarRecepcionista();
-                    break;
-                case "5":
-                    System.out.println("Elegiste salir \n");
-                    break;
-                default:
-                    System.out.print("Introduce una opcion correcta: ");
-            }
-        }while (!menuCU.equals("5"));
     }
 
     //FUNCIONES UTILIZADAS EN 2/3) MODIFICAR/ELIMINAR USUARIO
