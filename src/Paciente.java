@@ -239,7 +239,7 @@ public class Paciente extends Persona{
         try {
             Correo m = new Correo("src/config/Paciente.prop");
 
-            m.enviarEmail("Test", "Hola mundo", "meditech.recepcionista@gmail.com");
+            m.enviarEmail("Solicitud Cita", "", "meditech.recepcionista@gmail.com");
 
             System.out.println("Se ha enviado!!");
         } catch (InvalidParameterException | IOException | MessagingException ex) {
@@ -250,12 +250,28 @@ public class Paciente extends Persona{
 
     //3 - Cancelar cita
     public void cancelar_cita(){
+        try {
+            Correo m = new Correo("src/config/Paciente.prop");
 
+            m.enviarEmail("Cancelar Cita", "", "meditech.recepcionista@gmail.com");
+
+            System.out.println("Se ha enviado!!");
+        } catch (InvalidParameterException | IOException | MessagingException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     //4 - Modificar cita
     public void modificar_citas(){
+        try {
+            Correo m = new Correo("src/config/Paciente.prop");
 
+            m.enviarEmail("Modificar Cita", "", "meditech.recepcionista@gmail.com");
+
+            System.out.println("Se ha enviado!!");
+        } catch (InvalidParameterException | IOException | MessagingException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     //5 - Ver citas pendientes
