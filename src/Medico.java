@@ -12,8 +12,7 @@ public class Medico extends Persona{
     private int no_colegialo;
 
     // Constructor
-    public Medico(String email, String dni, String nombre, String apellidos, String fechaNacimiento, String genero,
-                  int no_seguridad_social, int no_colegialo) {
+    public Medico(String email, String dni, String nombre, String apellidos, String fechaNacimiento, String genero, int no_seguridad_social, int no_colegialo) {
         super(email, dni, nombre, apellidos, fechaNacimiento, genero);
         this.no_colegialo = no_colegialo;
         this.no_seguridad_social = no_seguridad_social;
@@ -24,6 +23,7 @@ public class Medico extends Persona{
     public int getNo_seguridad_social() {
         return no_seguridad_social;
     }
+
     public void setNo_seguridad_social(int no_seguridad_social) {
         this.no_seguridad_social = no_seguridad_social;
     }
@@ -172,6 +172,10 @@ public class Medico extends Persona{
 
         while (fecha!=fechaActual){
             imprimirHistorial(fecha,dniPaciente);
+            String[] separarFecha = fecha.split("-");
+            dia = Integer.parseInt(separarFecha[0]);
+            mes = Integer.parseInt(separarFecha[1]);
+            año = Integer.parseInt(separarFecha[2]);
             fecha = siguienteDia(dia,mes,año);
         }
     }
@@ -189,7 +193,7 @@ public class Medico extends Persona{
                 Paciente paciente = null;
                 while ((linea = br.readLine()) != null) {
                     cita = gson.fromJson(linea, Cita.class);
-                    if (cita.getDniPaciente().equalsIgnoreCase(dniPaciente)) {
+                    if (cita.getDniPaciente().equalsIgnoreCase(dniPaciente) && (cita.getReceta()!=null || cita.getDiagnostico()!=null)) {
                         System.out.println("Fecha: " + fecha + " Diagnóstico: " + cita.getDiagnostico() + " Receta: " + cita.getReceta());
                     }
                 }
