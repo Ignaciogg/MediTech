@@ -235,6 +235,7 @@ public class Paciente extends Persona{
 
     //2 - Solicitar cita
     public void solicitar_cita(){
+
         Scanner input = new Scanner(System.in);
         try {
             System.out.print("Introduce el dia que deseas la cita:");
@@ -250,6 +251,7 @@ public class Paciente extends Persona{
             System.out.println(ex.getMessage());
         }
 
+
     }
 
     //3 - Cancelar cita
@@ -263,6 +265,7 @@ public class Paciente extends Persona{
             Correo m = new Correo("src/config/Paciente.prop");
 
             m.enviarEmail("Solicitud Cancelar cita", "Solicitud cancelar cita del paciente"+getNombre()+" "+getApellidos()+" con DNI: "+getDni()+ "del día "+dia+ "a las "+hora + " horas.", "meditech.recepcionista@gmail.com");
+            m.enviarEmail("Cancelar Cita", "", "meditech.recepcionista@gmail.com");
 
             System.out.println("Se ha enviado!!");
         } catch (InvalidParameterException | IOException | MessagingException ex) {
@@ -288,6 +291,7 @@ public class Paciente extends Persona{
                     "Solicitud modificar cita del paciente"+getNombre()+" "+getApellidos()+" con DNI: "+getDni()
                             + "del día "+diaViejo+ "a las "+horaViejo + " horas. Y solicita cambiarla para el día : "+dia
                             +" a las "+hora+" horas.", "meditech.recepcionista@gmail.com");
+            m.enviarEmail("Modificar Cita", "", "meditech.recepcionista@gmail.com");
 
             System.out.println("Se ha enviado!!");
         } catch (InvalidParameterException | IOException | MessagingException ex) {
