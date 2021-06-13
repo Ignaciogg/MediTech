@@ -141,7 +141,7 @@ public class Paciente extends Persona{
         int año = 2021;
         String fecha = dia+"-"+mes+"-"+año;
 
-        while (fecha!=fechaActual){
+        while (!fecha.equals(fechaActual)){
             imprimirHistorial(fecha,dniPaciente);
             String[] separarFecha = fecha.split("-");
             dia = Integer.parseInt(separarFecha[0]);
