@@ -176,6 +176,7 @@ public class Administrador extends Persona {
         Double altura = input.nextDouble();
         System.out.print("Introduce el peso:");
         Double peso = input.nextDouble();
+        input.next();
         System.out.print("Introduce las patologías:");
         String patologías = input.nextLine();
         System.out.print("Introduce las alergias:");
@@ -223,7 +224,7 @@ public class Administrador extends Persona {
             String linea;
             while ((linea = br.readLine()) != null && encontrado == false) {
                 persona = gson.fromJson(linea, Persona.class);
-                if (persona.getDni().toLowerCase().equals(dni)) {
+                if (persona.getDni().equalsIgnoreCase(dni)) {
                     encontrado = true;
                 }
             }

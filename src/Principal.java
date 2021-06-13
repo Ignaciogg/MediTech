@@ -100,7 +100,6 @@ public class Principal {
             usuarioActivo = iniciarSesion(email, contraseña);
 
         }while (usuarioActivo==null);
-        System.out.println(usuarioActivo);
         usuarioActivo.Menu();
     }
 }

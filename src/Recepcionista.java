@@ -66,7 +66,7 @@ public class Recepcionista extends Persona{
                 default:
                     System.out.print("Introduce una opcion correcta: ");
             }
-        }while (!menu.equals("5"));
+        }while (!menu.equals("6"));
     }
 
     //FUNCIONES UTILIZADAS EN 1) GENERAR UNA NUEVA CITA
@@ -77,7 +77,7 @@ public class Recepcionista extends Persona{
         String paciente = input.nextLine();
         System.out.print("Introduce el dni del médico:");
         String medico = input.nextLine();
-        //facha
+        //fecha
         String ficheroNombre = solicitarFecha();
         //hora
         System.out.print("Introduce la hora de la cita:");
@@ -174,13 +174,13 @@ public class Recepcionista extends Persona{
         if (Integer.parseInt(mes) < 10) mes = "0"+Integer.parseInt(mes);
         if (Integer.parseInt(dia) < 10) dia = "0"+Integer.parseInt(dia);
 
-        return ("src/Citas/"+dia + "-"+mes+"-"+año+".jsonl");
+        return ("src/ficheros/Citas/"+dia + "-"+mes+"-"+año+".jsonl");
     }
 
     public void escribirCita (String ruta, String medico, String paciente, String hora){
         Gson gson = new Gson();
         try{
-            BufferedWriter bw = new BufferedWriter(new FileWriter(ruta));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(ruta,true));
             Cita nuevo = new Cita(medico,paciente,hora);
             bw.append(gson.toJson(nuevo));
             bw.flush();
@@ -195,7 +195,7 @@ public class Recepcionista extends Persona{
         Scanner input = new Scanner(System.in);
         System.out.print("Introduce el dni del paciente:");
         String paciente = input.nextLine();
-        System.out.println("Introduce los datos de la cita que quieres cancelar:");
+        System.out.println("Introduce los datos de la cita que quieres cancelar");
         String urlCita = solicitarFecha();
         System.out.print("Introduce a que hora tenía la cita:");
         String hora = input.nextLine();
@@ -314,6 +314,7 @@ public class Recepcionista extends Persona{
         Double altura = input.nextDouble();
         System.out.print("Introduce el peso:");
         Double peso = input.nextDouble();
+        input.next();
         System.out.print("Introduce las patologías:");
         String patologías = input.nextLine();
         System.out.print("Introduce las alergias:");
