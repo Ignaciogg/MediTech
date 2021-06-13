@@ -90,7 +90,6 @@ public class Medico extends Persona{
             ruta += mes+"-";
         }
         ruta+= año+".jsonl";
-        System.out.println(ruta);
         //Compruebo si existe un fichero de citas para este día
         if (new File(ruta).exists()){
             ArrayList <Cita> citas = new ArrayList<Cita>();
@@ -98,6 +97,7 @@ public class Medico extends Persona{
             Cita cita = null;
             File ficheroViejo = new File(ruta);
             int contadorCitas = 0;
+            System.out.println();
             try {
                 FileReader fr = new FileReader(ficheroViejo);
                 BufferedReader br = new BufferedReader(fr);
@@ -106,7 +106,7 @@ public class Medico extends Persona{
                 while ((linea = br.readLine()) != null) {
                     cita = gson.fromJson(linea, Cita.class);
                     if (cita.getDniMedico().equalsIgnoreCase(dniMedico)) {
-                        if (cita.getDiagnostico()==null && cita.getReceta()==null){
+                        if (cita.getDiagnostico().equals("null") && cita.getReceta().equals("null")){
                             ++contadorCitas;
                             citas.add(cita);
                             paciente=buscarPaciente(cita.getDniPaciente());
@@ -120,7 +120,7 @@ public class Medico extends Persona{
                 System.out.println(e);
             }
             if (contadorCitas!=0){
-                System.out.println("Estas son todas las citas restantes que tiene hoy.");
+                System.out.println("\nEstas son todas las citas restantes que tiene hoy.");
                 System.out.print("Si desea atender una cita introduce el número de la misma, sino pulse 0: ");
                 Scanner input = new Scanner(System.in);
                 String opcion = input.nextLine();
@@ -144,7 +144,7 @@ public class Medico extends Persona{
     //FUNCIONES UTILIZADAS EN 2) VER HISTORIAL DE UN PACIENTE
     public void historial_paciente(){
         Scanner input = new Scanner(System.in);
-        System.out.println("Introduce el dni del paciente del que se quieren ver los datos:");
+        System.out.print("Introduce el dni del paciente del que se quieren ver los datos:");
         String dniPaciente = input.nextLine();
 
         //Obtenemos el día actual para buscar en las citas hasta este día
@@ -169,8 +169,8 @@ public class Medico extends Persona{
         int mes = 4;
         int año = 2021;
         String fecha = dia+"-"+mes+"-"+año;
-
-        while (fecha!=fechaActual){
+        System.out.println(fechaActual);
+        while (!fechaActual.equals(fecha)){
             imprimirHistorial(fecha,dniPaciente);
             String[] separarFecha = fecha.split("-");
             dia = Integer.parseInt(separarFecha[0]);
@@ -334,7 +334,7 @@ public class Medico extends Persona{
 
     public void escribirCita(Cita nuevo, String ruta){
         Gson gson = new Gson();
-        Cita cita = null;
+        Cita cita;
         boolean citaBuscada = false;
         File ficheroViejo = new File(ruta);
         File ficheroNuevo = new File("src/ficheros/citas/cita.jsonl");
@@ -369,8 +369,8 @@ public class Medico extends Persona{
             if (citaBuscada){
                 if(ficheroViejo.delete()){
                     if(ficheroNuevo.renameTo(new File(ruta))) {
-                        FileWriter fw2 = new FileWriter(new File(ruta), true);
-                        BufferedWriter bw2 = new BufferedWriter(fw);
+                        FileWriter fw2 = new FileWriter(ruta, true);
+                        BufferedWriter bw2 = new BufferedWriter(fw2);
                         bw2.append(gson.toJson(nuevo));
                         bw2.flush();
                         System.out.println("Diagnostico realizado correctamente");
@@ -405,7 +405,7 @@ public class Medico extends Persona{
         Gson gson = new Gson();
         Paciente paciente = null;
         try {
-            BufferedReader br = new BufferedReader(new FileReader("src/ficheros/Pacientes"+ dniPaciente +".jsonl"));
+            BufferedReader br = new BufferedReader(new FileReader("src/ficheros/Pacientes/"+ dniPaciente +".jsonl"));
             String linea;
             linea = br.readLine();
             paciente = gson.fromJson(linea, Paciente.class);
