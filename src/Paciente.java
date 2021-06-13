@@ -235,11 +235,15 @@ public class Paciente extends Persona{
 
     //2 - Solicitar cita
     public void solicitar_cita(){
-
+        Scanner input = new Scanner(System.in);
         try {
+            System.out.print("Introduce el dia que deseas la cita:");
+            String dia = input.nextLine();
+            System.out.print("Introduce la hora a la que deseas la cita:");
+            String hora = input.nextLine();
             Correo m = new Correo("src/config/Paciente.prop");
 
-            m.enviarEmail("Solicitud Cita", "", "meditech.recepcionista@gmail.com");
+            m.enviarEmail("Solicitud Cita", "Solicitud cita del paciente"+getNombre()+" "+getApellidos()+" con DNI: "+getDni()+ "para el día "+dia+ "a las "+hora + " horas.", "meditech.recepcionista@gmail.com");
 
             System.out.println("Se ha enviado!!");
         } catch (InvalidParameterException | IOException | MessagingException ex) {
@@ -250,10 +254,15 @@ public class Paciente extends Persona{
 
     //3 - Cancelar cita
     public void cancelar_cita(){
+        Scanner input = new Scanner(System.in);
         try {
+            System.out.print("Introduce el dia que tenías la cita:");
+            String dia = input.nextLine();
+            System.out.print("Introduce a la hora a la que tenias la cita:");
+            String hora = input.nextLine();
             Correo m = new Correo("src/config/Paciente.prop");
 
-            m.enviarEmail("Cancelar Cita", "", "meditech.recepcionista@gmail.com");
+            m.enviarEmail("Solicitud Cancelar cita", "Solicitud cancelar cita del paciente"+getNombre()+" "+getApellidos()+" con DNI: "+getDni()+ "del día "+dia+ "a las "+hora + " horas.", "meditech.recepcionista@gmail.com");
 
             System.out.println("Se ha enviado!!");
         } catch (InvalidParameterException | IOException | MessagingException ex) {
@@ -263,10 +272,22 @@ public class Paciente extends Persona{
 
     //4 - Modificar cita
     public void modificar_citas(){
+        Scanner input = new Scanner(System.in);
         try {
+            System.out.print("Introduce el dia que tenias la cita:");
+            String diaViejo = input.nextLine();
+            System.out.print("Introduce la hora a la que tenias la cita:");
+            String horaViejo = input.nextLine();
+            System.out.print("Introduce el dia que deseas la cita:");
+            String dia = input.nextLine();
+            System.out.print("Introduce la hora a la que deseas la cita:");
+            String hora = input.nextLine();
             Correo m = new Correo("src/config/Paciente.prop");
 
-            m.enviarEmail("Modificar Cita", "", "meditech.recepcionista@gmail.com");
+            m.enviarEmail("Solicitud modificar Cita",
+                    "Solicitud modificar cita del paciente"+getNombre()+" "+getApellidos()+" con DNI: "+getDni()
+                            + "del día "+diaViejo+ "a las "+horaViejo + " horas. Y solicita cambiarla para el día : "+dia
+                            +" a las "+hora+" horas.", "meditech.recepcionista@gmail.com");
 
             System.out.println("Se ha enviado!!");
         } catch (InvalidParameterException | IOException | MessagingException ex) {
