@@ -1,8 +1,12 @@
 import com.google.gson.Gson;
 
+import javax.mail.MessagingException;
 import java.io.*;
+import java.security.InvalidParameterException;
 import java.util.Scanner;
 import java.time.LocalDateTime;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Recepcionista extends Persona{
 
@@ -269,9 +273,21 @@ public class Recepcionista extends Persona{
 
     //FUNCIONES UTILIZADAS EN 4) RECORDAR UNA CITA ----Por Hacer(Correo)----
     public void Recordar_cita(){
+        Scanner input = new Scanner(System.in);
+        try {
+            String email = verificadorEmail();
+            System.out.print("Introduce el dia que tiene la cita:");
+            String dia = input.nextLine();
+            System.out.print("Introduce la hora a la que tiene la cita:");
+            String hora = input.nextLine();
+            Correo m = new Correo("src/config/Recepcionista.prop");
 
+            m.enviarEmail("Recordatorio Cita", "Le recordamos su cita el proximo "+dia+" a las "+hora+". Un saludo", email);
 
-        System.out.print("");
+            System.out.println("Se ha enviado!!");
+        } catch (InvalidParameterException | IOException | MessagingException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     //FUNCIONES UTILIZADAS EN 5) GENERAR UN NUEVO PACIENTE
@@ -332,6 +348,29 @@ public class Recepcionista extends Persona{
         }catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    public String verificadorEmail (){
+        // Patrón para validar el email
+        Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+
+        Scanner input = new Scanner(System.in);
+        boolean correcto = false;
+        String email = "";
+        do{
+            System.out.print("Introduce el email del paciente:");
+            email = input.nextLine();
+            Matcher mather = pattern.matcher(email);
+
+            if (mather.find() == true) {
+                System.out.println("El email ingresado es válido.");
+                correcto=true;
+            } else {
+                System.out.println("El email ingresado es inválido.");
+            }
+        }while (!correcto);
+        return  email;
     }
 
 }

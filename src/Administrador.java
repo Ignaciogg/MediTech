@@ -2,6 +2,8 @@ import com.google.gson.Gson;
 
 import java.io.*;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Administrador extends Persona {
 
@@ -107,8 +109,7 @@ public class Administrador extends Persona {
     public void generarAdministrador(){
         Scanner input = new Scanner(System.in);
 
-        System.out.print("Introduce el email:");
-        String email = input.nextLine();
+        String email = verificadorEmail();
         //GENERAR AUTOMATICO Y MANDAR POR CORREO
         System.out.print("Introduce la contraseña:");
         String contraseña = input.nextLine();
@@ -131,8 +132,7 @@ public class Administrador extends Persona {
 
     public void generarMedico(){
         Scanner input = new Scanner(System.in);
-        System.out.print("Introduce el email:");
-        String email = input.nextLine();
+        String email = verificadorEmail();
         //GENERAR AUTOMATICO Y MANDAR POR CORREO
         System.out.print("Introduce la contraseña:");
         String contraseña = input.nextLine();
@@ -158,8 +158,7 @@ public class Administrador extends Persona {
     public void generarPaciente(){
         Scanner input = new Scanner(System.in);
 
-        System.out.print("Introduce el email:");
-        String email = input.nextLine();
+        String email = verificadorEmail();
         //GENERAR AUTOMATICO Y MANDAR POR CORREO
         System.out.print("Introduce la contraseña:");
         String contraseña = input.nextLine();
@@ -193,8 +192,7 @@ public class Administrador extends Persona {
     public void generarRecepcionista(){
         Scanner input = new Scanner(System.in);
 
-        System.out.print("Introduce el email:");
-        String email = input.nextLine();
+        String email = verificadorEmail();
         //GENERAR AUTOMATICO Y MANDAR POR CORREO
         System.out.print("Introduce la contraseña:");
         String contraseña = input.nextLine();
@@ -689,4 +687,26 @@ public class Administrador extends Persona {
         }
     }
 
+    public String verificadorEmail (){
+        // Patrón para validar el email
+        Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+
+        Scanner input = new Scanner(System.in);
+        boolean correcto = false;
+        String email = "";
+        do{
+            System.out.print("Introduce el email:");
+            email = input.nextLine();
+            Matcher mather = pattern.matcher(email);
+
+            if (mather.find() == true) {
+                System.out.println("El email ingresado es válido.");
+                correcto=true;
+            } else {
+                System.out.println("El email ingresado es inválido.");
+            }
+        }while (!correcto);
+        return  email;
+    }
 }
