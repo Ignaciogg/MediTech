@@ -72,6 +72,7 @@ public class Medico extends Persona{
 
     //FUNCIONES UTILIZADAS EN 1) VER CITAS PENDIENTES
     public void ver_cita(){
+        int contador = 0;
         //Obtenemos el DNI del medico
         String dniMedico = getDni();
         //Obtenemos el día actual para buscar en las citas de este día
@@ -111,11 +112,13 @@ public class Medico extends Persona{
                             citas.add(cita);
                             paciente=buscarPaciente(cita.getDniPaciente());
                             System.out.println(contadorCitas+") Paciente: "+paciente.getNombre()+" "+paciente.getApellidos()+" Hora: "+cita.getHora());
+                            contador++;
                         }
                     }
                 }
                 br.close();
                 fr.close();
+                System.out.println("Tienes " + contador + " citas hoy");
             }catch (IOException e) {
                 System.out.println(e);
             }
@@ -195,8 +198,10 @@ public class Medico extends Persona{
                     cita = gson.fromJson(linea, Cita.class);
                     if (cita.getDniPaciente().equalsIgnoreCase(dniPaciente) && (cita.getReceta()!=null || cita.getDiagnostico()!=null)) {
                         System.out.println("Fecha: " + fecha + " Diagnóstico: " + cita.getDiagnostico() + " Receta: " + cita.getReceta());
+
                     }
                 }
+
                 br.close();
                 fr.close();
             } catch (IOException e) {
