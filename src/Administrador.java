@@ -23,7 +23,7 @@ public class Administrador extends Persona {
                 "1 - Dar de alta a un usuario\n" +
                 "2 - Modificar a un usuario\n" +
                 "3 - Eliminar a un usuario\n" +
-                "4 - Contar usuarios\n" +
+                "4 - Contar usuarios totales\n" +
                 "5 - Contar administradores\n" +
                 "6 - Contar medicos\n" +
                 "7 - Contar recepcionistas\n" +
