@@ -19,10 +19,16 @@ public class Administrador extends Persona {
         do {
             System.out.println("\n\n\n----MENU ADMIN----");
             System.out.print(
+                "0 - Salir\n" +
                 "1 - Dar de alta a un usuario\n" +
                 "2 - Modificar a un usuario\n" +
                 "3 - Eliminar a un usuario\n" +
-                "4 - Salir\n" +
+                "4 - Contar usuarios\n" +
+                "5 - Contar administradores\n" +
+                "6 - Contar medicos\n" +
+                "7 - Contar recepcionistas\n" +
+                "8 - Contar pacientes\n" +
+                "9 - Contar citas totales\n" +
                 "Introduce el número de la opcion que quieras realizar: "
             );
             switch (menu = input.nextLine()) {
@@ -36,12 +42,41 @@ public class Administrador extends Persona {
                     EliminarUsuario();
                     break;
                 case "4":
+                    int usuarios = contar_usuarios("src/ficheros/Login.jsonl", 0);
+                    System.out.println("Hay " + usuarios + " usuarios registrados");
+                    pulsaEnterParaContinuar();
+                    break;
+                case "5":
+                    int admins = contar_usuarios("src/ficheros/Login.jsonl", 1);
+                    System.out.println("Hay " + admins + " administradores registrados");
+                    pulsaEnterParaContinuar();
+                    break;
+                case "6":
+                    int medicos = contar_usuarios("src/ficheros/Login.jsonl", 2);
+                    System.out.println("Hay " + medicos + " medicos registrados");
+                    pulsaEnterParaContinuar();
+                    break;
+                case "7":
+                    int recepcionistas = contar_usuarios("src/ficheros/Login.jsonl", 4);
+                    System.out.println("Hay " + recepcionistas + " recepcionistas registrados");
+                    pulsaEnterParaContinuar();
+                    break;
+                case "8":
+                    int pacientes = contar_usuarios("src/ficheros/Login.jsonl", 3);
+                    System.out.println("Hay " + pacientes + " pacientes registrados");
+                    pulsaEnterParaContinuar();
+                    break;
+                case "9":
+                    contra_citas();
+                    pulsaEnterParaContinuar();
+                    break;
+                case "0":
                     System.out.println("Hasta pronto");
                     break;
                 default:
                     System.out.print("Introduce una opcion correcta: ");
             }
-        }while (!menu.equals("4"));
+        }while (!menu.equals("0"));
     }
 
     public void escribirLogin(Persona nuevo){
@@ -710,4 +745,67 @@ public class Administrador extends Persona {
         }while (!correcto);
         return  email;
     }
+
+    public int contar_usuarios(String ruta, int tipo){
+        int usuarios = 0;
+        int admin = 0;
+        int recepcionista = 0;
+        int paciente = 0;
+        int medico = 0;
+        String linea;
+
+        File fichero = new File(ruta);
+
+        try {
+            Scanner sc = new Scanner(fichero);
+            while (sc.hasNextLine()) { // repite el bucle hasta que no haya usuarios en el documneto
+
+                linea = sc.nextLine();
+                usuarios++;
+
+                if (linea.contains("\"genero\":\"1\"")){
+                    admin++;
+                }else if (linea.contains("\"genero\":\"2\"")){
+                    medico++;
+                }else if (linea.contains("\"genero\":\"3\"")){
+                    paciente++;
+                }else if (linea.contains("\"genero\":\"4\"")){
+                    recepcionista++;
+                }
+            }
+            sc.close(); // se cierra el escaner al salir del bucle
+        } catch (FileNotFoundException e) { //en caso de no encontrar el archivo se recoge la excepcion si se imprime por pantalla un mensaje de error
+            System.out.println("Error, no se puede abrir el fichero.");
+        }
+
+        if (tipo == 1){
+            return admin;
+        }else if (tipo == 2){
+            return medico;
+        }else if (tipo == 3){
+            return paciente;
+        }else if (tipo == 4){
+            return recepcionista;
+        }else {
+            return usuarios;
+        }
+
+    }
+
+
+    public static void contra_citas(){
+        File carpeta = new File("src/ficheros/Citas");
+        File[] lista = carpeta.listFiles();
+        System.out.println("En total hay registradas " +  lista.length + " citas");
+    }
+
+
+    public static void pulsaEnterParaContinuar(){
+        System.out.println("pulsa la tecla enter para continuar...");
+        try {
+            System.in.read(); //espera una entrada por el usuario para continuar la ejecucion del programa
+        } catch (Exception e) {
+        }
+    }
+
 }

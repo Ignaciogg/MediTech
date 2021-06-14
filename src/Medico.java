@@ -119,6 +119,7 @@ public class Medico extends Persona{
                 br.close();
                 fr.close();
                 System.out.println("Tienes " + contador + " citas hoy");
+
             }catch (IOException e) {
                 System.out.println(e);
             }

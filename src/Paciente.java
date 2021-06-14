@@ -80,12 +80,12 @@ public class Paciente extends Persona{
         do {
             System.out.println("\n\n\n----MENU PACIENTE----");
             System.out.print(
+                "0 - Salir\n" +
                 "1 - Ver resultados de consultas\n" +
                 "2 - Solicitar cita\n" +
                 "3 - Cancelar cita\n" +
                 "4 - Modificar cita\n" +
                 "5 - Ver citas pendientes\n" +
-                "6 - Salir\n" +
                 "Introduce el número de la opcion que quieras realizar: "
             );
             switch (menu = input.nextLine()) {
@@ -104,14 +104,14 @@ public class Paciente extends Persona{
                 case "5":
                     mostrar_citas();
                     break;
-                case "6":
+                case "0":
                     System.out.println("Hasta pronto");
                     break;
                 default:
                     System.out.print("Introduce una opcion correcta: ");
                     break;
             }
-        }while (!menu.equals("6"));
+        }while (!menu.equals("0"));
     }
 
     //1 - Ver resultados de consultas
