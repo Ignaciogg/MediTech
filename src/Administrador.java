@@ -1,6 +1,7 @@
 import com.google.gson.Gson;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -67,16 +68,12 @@ public class Administrador extends Persona {
                     pulsaEnterParaContinuar();
                     break;
                 case "9":
-                    contra_citas();
-                    pulsaEnterParaContinuar();
-                    break;
-                case "0":
                     System.out.println("Hasta pronto");
                     break;
                 default:
                     System.out.print("Introduce una opcion correcta: ");
             }
-        }while (!menu.equals("0"));
+        }while (!menu.equals("9"));
     }
 
     public void escribirLogin(Persona nuevo){
@@ -141,6 +138,90 @@ public class Administrador extends Persona {
         }while (!menuCU.equals("5"));
     }
 
+    public String solicitarFecha(){
+        Scanner input = new Scanner(System.in);
+        boolean salir = false;
+        boolean bisiesto = false;
+        boolean mismoAnio = false;
+        boolean mismoMes = false;
+        int maxDias = 0;
+
+        String dia,mes,año;
+
+        //año
+        do {
+            System.out.print("Introduce el año de la cita:");
+            año = input.nextLine();
+            if (Integer.parseInt(año) >= LocalDateTime.now().getYear()) {
+                salir = true;
+                if(Integer.parseInt(año) == LocalDateTime.now().getYear()) mismoAnio = true;
+                if ((Integer.parseInt(año) % 4 == 0) && ((Integer.parseInt(año) % 100 != 0) || (Integer.parseInt(año) % 400 == 0)) ) bisiesto = true;
+            }
+        } while (!salir) ;
+        salir = false;
+        //mes
+        do {
+            System.out.print("Introduce el mes de la cita:");
+            mes = input.nextLine();
+            int mesEntero = Integer.parseInt(mes);
+            if (mesEntero > 0 && mesEntero < 13) {
+                if (mismoAnio) {
+                    if (mesEntero >= LocalDateTime.now().getMonthValue()) {
+                        if (mesEntero == LocalDateTime.now().getMonthValue()) mismoMes = true;
+                        salir = true;
+                        if (mesEntero == 1 || mesEntero == 3 || mesEntero == 5 || mesEntero == 7 || mesEntero == 8 || mesEntero == 10 || mesEntero == 12) {
+                            maxDias = 31;
+                        } else {
+                            if (mesEntero == 2) {
+                                if (bisiesto) {
+                                    maxDias = 29;
+                                } else {
+                                    maxDias = 28;
+                                }
+                            } else {
+                                maxDias = 30;
+                            }
+                        }
+                    }
+                }else {
+                    salir = true;
+                    if (mesEntero == 1 || mesEntero == 3 || mesEntero == 5 || mesEntero == 7 || mesEntero == 8 || mesEntero == 10 || mesEntero == 12) {
+                        maxDias = 31;
+                    } else {
+                        if (mesEntero == 2) {
+                            if (bisiesto) {
+                                maxDias = 29;
+                            } else {
+                                maxDias = 28;
+                            }
+                        } else {
+                            maxDias = 30;
+                        }
+                    }
+                }
+            }
+        }while (!salir);
+        salir = false;
+        //dia
+        do {
+            System.out.print("Introduce el dia de la cita:");
+            dia = input.nextLine();
+            if (Integer.parseInt(dia) > 0 && Integer.parseInt(dia) <= maxDias) {
+                if (mismoMes) {
+                    if (Integer.parseInt(dia) >= LocalDateTime.now().getDayOfMonth()) {
+                        salir = true;
+                    }
+                }else {
+                    salir = true;
+                }
+            }
+        }while (!salir);
+        if (Integer.parseInt(mes) < 10) mes = "0"+Integer.parseInt(mes);
+        if (Integer.parseInt(dia) < 10) dia = "0"+Integer.parseInt(dia);
+
+        return (dia + "-"+mes+"-"+año);
+    }
+
     public void generarAdministrador(){
         Scanner input = new Scanner(System.in);
 
@@ -155,7 +236,7 @@ public class Administrador extends Persona {
         System.out.print("Introduce los apellidos:");
         String apellidos = input.nextLine();
         System.out.print("Introduce la fecha de nacimiento:");
-        String fechaNacimiento = input.nextLine();
+        String fechaNacimiento = solicitarFecha();
         System.out.print("Introduce el género:");
         String genero = input.nextLine();
 
@@ -178,7 +259,7 @@ public class Administrador extends Persona {
         System.out.print("Introduce los apellidos:");
         String apellidos = input.nextLine();
         System.out.print("Introduce la fecha de nacimiento:");
-        String fechaNacimiento = input.nextLine();
+        String fechaNacimiento = solicitarFecha();
         System.out.print("Introduce el género:");
         String genero = input.nextLine();
         System.out.print("Introduce el nº de la Seguridad Social:");
@@ -204,7 +285,7 @@ public class Administrador extends Persona {
         System.out.print("Introduce los apellidos:");
         String apellidos = input.nextLine();
         System.out.print("Introduce la fecha de nacimiento:");
-        String fechaNacimiento = input.nextLine();
+        String fechaNacimiento = solicitarFecha();
         System.out.print("Introduce el género:");
         String genero = input.nextLine();
         System.out.print("Introduce la altura:");
@@ -239,7 +320,7 @@ public class Administrador extends Persona {
         System.out.print("Introduce los apellidos:");
         String apellidos = input.nextLine();
         System.out.print("Introduce la fecha de nacimiento:");
-        String fechaNacimiento = input.nextLine();
+        String fechaNacimiento = solicitarFecha();
         System.out.print("Introduce el género:");
         String genero = input.nextLine();
         System.out.print("Introduce número de la seguridad social");
@@ -399,7 +480,7 @@ public class Administrador extends Persona {
                                 break;
                             case "6":
                                 System.out.print("Introduce la nueva fecha de nacimiento: ");
-                                fechaNacimiento = input.nextLine();
+                                fechaNacimiento = solicitarFecha();
                                 personaFicheroNuevo.setFechaNacimiento(fechaNacimiento);
                                 break;
                             case "7":
@@ -472,7 +553,7 @@ public class Administrador extends Persona {
                                 break;
                             case "6":
                                 System.out.print("Introduce la nueva fecha de nacimiento: ");
-                                fechaNacimiento = input.nextLine();
+                                fechaNacimiento = solicitarFecha();
                                 personaFicheroNuevo.setFechaNacimiento(fechaNacimiento);
                                 break;
                             case "7":
@@ -557,7 +638,7 @@ public class Administrador extends Persona {
                                 break;
                             case "6":
                                 System.out.print("Introduce la nueva fecha de nacimiento: ");
-                                fechaNacimiento = input.nextLine();
+                                fechaNacimiento = solicitarFecha();
                                 personaFicheroNuevo.setFechaNacimiento(fechaNacimiento);
                                 break;
                             case "7":
@@ -653,7 +734,7 @@ public class Administrador extends Persona {
                                 break;
                             case "6":
                                 System.out.print("Introduce la nueva fecha de nacimiento: ");
-                                fechaNacimiento = input.nextLine();
+                                fechaNacimiento = solicitarFecha();
                                 personaFicheroNuevo.setFechaNacimiento(fechaNacimiento);
                                 break;
                             case "7":
@@ -791,14 +872,6 @@ public class Administrador extends Persona {
         }
 
     }
-
-
-    public static void contra_citas(){
-        File carpeta = new File("src/ficheros/Citas");
-        File[] lista = carpeta.listFiles();
-        System.out.println("En total hay registradas " +  lista.length + " citas");
-    }
-
 
     public static void pulsaEnterParaContinuar(){
         System.out.println("pulsa la tecla enter para continuar...");

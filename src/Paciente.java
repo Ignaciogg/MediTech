@@ -244,7 +244,7 @@ public class Paciente extends Persona{
             String hora = input.nextLine();
             Correo m = new Correo("src/config/Paciente.prop");
 
-            m.enviarEmail("Solicitud Cita", "Solicitud cita del paciente"+getNombre()+" "+getApellidos()+" con DNI: "+getDni()+ "para el día "+dia+ "a las "+hora + " horas.", "meditech.recepcionista@gmail.com");
+            m.enviarEmail("Solicitud Cita", "Solicitud cita del paciente"+getNombre()+" "+getApellidos()+" con DNI: "+getDni()+ "para el día "+dia+ "a las "+hora + " horas.", "MARIOUCEDAYEVES@gmail.com");
 
             System.out.println("Se ha enviado!!");
         } catch (InvalidParameterException | IOException | MessagingException ex) {
@@ -265,7 +265,6 @@ public class Paciente extends Persona{
             Correo m = new Correo("src/config/Paciente.prop");
 
             m.enviarEmail("Solicitud Cancelar cita", "Solicitud cancelar cita del paciente"+getNombre()+" "+getApellidos()+" con DNI: "+getDni()+ "del día "+dia+ "a las "+hora + " horas.", "meditech.recepcionista@gmail.com");
-            m.enviarEmail("Cancelar Cita", "", "meditech.recepcionista@gmail.com");
 
             System.out.println("Se ha enviado!!");
         } catch (InvalidParameterException | IOException | MessagingException ex) {
@@ -291,7 +290,6 @@ public class Paciente extends Persona{
                     "Solicitud modificar cita del paciente"+getNombre()+" "+getApellidos()+" con DNI: "+getDni()
                             + "del día "+diaViejo+ "a las "+horaViejo + " horas. Y solicita cambiarla para el día : "+dia
                             +" a las "+hora+" horas.", "meditech.recepcionista@gmail.com");
-            m.enviarEmail("Modificar Cita", "", "meditech.recepcionista@gmail.com");
 
             System.out.println("Se ha enviado!!");
         } catch (InvalidParameterException | IOException | MessagingException ex) {
@@ -383,4 +381,17 @@ public class Paciente extends Persona{
         return medico;
     }
 
+    @Override
+    public String toString() {
+        return super.toString()+
+                "Altura: " + altura + '\n' +
+                "Peso: " + peso + '\n' +
+                "Patologías: " + patologías + '\n' +
+                "Alergias: " + alergias + '\n' +
+                "Grupo sanguineo: " + grupo_sanguineo;
+    }
+
+    public String toCSV (){
+        return this.getEmail()+";"+this.getDni()+";"+this.getNombre()+";"+this.getApellidos()+";"+this.getFechaNacimiento()+";"+this.getGenero()+";"+altura+";"+peso+";"+patologías+";"+alergias+";"+grupo_sanguineo;
+    }
 }

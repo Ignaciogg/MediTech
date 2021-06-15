@@ -44,8 +44,9 @@ public class Medico extends Persona{
                 "1 - Ver citas pendientes\n" +
                 "2 - Ver el historial de un paciente\n" +
                 "3 - Diagnostico de una cita \n" +
-                "4 - Mostrar datos de un paciente\n" +
-                "5 - Salir\n" +
+                "4 - Mostrar datos de un paciente\n"+
+                "5 - Exportar datos de un paciente\n"+
+                "6 - Salir\n" +
                 "Introduce el número de la opcion que quieras realizar:"
             );
             switch (menu = input.nextLine()) {
@@ -62,12 +63,18 @@ public class Medico extends Persona{
                     datos_paciente();
                     break;
                 case "5":
+                    Scanner entrada = new Scanner(System.in);
+                    System.out.println("Introduce el dni del paciente del que se quieren exportar los datos:");
+                    String dniPaciente = entrada.nextLine();
+                    exportar(buscarPaciente(dniPaciente));
+                    break;
+                case "6":
                     System.out.println("Hasta pronto");
                     break;
                 default:
                     System.out.print("Introduce una opcion correcta: ");
             }
-        }while (!menu.equals("5"));
+        }while (!menu.equals("6"));
     }
 
     //FUNCIONES UTILIZADAS EN 1) VER CITAS PENDIENTES
@@ -401,6 +408,7 @@ public class Medico extends Persona{
         Paciente paciente = buscarPaciente(dniPaciente);
         if(paciente != null){
             System.out.println(paciente);
+            System.out.println();
         }
         else
             System.out.println("Paciente no encontrado con ese DNI.");
@@ -420,5 +428,16 @@ public class Medico extends Persona{
             System.out.println(e);
         }
         return paciente;
+    }
+    public void exportar(Paciente paciente){
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter("src/ficheros/Pacientes/"+ paciente.getDni() +".csv"));
+            String linea=paciente.toCSV();
+            bw.write(linea);
+            bw.flush();
+            System.out.println("Exportación completa.");
+        }catch (IOException e){
+            System.out.println(e);
+        }
     }
 }
