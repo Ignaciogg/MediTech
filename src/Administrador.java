@@ -29,7 +29,7 @@ public class Administrador extends Persona {
                 "6 - Contar medicos\n" +
                 "7 - Contar recepcionistas\n" +
                 "8 - Contar pacientes\n" +
-                "9 - Contar citas totales\n" +
+                "9 - Salir\n" +
                 "Introduce el número de la opcion que quieras realizar: "
             );
             switch (menu = input.nextLine()) {

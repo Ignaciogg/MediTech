@@ -402,7 +402,7 @@ public class Medico extends Persona{
     //FUNCIONES UTILIZADAS EN 4) VER LOS DATOS DE UN PACIENTE
     public void datos_paciente(){
         Scanner input = new Scanner(System.in);
-        System.out.println("Introduce el dni del paciente del que se quieren ver los datos:");
+        System.out.print("Introduce el dni del paciente del que se quieren ver los datos:");
         String dniPaciente = input.nextLine();
 
         Paciente paciente = buscarPaciente(dniPaciente);
@@ -433,6 +433,8 @@ public class Medico extends Persona{
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter("src/ficheros/Pacientes/"+ paciente.getDni() +".csv"));
             String linea=paciente.toCSV();
+            bw.write("Email ; Dni ; Nombre ; Apellidos ; Fecha Nacimiento ; Genero ; Altura ; Peso ; Patologías ; Alergias ; Grupo Sanguineo");
+            bw.newLine();
             bw.write(linea);
             bw.flush();
             System.out.println("Exportación completa.");
