@@ -874,7 +874,7 @@ public class Administrador extends Persona {
     }
 
     public static void pulsaEnterParaContinuar(){
-        System.out.println("pulsa la tecla enter para continuar...");
+        System.out.println("Pulsa la tecla enter para continuar...");
         try {
             System.in.read(); //espera una entrada por el usuario para continuar la ejecucion del programa
         } catch (Exception e) {
