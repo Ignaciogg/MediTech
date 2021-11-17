@@ -1,22 +1,25 @@
 import com.google.gson.Gson;
 
+import javax.mail.MessagingException;
 import java.io.*;
+import java.security.InvalidParameterException;
 import java.util.Scanner;
 import java.time.LocalDateTime;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Recepcionista extends Persona{
 
-    // Generados parámetros de la clase
+    // Datos de la clase
     private int no_seguridad_social;
 
     //  Constructor
-    public Recepcionista(String email, String dni, String nombre, String apellidos, String fechaNacimiento,
-                         String genero, int no_seguridad_social) {
+    public Recepcionista(String email, String dni, String nombre, String apellidos, String fechaNacimiento, String genero, int no_seguridad_social) {
         super(email, dni, nombre, apellidos, fechaNacimiento, genero);
         this.no_seguridad_social = no_seguridad_social;
     }
 
-    // Generamos getters y setters
+    // Getters y Setters
     public int getNo_seguridad_social() {
         return no_seguridad_social;
     }
@@ -55,7 +58,7 @@ public class Recepcionista extends Persona{
                     Recordar_cita();
                     break;
                 case "5":
-                    generarPaciente();
+                    Generar_paciente();
                     break;
                 case "6":
                     System.out.println("Hasta pronto");
@@ -63,10 +66,33 @@ public class Recepcionista extends Persona{
                 default:
                     System.out.print("Introduce una opcion correcta: ");
             }
-        }while (!menu.equals("5"));
+        }while (!menu.equals("6"));
     }
 
     //FUNCIONES UTILIZADAS EN 1) GENERAR UNA NUEVA CITA
+
+    public void Crear_cita() {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Introduce el dni del paciente:");
+        String paciente = input.nextLine();
+        System.out.print("Introduce el dni del médico:");
+        String medico = input.nextLine();
+        //fecha
+        String ficheroNombre = solicitarFecha();
+        //hora
+        System.out.print("Introduce la hora de la cita:");
+        String hora = input.nextLine();
+        try {
+            File cita = new File (ficheroNombre);
+            if(!cita.exists()) {
+                cita.createNewFile();
+            }
+            escribirCita(ficheroNombre,medico,paciente,hora);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String solicitarFecha(){
         Scanner input = new Scanner(System.in);
         boolean salir = false;
@@ -148,35 +174,13 @@ public class Recepcionista extends Persona{
         if (Integer.parseInt(mes) < 10) mes = "0"+Integer.parseInt(mes);
         if (Integer.parseInt(dia) < 10) dia = "0"+Integer.parseInt(dia);
 
-        return ("src/Citas/"+dia + "-"+mes+"-"+año+".jsonl");
-    }
-
-    public void Crear_cita() {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Introduce el dni del paciente:");
-        String paciente = input.nextLine();
-        System.out.print("Introduce el dni del médico:");
-        String medico = input.nextLine();
-        //facha
-        String ficheroNombre = solicitarFecha();
-        //hora
-        System.out.print("Introduce la hora de la cita:");
-        String hora = input.nextLine();
-        try {
-            File cita = new File (ficheroNombre);
-            if(!cita.exists()) {
-                cita.createNewFile();
-            }
-            escribirCita(ficheroNombre,medico,paciente,hora);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return ("src/ficheros/Citas/"+dia + "-"+mes+"-"+año+".jsonl");
     }
 
     public void escribirCita (String ruta, String medico, String paciente, String hora){
         Gson gson = new Gson();
         try{
-            BufferedWriter bw = new BufferedWriter(new FileWriter(ruta));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(ruta,true));
             Cita nuevo = new Cita(medico,paciente,hora);
             bw.append(gson.toJson(nuevo));
             bw.flush();
@@ -186,11 +190,12 @@ public class Recepcionista extends Persona{
     }
 
     //FUNCIONES UTILIZADAS EN 2) CANCELAR UNA CITA
+
     public void Cancelar_cita(){
         Scanner input = new Scanner(System.in);
         System.out.print("Introduce el dni del paciente:");
         String paciente = input.nextLine();
-        System.out.println("Introduce los datos de la cita que quieres cancelar:");
+        System.out.println("Introduce los datos de la cita que quieres cancelar");
         String urlCita = solicitarFecha();
         System.out.print("Introduce a que hora tenía la cita:");
         String hora = input.nextLine();
@@ -207,7 +212,7 @@ public class Recepcionista extends Persona{
         Cita cita = null;
         Cita citaBuscada = null;
         File ficheroViejo = new File(url);
-        File ficheroNuevo = new File("src/citas/cita.jsonl");
+        File ficheroNuevo = new File("src/ficheros/citas/cita.jsonl");
         try {
             FileReader fr = new FileReader(ficheroViejo);
             BufferedReader br = new BufferedReader(fr);
@@ -266,12 +271,63 @@ public class Recepcionista extends Persona{
         }
     }
 
-    //FUNCIONES UTILIZADAS EN 4) RECORDAR UNA CITA
+    //FUNCIONES UTILIZADAS EN 4) RECORDAR UNA CITA ----Por Hacer(Correo)----
     public void Recordar_cita(){
-            System.out.print("");
+        Scanner input = new Scanner(System.in);
+        try {
+            String email = verificadorEmail();
+            System.out.print("Introduce el dia que tiene la cita:");
+            String dia = input.nextLine();
+            System.out.print("Introduce la hora a la que tiene la cita:");
+            String hora = input.nextLine();
+            Correo m = new Correo("src/config/Recepcionista.prop");
+
+            m.enviarEmail("Recordatorio Cita", "Le recordamos su cita el proximo "+dia+" a las "+hora+". Un saludo", email);
+
+            System.out.println("Se ha enviado!!");
+        } catch (InvalidParameterException | IOException | MessagingException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     //FUNCIONES UTILIZADAS EN 5) GENERAR UN NUEVO PACIENTE
+
+    public void Generar_paciente(){
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Introduce el email:");
+        String email = input.nextLine();
+        //GENERAR AUTOMATICO Y MANDAR POR CORREO
+        System.out.print("Introduce la contraseña:");
+        String contraseña = input.nextLine();
+        System.out.print("Introduce el dni:");
+        String dni = input.nextLine();
+        System.out.print("Introduce el nombre:");
+        String nombre = input.nextLine();
+        System.out.print("Introduce los apellidos:");
+        String apellidos = input.nextLine();
+        System.out.print("Introduce la fecha de nacimiento:");
+        String fechaNacimiento = input.nextLine();
+        System.out.print("Introduce el género:");
+        String genero = input.nextLine();
+        System.out.print("Introduce la altura:");
+        Double altura = input.nextDouble();
+        System.out.print("Introduce el peso:");
+        Double peso = input.nextDouble();
+        input.next();
+        System.out.print("Introduce las patologías:");
+        String patologías = input.nextLine();
+        System.out.print("Introduce las alergias:");
+        String alergias = input.nextLine();
+        System.out.print("Introduce el grupo sanguíneo:");
+        String grupo_sanguineo = input.nextLine();
+
+        String ruta = "src/ficheros/Pacientes/" + dni + ".jsonl";
+
+        escribirLogin(new Persona(email,contraseña,dni,"3"));
+        escribirPersona(new Paciente(email,dni,nombre,apellidos,fechaNacimiento,genero,altura,peso,patologías,alergias,grupo_sanguineo),ruta);
+    }
+
     public void escribirLogin(Persona nuevo){
         Gson gson = new Gson();
         try{
@@ -295,38 +351,27 @@ public class Recepcionista extends Persona{
         }
     }
 
-    public void generarPaciente(){
+    public String verificadorEmail (){
+        // Patrón para validar el email
+        Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+
         Scanner input = new Scanner(System.in);
+        boolean correcto = false;
+        String email = "";
+        do{
+            System.out.print("Introduce el email del paciente:");
+            email = input.nextLine();
+            Matcher mather = pattern.matcher(email);
 
-        System.out.print("Introduce el email:");
-        String email = input.nextLine();
-        //GENERAR AUTOMATICO Y MANDAR POR CORREO
-        System.out.print("Introduce la contraseña:");
-        String contraseña = input.nextLine();
-        System.out.print("Introduce el dni:");
-        String dni = input.nextLine();
-        System.out.print("Introduce el nombre:");
-        String nombre = input.nextLine();
-        System.out.print("Introduce los apellidos:");
-        String apellidos = input.nextLine();
-        System.out.print("Introduce la fecha de nacimiento:");
-        String fechaNacimiento = input.nextLine();
-        System.out.print("Introduce el género:");
-        String genero = input.nextLine();
-        System.out.print("Introduce la altura:");
-        Double altura = input.nextDouble();
-        System.out.print("Introduce el peso:");
-        Double peso = input.nextDouble();
-        System.out.print("Introduce las patologías:");
-        String patologías = input.nextLine();
-        System.out.print("Introduce las alergias:");
-        String alergias = input.nextLine();
-        System.out.print("Introduce el grupo sanguíneo:");
-        String grupo_sanguineo = input.nextLine();
-
-        String ruta = "src/ficheros/Pacientes/" + dni + ".jsonl";
-
-        escribirLogin(new Persona(email,contraseña,dni,"3"));
-        escribirPersona(new Paciente(email,dni,nombre,apellidos,fechaNacimiento,genero,altura,peso,patologías,alergias,grupo_sanguineo),ruta);
+            if (mather.find() == true) {
+                System.out.println("El email ingresado es válido.");
+                correcto=true;
+            } else {
+                System.out.println("El email ingresado es inválido.");
+            }
+        }while (!correcto);
+        return  email;
     }
+
 }
